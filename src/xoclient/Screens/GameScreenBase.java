@@ -14,7 +14,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public abstract class GameScreenBase extends BorderPane {
+public  class GameScreenBase extends BorderPane {
 
     protected final HBox hBox;
     protected final VBox vBox;

@@ -1,9 +1,12 @@
 package xoclient.Screens;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import xoclient.Navigate;
 
 public  class ChooseLevelScreenBase extends AnchorPane {
 
@@ -48,6 +51,12 @@ public  class ChooseLevelScreenBase extends AnchorPane {
         easyButton.setPrefWidth(87.0);
         easyButton.setText("Easy");
         easyButton.setFont(new Font("System Italic", 13.0));
+        easyButton.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                Navigate.navigateTo(new EnterPlayerNamesScreenBase(),e);
+            }
+        });
 
         midButton.setLayoutX(207.0);
         midButton.setLayoutY(169.0);

@@ -1,5 +1,7 @@
 package xoclient.Screens;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +11,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
+import xoclient.Navigate;
 
 public class EnterPlayerNamesScreenBase extends BorderPane {
 
@@ -110,6 +113,12 @@ public class EnterPlayerNamesScreenBase extends BorderPane {
         BorderPane.setMargin(btnStart, new Insets(0.0, 0.0, 30.0, 0.0));
         btnStart.setFont(new Font(20.0));
         setBottom(btnStart);
+        btnStart.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                Navigate.navigateTo(new GameScreenBase(),e);
+            }
+        });
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
