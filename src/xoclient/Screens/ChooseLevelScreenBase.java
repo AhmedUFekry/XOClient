@@ -1,4 +1,4 @@
-package xoclient;
+package xoclient.Screens;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
