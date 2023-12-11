@@ -1,4 +1,4 @@
-package xoclient.Screen;
+package xoclient.Screens;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
