@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xoclient;
+package xoclient.Screens;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author Ahmed Fekry
  */
-public class ProfileScreenController implements Initializable {
+public class LoginScreenController implements Initializable {
 
     /**
      * Initializes the controller class.
