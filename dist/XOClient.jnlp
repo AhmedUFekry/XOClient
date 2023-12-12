@@ -10,6 +10,7 @@
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <jar href="XOClient.jar" size="5455" download="eager" />
 =======
     <jar href="XOClient.jar" size="8108" download="eager" />
@@ -17,6 +18,9 @@
 =======
     <jar href="XOClient.jar" size="6966" download="eager" />
 >>>>>>> signupscreen
+=======
+    <jar href="XOClient.jar" size="7140" download="eager" />
+>>>>>>> profilescreen
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="XOClient" >
     <param name="requiredFXVersion" value="8.0+"/>
