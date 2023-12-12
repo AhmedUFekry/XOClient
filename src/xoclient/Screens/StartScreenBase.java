@@ -1,9 +1,14 @@
 package xoclient.Screens;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public  class StartScreenBase extends AnchorPane {
 
@@ -64,6 +69,17 @@ public  class StartScreenBase extends AnchorPane {
         onlButton.setPrefWidth(77.0);
         onlButton.setText("Online");
         onlButton.setFont(new Font("System Italic", 15.0));
+        onlButton.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage primaryStage = (Stage) onlButton.getScene().getWindow();
+                //Stage primaryStage = new Stage();
+                LoginScreenBase pro = new LoginScreenBase();
+                Parent root = pro;
+                primaryStage.setScene(new Scene(root, USE_PREF_SIZE, USE_PREF_SIZE));
+                primaryStage.show();
+            }
+        });
 
         getChildren().add(text);
         getChildren().add(text0);

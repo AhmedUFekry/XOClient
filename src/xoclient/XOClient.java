@@ -22,7 +22,7 @@ public class XOClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = new LoginScreenBase();
+        Parent root = new StartScreenBase();
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
