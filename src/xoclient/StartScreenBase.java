@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import static sun.plugin.javascript.navig.JSType.Navigator;
 import xoclient.Screens.ChooseLevelScreenBase;
+import xoclient.Screens.EnterPlayerNamesScreenBase;
 
 public  class StartScreenBase extends AnchorPane {
 
@@ -66,6 +67,12 @@ public  class StartScreenBase extends AnchorPane {
         dualButton.setPrefWidth(77.0);
         dualButton.setText("Dual");
         dualButton.setFont(new Font("System Italic", 15.0));
+         dualButton.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                Navigate.navigateTo(new EnterPlayerNamesScreenBase(),e);
+            }
+        });
 
         onlButton.setLayoutX(352.0);
         onlButton.setLayoutY(164.0);

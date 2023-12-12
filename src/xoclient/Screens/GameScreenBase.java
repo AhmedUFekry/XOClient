@@ -16,13 +16,14 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import xoclient.Navigate;
+import xoclient.StartScreenBase;
 
 public  class GameScreenBase extends BorderPane {
 
     protected final HBox hBox;
     protected final VBox vBox;
   //  protected final ImageView imageView;
-    protected final Label txtPlayer1;
+    protected final  Label txtPlayer1;
     protected final Label player1Symbol;
     protected final VBox vBox0;
     protected final Label label;
@@ -33,7 +34,7 @@ public  class GameScreenBase extends BorderPane {
     protected final Label label3;
     protected final VBox vBox1;
     //protected final ImageView imageView0;
-    protected final Label txtPlayer2;
+    protected final  Label txtPlayer2;
     protected final Label player2Symbol;
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -54,6 +55,7 @@ public  class GameScreenBase extends BorderPane {
     protected final Pane pane;
     protected final Button exitBtn;
     protected final Button recBtn;
+    
     //protected final ImageView imageView1;
 
     public GameScreenBase() {
@@ -307,7 +309,7 @@ public  class GameScreenBase extends BorderPane {
          exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
-                Navigate.navigateTo(new EnterPlayerNamesScreenBase(),e);
+                Navigate.navigateTo(new StartScreenBase(),e);
             }
         });
 

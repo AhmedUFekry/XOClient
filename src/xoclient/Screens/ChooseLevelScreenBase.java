@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import xoclient.Navigate;
+import xoclient.StartScreenBase;
 
 public  class ChooseLevelScreenBase extends AnchorPane {
 
@@ -15,6 +16,7 @@ public  class ChooseLevelScreenBase extends AnchorPane {
     protected final Button easyButton;
     protected final Button midButton;
     protected final Button hardButton;
+    protected final Button backBtn;
 
     public ChooseLevelScreenBase() {
 
@@ -23,6 +25,7 @@ public  class ChooseLevelScreenBase extends AnchorPane {
         easyButton = new Button();
         midButton = new Button();
         hardButton = new Button();
+        backBtn = new Button();
 
         setId("AnchorPane");
         setPrefHeight(337.0);
@@ -51,10 +54,10 @@ public  class ChooseLevelScreenBase extends AnchorPane {
         easyButton.setPrefWidth(87.0);
         easyButton.setText("Easy");
         easyButton.setFont(new Font("System Italic", 13.0));
-        easyButton.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+         easyButton.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
-                Navigate.navigateTo(new EnterPlayerNamesScreenBase(),e);
+                Navigate.navigateTo(new GameScreenBase(),e);
             }
         });
 
@@ -74,11 +77,23 @@ public  class ChooseLevelScreenBase extends AnchorPane {
         hardButton.setText("Hard");
         hardButton.setFont(new Font("System Italic", 13.0));
 
+        backBtn.setLayoutX(14.0);
+        backBtn.setLayoutY(14.0);
+        backBtn.setMnemonicParsing(false);
+        backBtn.setText("Back");
+         backBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                Navigate.navigateTo(new StartScreenBase(),e);
+            }
+        });
+
         getChildren().add(text);
         getChildren().add(text0);
         getChildren().add(easyButton);
         getChildren().add(midButton);
         getChildren().add(hardButton);
+        getChildren().add(backBtn);
 
     }
 }
