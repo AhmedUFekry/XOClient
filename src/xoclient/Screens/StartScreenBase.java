@@ -1,9 +1,18 @@
-package xoclient;
+package xoclient.Screens;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public  class StartScreenBase extends AnchorPane {
 
@@ -48,7 +57,7 @@ public  class StartScreenBase extends AnchorPane {
         singButton.setPrefWidth(77.0);
         singButton.setText("Single");
         singButton.setFont(new Font("System Italic", 15.0));
-
+        
         dualButton.setLayoutX(194.0);
         dualButton.setLayoutY(164.0);
         dualButton.setMnemonicParsing(false);
@@ -56,7 +65,21 @@ public  class StartScreenBase extends AnchorPane {
         dualButton.setPrefWidth(77.0);
         dualButton.setText("Dual");
         dualButton.setFont(new Font("System Italic", 15.0));
-
+        dualButton.addEventHandler(ActionEvent.ACTION,e->{
+        Stage st = (Stage) singButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameScreen.fxml"));
+        
+            try {
+                VBox root;
+                root = loader.load();
+                  GameScreenController controller = loader.getController();
+                   st.setScene(new Scene(root,USE_PREF_SIZE,USE_PREF_SIZE));
+                   st.show();
+            } catch (IOException ex) {
+                Logger.getLogger(StartScreenBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+      
+        });
         onlButton.setLayoutX(352.0);
         onlButton.setLayoutY(164.0);
         onlButton.setMnemonicParsing(false);
