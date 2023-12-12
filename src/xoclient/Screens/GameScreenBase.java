@@ -1,10 +1,12 @@
 package xoclient.Screens;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+//import javafx.scene.image.Image;
+//import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -13,12 +15,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import xoclient.Navigate;
 
 public  class GameScreenBase extends BorderPane {
 
     protected final HBox hBox;
     protected final VBox vBox;
-    protected final ImageView imageView;
+  //  protected final ImageView imageView;
     protected final Label txtPlayer1;
     protected final Label player1Symbol;
     protected final VBox vBox0;
@@ -29,7 +32,7 @@ public  class GameScreenBase extends BorderPane {
     protected final Label label2;
     protected final Label label3;
     protected final VBox vBox1;
-    protected final ImageView imageView0;
+    //protected final ImageView imageView0;
     protected final Label txtPlayer2;
     protected final Label player2Symbol;
     protected final GridPane gridPane;
@@ -51,13 +54,13 @@ public  class GameScreenBase extends BorderPane {
     protected final Pane pane;
     protected final Button exitBtn;
     protected final Button recBtn;
-    protected final ImageView imageView1;
+    //protected final ImageView imageView1;
 
     public GameScreenBase() {
 
         hBox = new HBox();
         vBox = new VBox();
-        imageView = new ImageView();
+      //  imageView = new ImageView();
         txtPlayer1 = new Label();
         player1Symbol = new Label();
         vBox0 = new VBox();
@@ -68,7 +71,7 @@ public  class GameScreenBase extends BorderPane {
         label2 = new Label();
         label3 = new Label();
         vBox1 = new VBox();
-        imageView0 = new ImageView();
+        //imageView0 = new ImageView();
         txtPlayer2 = new Label();
         player2Symbol = new Label();
         gridPane = new GridPane();
@@ -90,7 +93,7 @@ public  class GameScreenBase extends BorderPane {
         pane = new Pane();
         exitBtn = new Button();
         recBtn = new Button();
-        imageView1 = new ImageView();
+       // imageView1 = new ImageView();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -108,12 +111,12 @@ public  class GameScreenBase extends BorderPane {
         vBox.setPrefHeight(200.0);
         vBox.setPrefWidth(100.0);
 
-        imageView.setFitHeight(124.0);
+        /*imageView.setFitHeight(124.0);
         imageView.setFitWidth(103.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         VBox.setMargin(imageView, new Insets(0.0));
-        imageView.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));*/
 
         txtPlayer1.setAlignment(javafx.geometry.Pos.CENTER);
         txtPlayer1.setPrefHeight(21.0);
@@ -173,12 +176,12 @@ public  class GameScreenBase extends BorderPane {
         vBox1.setPrefHeight(200.0);
         vBox1.setPrefWidth(100.0);
 
-        imageView0.setFitHeight(124.0);
+        /*imageView0.setFitHeight(124.0);
         imageView0.setFitWidth(103.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
         VBox.setMargin(imageView0, new Insets(0.0));
-        imageView0.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));*/
 
         txtPlayer2.setAlignment(javafx.geometry.Pos.CENTER);
         txtPlayer2.setPrefHeight(21.0);
@@ -301,6 +304,12 @@ public  class GameScreenBase extends BorderPane {
         exitBtn.setPrefWidth(122.0);
         exitBtn.setText("Exit");
         exitBtn.setFont(new Font("Baskerville Old Face", 20.0));
+         exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                Navigate.navigateTo(new EnterPlayerNamesScreenBase(),e);
+            }
+        });
 
         recBtn.setLayoutX(464.0);
         recBtn.setLayoutY(10.0);
@@ -310,15 +319,15 @@ public  class GameScreenBase extends BorderPane {
         recBtn.setText("Record");
         recBtn.setFont(new Font("Baskerville Old Face", 20.0));
 
-        imageView1.setFitHeight(20.0);
+        /*imageView1.setFitHeight(20.0);
         imageView1.setFitWidth(19.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
         imageView1.setImage(new Image(getClass().getResource("../Icons/rec.png").toExternalForm()));
-        recBtn.setGraphic(imageView1);
+        recBtn.setGraphic(imageView1);*/
         setBottom(pane);
 
-        vBox.getChildren().add(imageView);
+        //vBox.getChildren().add(imageView);
         vBox.getChildren().add(txtPlayer1);
         vBox.getChildren().add(player1Symbol);
         hBox.getChildren().add(vBox);
@@ -329,7 +338,7 @@ public  class GameScreenBase extends BorderPane {
         hBox0.getChildren().add(label3);
         vBox0.getChildren().add(hBox0);
         hBox.getChildren().add(vBox0);
-        vBox1.getChildren().add(imageView0);
+        //vBox1.getChildren().add(imageView0);
         vBox1.getChildren().add(txtPlayer2);
         vBox1.getChildren().add(player2Symbol);
         hBox.getChildren().add(vBox1);
