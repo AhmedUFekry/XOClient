@@ -33,6 +33,7 @@ public class ProfileScreenBase extends BorderPane {
     protected final Label label3;
     protected final ImageView profileImage;
     protected final Label usernameLabel;
+    public String username;
 
     public ProfileScreenBase() {
 

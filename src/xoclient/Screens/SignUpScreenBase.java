@@ -1,6 +1,10 @@
 package xoclient.Screens;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -11,6 +15,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class SignUpScreenBase extends BorderPane {
 
@@ -169,6 +174,21 @@ public class SignUpScreenBase extends BorderPane {
         createBtn.setText("Create");
         createBtn.setFont(new Font("Bodoni MT Black", 14.0));
         GridPane.setMargin(createBtn, new Insets(-70.0, 0.0, 0.0, 340.0));
+        createBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
+                //Stage primaryStage = new Stage();
+                LoginScreenBase pro = new LoginScreenBase();
+                if(emailTxtfield.getText() != null && passwordTxtfield.getText() != null){
+                    pro.userNameTxtField.setText(emailTxtfield.getText());
+                    pro.passTxtField.setText(passwordTxtfield.getText());
+                }                
+                Parent root = pro;
+                primaryStage.setScene(new Scene(root, USE_PREF_SIZE, USE_PREF_SIZE));
+                primaryStage.show();
+            }
+        });
 
         GridPane.setRowIndex(loginBtn, 5);
         loginBtn.setLayoutX(350.0);
@@ -177,6 +197,18 @@ public class SignUpScreenBase extends BorderPane {
         loginBtn.setText("Login");
         loginBtn.setFont(new Font("Bodoni MT Black", 14.0));
         GridPane.setMargin(loginBtn, new Insets(50.0, 0.0, 0.0, 325.0));
+        loginBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
+                //Stage primaryStage = new Stage();
+                LoginScreenBase pro = new LoginScreenBase();
+                
+                Parent root = pro;
+                primaryStage.setScene(new Scene(root, USE_PREF_SIZE, USE_PREF_SIZE));
+                primaryStage.show();
+            }
+        });
 
         GridPane.setRowIndex(label5, 5);
         label5.setLayoutX(110.0);
