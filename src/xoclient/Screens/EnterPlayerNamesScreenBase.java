@@ -1,16 +1,21 @@
 package xoclient.Screens;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
+import xoclient.Navigate;
+import xoclient.StartScreenBase;
 
-public class EnterPlayerNamesScreenBase extends BorderPane {
+public  class EnterPlayerNamesScreenBase extends BorderPane {
 
     protected final GridPane gridPane;
     protected final ColumnConstraints columnConstraints;
@@ -21,8 +26,10 @@ public class EnterPlayerNamesScreenBase extends BorderPane {
     protected final Label label0;
     protected final TextField txtFieldPlayer1;
     protected final TextField txtFieldPlayer2;
-    protected final Label label1;
     protected final Button btnStart;
+    protected final FlowPane flowPane;
+    protected final Button backBtn;
+    protected final Label label1;
 
     public EnterPlayerNamesScreenBase() {
 
@@ -35,8 +42,10 @@ public class EnterPlayerNamesScreenBase extends BorderPane {
         label0 = new Label();
         txtFieldPlayer1 = new TextField();
         txtFieldPlayer2 = new TextField();
-        label1 = new Label();
         btnStart = new Button();
+        flowPane = new FlowPane();
+        backBtn = new Button();
+        label1 = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -93,15 +102,6 @@ public class EnterPlayerNamesScreenBase extends BorderPane {
         BorderPane.setMargin(gridPane, new Insets(30.0, 80.0, 30.0, 80.0));
         setCenter(gridPane);
 
-        BorderPane.setAlignment(label1, javafx.geometry.Pos.CENTER);
-        label1.setAlignment(javafx.geometry.Pos.CENTER);
-        label1.setPrefHeight(59.0);
-        label1.setPrefWidth(427.0);
-        label1.setText("Enter Your Name");
-        BorderPane.setMargin(label1, new Insets(30.0, 0.0, 0.0, 0.0));
-        label1.setFont(new Font("Baskerville Old Face", 36.0));
-        setTop(label1);
-
         BorderPane.setAlignment(btnStart, javafx.geometry.Pos.CENTER);
         btnStart.setMnemonicParsing(false);
         btnStart.setPrefHeight(55.0);
@@ -110,6 +110,45 @@ public class EnterPlayerNamesScreenBase extends BorderPane {
         BorderPane.setMargin(btnStart, new Insets(0.0, 0.0, 30.0, 0.0));
         btnStart.setFont(new Font(20.0));
         setBottom(btnStart);
+         btnStart.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                GameScreenBase gs=new  GameScreenBase();
+                gs.txtPlayer1.setText(txtFieldPlayer1.getText());
+                gs.txtPlayer2.setText(txtFieldPlayer2.getText());
+                
+                        
+               Navigate.navigateTo(gs,e);
+                
+            }
+        });
+
+        BorderPane.setAlignment(flowPane, javafx.geometry.Pos.CENTER);
+        flowPane.setHgap(15.0);
+        flowPane.setPrefHeight(51.0);
+        flowPane.setPrefWidth(600.0);
+
+        backBtn.setMnemonicParsing(false);
+        backBtn.setPrefHeight(25.0);
+        backBtn.setPrefWidth(65.0);
+        backBtn.setText("Back");
+        FlowPane.setMargin(backBtn, new Insets(0.0, 0.0, 0.0, 20.0));
+         backBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+              
+                
+                        
+                Navigate.navigateTo(new StartScreenBase(),e);
+            }
+        });
+
+        label1.setAlignment(javafx.geometry.Pos.CENTER);
+        label1.setPrefHeight(59.0);
+        label1.setPrefWidth(405.0);
+        label1.setText("Enter Your Name");
+        label1.setFont(new Font("Baskerville Old Face", 36.0));
+        setTop(flowPane);
 
         gridPane.getColumnConstraints().add(columnConstraints);
         gridPane.getColumnConstraints().add(columnConstraints0);
@@ -119,6 +158,8 @@ public class EnterPlayerNamesScreenBase extends BorderPane {
         gridPane.getChildren().add(label0);
         gridPane.getChildren().add(txtFieldPlayer1);
         gridPane.getChildren().add(txtFieldPlayer2);
+        flowPane.getChildren().add(backBtn);
+        flowPane.getChildren().add(label1);
 
     }
 }
