@@ -12,6 +12,7 @@ import static sun.plugin.javascript.navig.JSType.Navigator;
 import xoclient.Screens.ChooseLevelScreenBase;
 import xoclient.Screens.EnterPlayerNamesScreenBase;
 import javafx.stage.Stage;
+import xoclient.Navigate;
 
 
 public  class StartScreenBase extends AnchorPane {

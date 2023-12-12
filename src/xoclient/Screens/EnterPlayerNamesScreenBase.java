@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import xoclient.Navigate;
-import xoclient.StartScreenBase;
+import xoclient.Screens.StartScreenBase;
 
 public  class EnterPlayerNamesScreenBase extends BorderPane {
 

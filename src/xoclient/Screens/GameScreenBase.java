@@ -16,7 +16,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import xoclient.Navigate;
-import xoclient.StartScreenBase;
+import xoclient.Screens.StartScreenBase;
 
 public  class GameScreenBase extends BorderPane {
 

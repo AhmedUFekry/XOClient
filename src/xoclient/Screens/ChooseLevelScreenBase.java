@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import xoclient.Navigate;
-import xoclient.StartScreenBase;
+import xoclient.Screens.StartScreenBase;
 
 public  class ChooseLevelScreenBase extends AnchorPane {
 
