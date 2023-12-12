@@ -174,6 +174,21 @@ public class SignUpScreenBase extends BorderPane {
         createBtn.setText("Create");
         createBtn.setFont(new Font("Bodoni MT Black", 14.0));
         GridPane.setMargin(createBtn, new Insets(-70.0, 0.0, 0.0, 340.0));
+        createBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
+                //Stage primaryStage = new Stage();
+                LoginScreenBase pro = new LoginScreenBase();
+                if(emailTxtfield.getText() != null && passwordTxtfield.getText() != null){
+                    pro.userNameTxtField.setText(emailTxtfield.getText());
+                    pro.passTxtField.setText(passwordTxtfield.getText());
+                }                
+                Parent root = pro;
+                primaryStage.setScene(new Scene(root, USE_PREF_SIZE, USE_PREF_SIZE));
+                primaryStage.show();
+            }
+        });
 
         GridPane.setRowIndex(loginBtn, 5);
         loginBtn.setLayoutX(350.0);
