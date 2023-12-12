@@ -117,6 +117,17 @@ public class LoginScreenBase extends BorderPane {
         backBtn.setMnemonicParsing(false);
         backBtn.setText("Back");
         FlowPane.setMargin(backBtn, new Insets(0.0, 0.0, 0.0, 20.0));
+        backBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage primaryStage = (Stage) backBtn.getScene().getWindow();
+                //Stage primaryStage = new Stage();
+                StartScreenBase pro = new StartScreenBase();
+                Parent root = pro;
+                primaryStage.setScene(new Scene(root, USE_PREF_SIZE, USE_PREF_SIZE));
+                primaryStage.show();
+            }
+        });
 
         label2.setAlignment(javafx.geometry.Pos.CENTER);
         label2.setPrefHeight(54.0);
