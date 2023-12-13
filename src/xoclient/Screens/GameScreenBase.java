@@ -1,5 +1,7 @@
 package xoclient.Screens;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,7 +21,15 @@ import xoclient.Navigate;
 import xoclient.Screens.StartScreenBase;
 
 public  class GameScreenBase extends BorderPane {
-
+    // Logic variables
+    private ArrayList<Button> boardBtns;                //BoardButtons
+    //  private int gameId;                                 // to store game Id 
+    private int turn;
+    private static int _scoreP1 = 0;
+    private static int _scoreP2 = 0;
+    private String[] players = {"X", "O"};
+    private String p1ayMoves;
+    
     protected final HBox hBox;
     protected final VBox vBox;
   //  protected final ImageView imageView;
@@ -29,9 +39,9 @@ public  class GameScreenBase extends BorderPane {
     protected final Label label;
     protected final Label label0;
     protected final HBox hBox0;
+    protected final Label scoreP1;
     protected final Label label1;
-    protected final Label label2;
-    protected final Label label3;
+    protected final Label scoreP2;
     protected final VBox vBox1;
     //protected final ImageView imageView0;
     protected final  Label txtPlayer2;
@@ -43,15 +53,15 @@ public  class GameScreenBase extends BorderPane {
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-    protected final Label cell;
-    protected final Label cell0;
-    protected final Label cell1;
-    protected final Label cell2;
-    protected final Label cell3;
-    protected final Label cell4;
-    protected final Label cell5;
-    protected final Label cell6;
-    protected final Label cell7;
+    protected final Button button1;
+    protected final Button button2;
+    protected final Button button3;
+    protected final Button button4;
+    protected final Button button5;
+    protected final Button button6;
+    protected final Button button7;
+    protected final Button button8;
+    protected final Button button9;
     protected final Pane pane;
     protected final Button exitBtn;
     protected final Button recBtn;
@@ -69,9 +79,9 @@ public  class GameScreenBase extends BorderPane {
         label = new Label();
         label0 = new Label();
         hBox0 = new HBox();
+        scoreP1 = new Label();
         label1 = new Label();
-        label2 = new Label();
-        label3 = new Label();
+        scoreP2 = new Label();
         vBox1 = new VBox();
         //imageView0 = new ImageView();
         txtPlayer2 = new Label();
@@ -83,20 +93,34 @@ public  class GameScreenBase extends BorderPane {
         rowConstraints = new RowConstraints();
         rowConstraints0 = new RowConstraints();
         rowConstraints1 = new RowConstraints();
-        cell = new Label();
-        cell0 = new Label();
-        cell1 = new Label();
-        cell2 = new Label();
-        cell3 = new Label();
-        cell4 = new Label();
-        cell5 = new Label();
-        cell6 = new Label();
-        cell7 = new Label();
+        button1 = new Button();
+        button2 = new Button();
+        button3 = new Button();
+        button4 = new Button();
+        button5 = new Button();
+        button6 = new Button();
+        button7 = new Button();
+        button8 = new Button();
+        button9 = new Button();
         pane = new Pane();
         exitBtn = new Button();
         recBtn = new Button();
        // imageView1 = new ImageView();
-
+/**************** Game Logic Init */
+   //  gameId = 0;
+        turn = 0;
+        p1ayMoves = "";
+        scoreP1.setText("0");
+        scoreP2.setText("0");
+        player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
+        exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
+            System.out.println("hello");
+        });
+        boardBtns.forEach(button -> {
+            setUpBtn(button);
+        });
+        /*********************************/ 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -118,7 +142,9 @@ public  class GameScreenBase extends BorderPane {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         VBox.setMargin(imageView, new Insets(0.0));
+
         imageView.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));*/
+
 
         txtPlayer1.setAlignment(javafx.geometry.Pos.CENTER);
         txtPlayer1.setPrefHeight(21.0);
@@ -153,23 +179,23 @@ public  class GameScreenBase extends BorderPane {
         hBox0.setPrefHeight(38.0);
         hBox0.setPrefWidth(100.0);
 
+        scoreP1.setAlignment(javafx.geometry.Pos.CENTER);
+        scoreP1.setPrefHeight(36.0);
+        scoreP1.setPrefWidth(69.0);
+        scoreP1.setText("0");
+        scoreP1.setFont(new Font("Baskerville Old Face", 30.0));
+
         label1.setAlignment(javafx.geometry.Pos.CENTER);
-        label1.setPrefHeight(36.0);
-        label1.setPrefWidth(69.0);
-        label1.setText("1");
-        label1.setFont(new Font("Baskerville Old Face", 30.0));
+        label1.setPrefHeight(33.0);
+        label1.setPrefWidth(106.0);
+        label1.setText("-");
+        label1.setFont(new Font("Berlin Sans FB", 30.0));
 
-        label2.setAlignment(javafx.geometry.Pos.CENTER);
-        label2.setPrefHeight(33.0);
-        label2.setPrefWidth(106.0);
-        label2.setText("-");
-        label2.setFont(new Font("Berlin Sans FB", 30.0));
-
-        label3.setAlignment(javafx.geometry.Pos.CENTER);
-        label3.setPrefHeight(36.0);
-        label3.setPrefWidth(69.0);
-        label3.setText("0");
-        label3.setFont(new Font("Baskerville Old Face", 30.0));
+        scoreP2.setAlignment(javafx.geometry.Pos.CENTER);
+        scoreP2.setPrefHeight(36.0);
+        scoreP2.setPrefWidth(69.0);
+        scoreP2.setText("0");
+        scoreP2.setFont(new Font("Baskerville Old Face", 30.0));
         vBox0.setPadding(new Insets(20.0, 0.0, 10.0, 0.0));
 
         vBox1.setAlignment(javafx.geometry.Pos.TOP_CENTER);
@@ -183,7 +209,9 @@ public  class GameScreenBase extends BorderPane {
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
         VBox.setMargin(imageView0, new Insets(0.0));
+
         imageView0.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));*/
+
 
         txtPlayer2.setAlignment(javafx.geometry.Pos.CENTER);
         txtPlayer2.setPrefHeight(21.0);
@@ -194,7 +222,7 @@ public  class GameScreenBase extends BorderPane {
         player2Symbol.setAlignment(javafx.geometry.Pos.CENTER);
         player2Symbol.setPrefHeight(21.0);
         player2Symbol.setPrefWidth(208.0);
-        player2Symbol.setText("0");
+        player2Symbol.setText("O");
         player2Symbol.setFont(new Font("Baskerville Old Face", 20.0));
         HBox.setMargin(vBox1, new Insets(0.0, 10.0, 0.0, 60.0));
         hBox.setOpaqueInsets(new Insets(0.0));
@@ -235,64 +263,53 @@ public  class GameScreenBase extends BorderPane {
         rowConstraints1.setPrefHeight(30.0);
         rowConstraints1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        cell.setAlignment(javafx.geometry.Pos.CENTER);
-        cell.setPrefHeight(51.0);
-        cell.setPrefWidth(127.0);
-        cell.setText("X");
-        cell.setFont(new Font("Berlin Sans FB", 30.0));
+        button1.setMnemonicParsing(false);
+        button1.setPrefHeight(49.0);
+        button1.setPrefWidth(102.0);
 
-        GridPane.setColumnIndex(cell0, 1);
-        cell0.setAlignment(javafx.geometry.Pos.CENTER);
-        cell0.setPrefHeight(51.0);
-        cell0.setPrefWidth(127.0);
-        cell0.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setColumnIndex(button2, 1);
+        button2.setMnemonicParsing(false);
+        button2.setPrefHeight(48.0);
+        button2.setPrefWidth(102.0);
 
-        GridPane.setColumnIndex(cell1, 2);
-        cell1.setAlignment(javafx.geometry.Pos.CENTER);
-        cell1.setPrefHeight(51.0);
-        cell1.setPrefWidth(127.0);
-        cell1.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setColumnIndex(button3, 2);
+        button3.setMnemonicParsing(false);
+        button3.setPrefHeight(60.0);
+        button3.setPrefWidth(107.0);
 
-        GridPane.setRowIndex(cell2, 1);
-        cell2.setAlignment(javafx.geometry.Pos.CENTER);
-        cell2.setPrefHeight(51.0);
-        cell2.setPrefWidth(127.0);
-        cell2.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setRowIndex(button4, 1);
+        button4.setMnemonicParsing(false);
+        button4.setPrefHeight(48.0);
+        button4.setPrefWidth(105.0);
 
-        GridPane.setRowIndex(cell3, 2);
-        cell3.setAlignment(javafx.geometry.Pos.CENTER);
-        cell3.setPrefHeight(51.0);
-        cell3.setPrefWidth(127.0);
-        cell3.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setColumnIndex(button5, 1);
+        GridPane.setRowIndex(button5, 1);
+        button5.setMnemonicParsing(false);
+        button5.setPrefHeight(53.0);
+        button5.setPrefWidth(108.0);
 
-        GridPane.setColumnIndex(cell4, 1);
-        GridPane.setRowIndex(cell4, 1);
-        cell4.setAlignment(javafx.geometry.Pos.CENTER);
-        cell4.setPrefHeight(51.0);
-        cell4.setPrefWidth(127.0);
-        cell4.setText("O");
-        cell4.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setColumnIndex(button6, 2);
+        GridPane.setRowIndex(button6, 1);
+        button6.setMnemonicParsing(false);
+        button6.setPrefHeight(56.0);
+        button6.setPrefWidth(119.0);
 
-        GridPane.setColumnIndex(cell5, 2);
-        GridPane.setRowIndex(cell5, 1);
-        cell5.setAlignment(javafx.geometry.Pos.CENTER);
-        cell5.setPrefHeight(51.0);
-        cell5.setPrefWidth(127.0);
-        cell5.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setRowIndex(button7, 2);
+        button7.setMnemonicParsing(false);
+        button7.setPrefHeight(55.0);
+        button7.setPrefWidth(103.0);
 
-        GridPane.setColumnIndex(cell6, 2);
-        GridPane.setRowIndex(cell6, 2);
-        cell6.setAlignment(javafx.geometry.Pos.CENTER);
-        cell6.setPrefHeight(51.0);
-        cell6.setPrefWidth(127.0);
-        cell6.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setColumnIndex(button8, 1);
+        GridPane.setRowIndex(button8, 2);
+        button8.setMnemonicParsing(false);
+        button8.setPrefHeight(59.0);
+        button8.setPrefWidth(136.0);
 
-        GridPane.setColumnIndex(cell7, 1);
-        GridPane.setRowIndex(cell7, 2);
-        cell7.setAlignment(javafx.geometry.Pos.CENTER);
-        cell7.setPrefHeight(51.0);
-        cell7.setPrefWidth(127.0);
-        cell7.setFont(new Font("Berlin Sans FB", 30.0));
+        GridPane.setColumnIndex(button9, 2);
+        GridPane.setRowIndex(button9, 2);
+        button9.setMnemonicParsing(false);
+        button9.setPrefHeight(58.0);
+        button9.setPrefWidth(127.0);
         setCenter(gridPane);
 
         BorderPane.setAlignment(pane, javafx.geometry.Pos.CENTER);
@@ -325,8 +342,13 @@ public  class GameScreenBase extends BorderPane {
         imageView1.setFitWidth(19.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
+
         imageView1.setImage(new Image(getClass().getResource("../Icons/rec.png").toExternalForm()));
         recBtn.setGraphic(imageView1);*/
+
+      //  imageView1.setImage(new Image(getClass().getResource("../Icons/rec.png").toExternalForm()));
+       // recBtn.setGraphic(imageView1);
+
         setBottom(pane);
 
         //vBox.getChildren().add(imageView);
@@ -335,9 +357,9 @@ public  class GameScreenBase extends BorderPane {
         hBox.getChildren().add(vBox);
         vBox0.getChildren().add(label);
         vBox0.getChildren().add(label0);
+        hBox0.getChildren().add(scoreP1);
         hBox0.getChildren().add(label1);
-        hBox0.getChildren().add(label2);
-        hBox0.getChildren().add(label3);
+        hBox0.getChildren().add(scoreP2);
         vBox0.getChildren().add(hBox0);
         hBox.getChildren().add(vBox0);
         //vBox1.getChildren().add(imageView0);
@@ -350,17 +372,125 @@ public  class GameScreenBase extends BorderPane {
         gridPane.getRowConstraints().add(rowConstraints);
         gridPane.getRowConstraints().add(rowConstraints0);
         gridPane.getRowConstraints().add(rowConstraints1);
-        gridPane.getChildren().add(cell);
-        gridPane.getChildren().add(cell0);
-        gridPane.getChildren().add(cell1);
-        gridPane.getChildren().add(cell2);
-        gridPane.getChildren().add(cell3);
-        gridPane.getChildren().add(cell4);
-        gridPane.getChildren().add(cell5);
-        gridPane.getChildren().add(cell6);
-        gridPane.getChildren().add(cell7);
+        gridPane.getChildren().add(button1);
+        gridPane.getChildren().add(button2);
+        gridPane.getChildren().add(button3);
+        gridPane.getChildren().add(button4);
+        gridPane.getChildren().add(button5);
+        gridPane.getChildren().add(button6);
+        gridPane.getChildren().add(button7);
+        gridPane.getChildren().add(button8);
+        gridPane.getChildren().add(button9);
         pane.getChildren().add(exitBtn);
         pane.getChildren().add(recBtn);
 
+    }
+     private void setUpBtn(Button btn) {
+
+        btn.addEventHandler(ActionEvent.ACTION, e -> {
+            int index;
+            setPlayerSymbol(btn);
+            index = boardBtns.indexOf(btn);
+            p1ayMoves = p1ayMoves + index;
+            btn.setDisable(true);
+            checkResult();
+        });
+
+    }
+
+    public void resetBtn(Button btn) {
+        btn.setDisable(false);
+        btn.setText(" ");
+    }
+
+    public void setPlayerSymbol(Button btn) {
+        if (turn % 2 == 0) {
+            btn.setText("X");
+            turn = 1;
+        } else {
+            btn.setText("O");
+            turn = 0;
+        }
+    }
+
+    public void checkResult() {
+        String result = null;
+        System.out.println("playMoves :"+p1ayMoves);
+        for (int i = 0; i < 8; i++) {
+            switch (i) {
+                case 0:                    // 1 2 3 
+                    result = button1.getText() + button2.getText() + button3.getText();
+                    break;
+                case 1:                      // 4 5 6 
+                    result = button4.getText() + button5.getText() + button6.getText();
+                    break;
+                case 2:                    // 7 8 9  
+                    result = button7.getText() + button8.getText() + button9.getText();
+                    break;
+                case 3:                    // 3 5 7 
+                    result = button3.getText() + button5.getText() + button7.getText();
+                    break;
+                case 4:                      // 1 5 9  
+                    result = button1.getText() + button5.getText() + button9.getText();
+                    break;
+                case 5:                    // 1 4 7 
+                    result = button1.getText() + button4.getText() + button7.getText();
+                    break;
+                case 6:                      // 2 5 8
+                    result = button2.getText() + button5.getText() + button8.getText();
+                    break;
+                case 7:                    // 3 6 9  
+                    result = button3.getText() + button6.getText() + button9.getText();
+                    break;
+                default:
+                    result = null;
+
+            };
+            
+            if (result.matches("XXX")) {
+                ++_scoreP1;                    
+                System.out.println("X wins ");
+                restartGame();
+                // go to video screen or tab 
+            } else if (result.matches("OOO")) {
+                ++_scoreP2;
+                System.out.println("O wins ");
+                restartGame();
+                // go to video screen or tab 
+            } else if (p1ayMoves.length() == 9) {
+                System.out.println("draw");
+                restartGame();
+            }
+        }
+    }
+
+    public void restartGame() {
+        // u should add code to store Game Records here 
+        /*
+        
+        
+        */
+        
+        p1ayMoves = "";                               // reset moves 
+        scoreP1.setText("" + _scoreP1);                // update scores on the screen 
+        scoreP2.setText("" + _scoreP2);                  // update scores on the screen
+        if (turn % 2 == 0) {                                // check for whose turn ? 
+            //player 1 turn 
+            player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+            player2Symbol.setStyle("-fx-border-color: black; -fx-border-width: 0px;");
+            player1Symbol.setText("X");
+            player2Symbol.setText("O");
+            turn = 1;
+        } else {
+            //player 2 turn
+            player2Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");        // set border 
+            player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 0px;");
+            player1Symbol.setText("O");
+            player2Symbol.setText("X");
+            turn = 0;
+        }
+        for (Button b : boardBtns) {
+            resetBtn(b);
+        }
     }
 }
