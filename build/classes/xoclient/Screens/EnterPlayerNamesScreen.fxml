@@ -7,12 +7,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
-
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
@@ -44,8 +41,6 @@
          </BorderPane.margin>
       </GridPane>
    </center>
-
-
    <bottom>
       <Button fx:id="btnStart" mnemonicParsing="false" prefHeight="55.0" prefWidth="162.0" text="Start" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -56,7 +51,6 @@
          </font>
       </Button>
    </bottom>
-
    <top>
       <FlowPane hgap="15.0" prefHeight="51.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -73,5 +67,4 @@
          </children>
       </FlowPane>
    </top>
-
 </BorderPane>
