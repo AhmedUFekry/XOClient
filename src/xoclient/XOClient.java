@@ -11,7 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import xoclient.Screens.LoginScreenBase;
+
+import xoclient.Screens.StartScreenBase;
+
 
 /**
  *
@@ -23,6 +27,8 @@ public class XOClient extends Application {
     public void start(Stage stage) throws Exception {
 
         Parent root = new StartScreenBase();
+        
+
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
