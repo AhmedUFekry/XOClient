@@ -1,5 +1,9 @@
 package xoclient.Screens;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.Timestamp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -320,6 +324,26 @@ public  class GameScreenBase extends BorderPane {
         recBtn.setPrefWidth(122.0);
         recBtn.setText("Record");
         recBtn.setFont(new Font("Baskerville Old Face", 20.0));
+        recBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
+                String timeStampAfterReplace = timeStamp.replace(":", "-");
+                String recordsDirPath = "D:\\ITI Native 9 month\\Java\\Laps\\JavaProject\\XOClient\\GameRecords";
+                File file = new File(recordsDirPath, timeStampAfterReplace);
+                if(file != null)
+                {
+                    try{
+                    FileOutputStream fos = new FileOutputStream(file);
+                    DataOutputStream dos = new DataOutputStream(fos);
+                   // dos.writeUTF(textAreaId.getText());
+                    fos.close();
+                    }catch(Exception e) {
+                        e.printStackTrace();                        
+                    }
+                } 
+            }
+        });
 
         /*imageView1.setFitHeight(20.0);
         imageView1.setFitWidth(19.0);
