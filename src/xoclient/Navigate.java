@@ -6,17 +6,12 @@
 package xoclient;
 
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import xoclient.Screens.ChooseLevelScreenController;
-import xoclient.Screens.StartScreenController;
  public class Navigate{
      private static Scene scene;
      private static Stage stage;
