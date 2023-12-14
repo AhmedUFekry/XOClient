@@ -1,4 +1,4 @@
-package xoclient.Screens;
+/*package xoclient.Screens;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,6 +109,7 @@ public  class GameScreenBase extends BorderPane {
        // imageView1 = new ImageView();
    /**************** Game Logic Init */
    //  gameId = 0;
+/*
         turn = 0;
         p1ayMoves = "";
         scoreP1.setText("0");
@@ -121,7 +122,7 @@ public  class GameScreenBase extends BorderPane {
         boardBtns.forEach(button -> {
             setUpBtn(button);
         });
-        /*********************************/ 
+        /\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\/ 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
@@ -144,7 +145,7 @@ public  class GameScreenBase extends BorderPane {
         imageView.setPreserveRatio(true);
         VBox.setMargin(imageView, new Insets(0.0));
 
-        imageView.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));*/
+        imageView.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));
 
 
         txtPlayer1.setAlignment(javafx.geometry.Pos.CENTER);
@@ -204,6 +205,7 @@ public  class GameScreenBase extends BorderPane {
         vBox1.setLayoutY(10.0);
         vBox1.setPrefHeight(200.0);
         vBox1.setPrefWidth(100.0);
+            ///////////////////////////////////////////
 
         /*imageView0.setFitHeight(124.0);
         imageView0.setFitWidth(103.0);
@@ -213,7 +215,7 @@ public  class GameScreenBase extends BorderPane {
 
         imageView0.setImage(new Image(getClass().getResource("../Icons/icon1.png").toExternalForm()));*/
 
-
+/*
         txtPlayer2.setAlignment(javafx.geometry.Pos.CENTER);
         txtPlayer2.setPrefHeight(21.0);
         txtPlayer2.setPrefWidth(192.0);
@@ -349,7 +351,7 @@ public  class GameScreenBase extends BorderPane {
 
       //  imageView1.setImage(new Image(getClass().getResource("../Icons/rec.png").toExternalForm()));
        // recBtn.setGraphic(imageView1);
-
+/*
         setBottom(pane);
 
         //vBox.getChildren().add(imageView);
@@ -472,6 +474,7 @@ public  class GameScreenBase extends BorderPane {
         
         */
         
+/*
         p1ayMoves = "";                               // reset moves 
         scoreP1.setText("" + _scoreP1);                // update scores on the screen 
         scoreP2.setText("" + _scoreP2);                  // update scores on the screen
@@ -495,3 +498,4 @@ public  class GameScreenBase extends BorderPane {
         }
     }
 }
+*/

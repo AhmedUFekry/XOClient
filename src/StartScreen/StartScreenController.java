@@ -10,9 +10,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import xoclient.Navigate;
 
 /**
 =======
@@ -31,8 +34,6 @@ import xoclient.Navigate;
 public class StartScreenController implements Initializable {
     
     private Label label;
-    @FXML
-    private Button singButton;
 
 
     @FXML
@@ -60,25 +61,26 @@ public class StartScreenController implements Initializable {
         // TODO
     }    
 
+    
     @FXML
-
-    private void showChooseLevelScreen(ActionEvent event) {
-
     private void goToChooseLevelScreen(ActionEvent event) throws IOException {
-           FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/ChooseLevelScreen/ChooseLevelScreen.fxml")) ;
-			Parent root = loader.load();
-			Navigate.navigateTo(root, event);
+           FXMLLoader loader = new FXMLLoader (getClass().getResource("/ChooseLevelScreen/ChooseLevelScreen.fxml"));
+            Parent root = loader.load();
+            Navigate.navigateTo(root, event);
     }
 
     @FXML
     private void goToEntrePlayerName(ActionEvent event) throws IOException {
-          FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/EntrePlayerNamesScreen/EntrePlayerNamesScreen.fxml")) ;
-Parent root = loader.load();
-Navigate.navigateTo(root, event);
+          FXMLLoader loader = new FXMLLoader (getClass().getResource("/EnterNameScreen/EnterPlayerNamesScreen.fxml")) ;
+          Parent root = loader.load();
+          Navigate.navigateTo(root, event);
     }
 
     @FXML
-    private void goToLogIn(ActionEvent event) {
+    private void goToLogIn(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
+          Parent root = loader.load();
+          Navigate.navigateTo(root, event);
 
     }
     

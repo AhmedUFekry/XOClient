@@ -14,31 +14,13 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EnterNameScreen.EnterPlayerNamesScreenController">
    <children>
-      <Button fx:id="backBtn" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back">
-         <font>
-            <Font name="Baskerville Old Face" size="18.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="23.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/backBtn.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label alignment="CENTER" layoutX="98.0" layoutY="9.0" prefHeight="59.0" prefWidth="405.0" text="Enter Your Name">
-         <font>
-            <Font name="Baskerville Old Face" size="36.0" />
-         </font>
-      </Label>
       <AnchorPane layoutY="325.0" prefHeight="75.0" prefWidth="600.0">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="191.0" layoutX="218.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="playImg" fitHeight="59.0" fitWidth="191.0" layoutX="218.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Icons/playImg.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnStart" alignment="CENTER" layoutX="210.0" layoutY="8.0" mnemonicParsing="false" onAction="#startTwoPlayergame" opacity="0.0" prefHeight="59.0" prefWidth="173.0">
+               </image></ImageView>
+            <Button fx:id="btnStart" alignment="CENTER" layoutX="210.0" layoutY="8.0" mnemonicParsing="false" onAction="#startTwoPlayergame" opacity="0.06" prefHeight="59.0" prefWidth="173.0">
                <font>
                   <Font name="Baskerville Old Face" size="22.0" />
                </font>
@@ -77,5 +59,21 @@
             </TextField>
          </children>
       </GridPane>
+      <Button fx:id="backBtn" layoutX="14.0" layoutY="20.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="92.0" text="Back">
+         <font>
+            <Font name="Baskerville Old Face" size="18.0" />
+         </font>
+         <graphic>
+            <ImageView fx:id="backImg" fitHeight="23.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/backBtn.png" />
+               </image></ImageView>
+         </graphic>
+      </Button>
+      <Label alignment="CENTER" layoutX="98.0" layoutY="9.0" prefHeight="59.0" prefWidth="405.0" text="Enter Your Name">
+         <font>
+            <Font name="Baskerville Old Face" size="36.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

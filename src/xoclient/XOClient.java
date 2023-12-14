@@ -25,8 +25,8 @@ public class XOClient extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-       // Parent root = new StartScreenBase();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screen/OnlineListScreen.fxml"));
+        // Parent root = new StartScreenBase();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/StartScreen/StartScreen.fxml"));
         Parent root = loader.load();
         //OnlineListScreenController controller = loader.getController();
        
@@ -35,12 +35,12 @@ public class XOClient extends Application {
         stage.setScene(scene);
         stage.show();
     }
-        
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
-
 }
+
