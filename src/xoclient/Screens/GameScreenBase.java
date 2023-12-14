@@ -4,9 +4,12 @@ package xoclient.Screens;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -70,11 +73,21 @@ public  class GameScreenBase extends BorderPane {
     protected final Pane pane;
     protected final Button exitBtn;
     protected final Button recBtn;
+    public Boolean isRecorded;
+    String timeStamp ;
+    String timeStampAfterReplace ;
+    String newFileName ;
+    String recordsDirPath = "D:\\ITI Native 9 month\\Java\\Laps\\JavaProject\\XOClient\\GameRecords";
+    File file ;
+    FileOutputStream fos;
+    DataOutputStream dos;
+    String intofile;
+
     
     //protected final ImageView imageView1;
 
     public GameScreenBase() {
-
+        isRecorded = false;
         hBox = new HBox();
         vBox = new VBox();
       //  imageView = new ImageView();
@@ -331,6 +344,14 @@ public  class GameScreenBase extends BorderPane {
          exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
+                if(isRecorded){
+                    try {
+                        fos.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameScreenBase.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    isRecorded = false;
+                }
                 Navigate.navigateTo(new StartScreenBase(),e);
             }
         });
@@ -345,21 +366,19 @@ public  class GameScreenBase extends BorderPane {
         recBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
-                String timeStampAfterReplace = timeStamp.replace(":", "-");
-                String recordsDirPath = "D:\\ITI Native 9 month\\Java\\Laps\\JavaProject\\XOClient\\GameRecords";
-                File file = new File(recordsDirPath, timeStampAfterReplace);
-                if(file != null)
-                {
-                    try{
-                    FileOutputStream fos = new FileOutputStream(file);
-                    DataOutputStream dos = new DataOutputStream(fos);
-                   // dos.writeUTF(textAreaId.getText());
-                    fos.close();
-                    }catch(Exception e) {
-                        e.printStackTrace();                        
+                isRecorded = true;
+                timeStamp = new Timestamp(System.currentTimeMillis()).toString();
+                timeStampAfterReplace = timeStamp.replace(":", "-");
+                newFileName = timeStampAfterReplace + ".txt";
+                file = new File(recordsDirPath, newFileName);
+                try{
+                    fos = new FileOutputStream(file);
+                    dos = new DataOutputStream(fos);
+                    recBtn.setDisable(true);
+                    }catch(Exception ex) {
+                        ex.printStackTrace();                        
                     }
-                } 
+                    
             }
         });
 
@@ -413,12 +432,27 @@ public  class GameScreenBase extends BorderPane {
      private void setUpBtn(Button btn) {
 
         btn.addEventHandler(ActionEvent.ACTION, e -> {
-            int index;
+            Integer index;
             setPlayerSymbol(btn);
             index = boardBtns.indexOf(btn);
             p1ayMoves = p1ayMoves + index;
+            //recorded game****************************
+            if (isRecorded) {
+               /* if (file != null) {
+                    try {
+                        dos.writeInt(index);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }*/
+            }
+            //*******************************************************************************************************************************
             btn.setDisable(true);
-            checkResult();
+            try {
+                checkResult();
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreenBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
     }
@@ -438,10 +472,12 @@ public  class GameScreenBase extends BorderPane {
         }
     }
 
-    public void checkResult() {
+    public void checkResult() throws IOException {
+        
         String result = null;
         System.out.println("playMoves :"+p1ayMoves);
         for (int i = 0; i < 8; i++) {
+            
             switch (i) {
                 case 0:                    // 1 2 3 
                     result = button1.getText() + button2.getText() + button3.getText();
@@ -475,15 +511,59 @@ public  class GameScreenBase extends BorderPane {
             if (result.matches("XXX")) {
                 ++_scoreP1;                    
                 System.out.println("X wins ");
+                if(isRecorded){
+                     if (file != null) {
+                    try {
+                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".X wins ";
+                        System.err.println(intofile);
+                        
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                    fos.close();
+                    recBtn.setDisable(false);
+                    isRecorded = false;
+                }
                 restartGame();
+                
                 // go to video screen or tab 
             } else if (result.matches("OOO")) {
                 ++_scoreP2;
                 System.out.println("O wins ");
+                
+                if(isRecorded){
+                     if (file != null) {
+                    try {
+                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".O wins ";
+                        System.err.println(intofile);
+                        
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                    fos.close();
+                    recBtn.setDisable(false);
+                    isRecorded = false;
+                }
                 restartGame();
                 // go to video screen or tab 
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
+                if(isRecorded){
+                     if (file != null) {
+                    try {
+                         intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".draw";
+                         dos.writeUTF(intofile);
+                         
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                    fos.close();
+                    recBtn.setDisable(false);
+                    isRecorded = false;
+                }
                 restartGame();
             }
         }
@@ -510,8 +590,8 @@ public  class GameScreenBase extends BorderPane {
             //player 2 turn
             player2Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");        // set border 
             player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 0px;");
-            player1Symbol.setText("O");
-            player2Symbol.setText("X");
+            player1Symbol.setText("X");
+            player2Symbol.setText("O");
             turn = 0;
         }
         for (Button b : boardBtns) {
