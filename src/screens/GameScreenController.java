@@ -96,9 +96,23 @@ public class GameScreenController implements Initializable {
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
         exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
+              if(isRecorded){
+                    
+                    try {
+                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".withdraw ";
+                        dos.writeUTF(intofile);
+                        //fos.close();
+                        isRecorded = false;
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+                Navigate.navigateTo(new StartScreenBase(),e);
             System.out.println("hello");
         });
         boardBtns.forEach(button -> {
+            
             setUpBtn(button);
         });
         /*********************************/ 
@@ -106,15 +120,7 @@ public class GameScreenController implements Initializable {
         exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
-                if(isRecorded){
-                    try {
-                        fos.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(GameScreenBase.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    isRecorded = false;
-                }
-                Navigate.navigateTo(new StartScreenBase(),e);
+              
             }
         });
         recBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
@@ -125,18 +131,18 @@ public class GameScreenController implements Initializable {
                 timeStampAfterReplace = timeStamp.replace(":", "-");
                 newFileName = timeStampAfterReplace + ".txt";
                 file = new File(recordsDirPath, newFileName);
-                try{
-                    fos = new FileOutputStream(file);
-                    dos = new DataOutputStream(fos);
+                try (FileOutputStream fos = new FileOutputStream(file);
+                        DataOutputStream dos = new DataOutputStream(fos)) {
                     recBtn.setDisable(true);
-                    }catch(Exception ex) {
-                        ex.printStackTrace();                        
-                    }
-                    
+                    // Your code for recording goes here
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
             }
         });
     }
-    
+
       private void setUpBtn(Button btn) {
 
         btn.addEventHandler(ActionEvent.ACTION, e -> {
@@ -145,22 +151,18 @@ public class GameScreenController implements Initializable {
             index = boardBtns.indexOf(btn);
             p1ayMoves = p1ayMoves + index;
             //recorded game****************************
-            if (isRecorded) {
-               /* if (file != null) {
+          /*  if (isRecorded) {
+                if (file != null) {
                     try {
                         dos.writeInt(index);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                }*/
-            }
+                }
+            }*/
             //*******************************************************************************************************************************
             btn.setDisable(true);
-            try {
-                checkResult();
-            } catch (IOException ex) {
-                Logger.getLogger(GameScreenBase.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            checkResult();
         });
 
     }
@@ -180,7 +182,7 @@ public class GameScreenController implements Initializable {
         }
     }
 
-    public void checkResult() throws IOException {
+    public void checkResult() {
         
         String result = null;
         System.out.println("playMoves :"+p1ayMoves);
@@ -217,40 +219,58 @@ public class GameScreenController implements Initializable {
             };
             
             if (result.matches("XXX")) {
-                ++_scoreP1;                    
+                ++_scoreP1;
                 System.out.println("X wins ");
-                if(isRecorded){
-                     if (file != null) {
+                if (isRecorded) {
                     try {
-                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".X wins ";
-                        System.err.println(intofile);
-                        
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                        if (file != null) {
+                            try {
+                                System.err.println("file Written");
+                                
+                                intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".X wins ";
+                                dos.writeUTF(intofile);
+                                System.err.println(intofile);
+                                
+                            } catch (Exception ex) {
+                                dos.writeUTF(intofile);
+                                System.err.println(intofile);
+                            //    fos.close();
+                                ex.printStackTrace();
+                            }
+                        }
+                      //  fos.close();
+                        recBtn.setDisable(false);
+                        isRecorded = false;
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
-                    fos.close();
-                    recBtn.setDisable(false);
-                    isRecorded = false;
+
                 }
                 restartGame();
-                
+
                 // go to video screen or tab 
             } else if (result.matches("OOO")) {
                 ++_scoreP2;
                 System.out.println("O wins ");
-                
-                if(isRecorded){
-                     if (file != null) {
-                    try {
-                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".O wins ";
-                        System.err.println(intofile);
-                        
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+
+                if (isRecorded) {
+                    if (file != null) {
+                        try {
+                            System.out.println("file Written");
+
+                            intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".O wins ";
+                            dos.writeUTF(intofile);
+                            System.out.println(intofile);
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                }
-                    fos.close();
+                   /* try {
+                    //    fos.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                    }*/
                     recBtn.setDisable(false);
                     isRecorded = false;
                 }
@@ -258,17 +278,24 @@ public class GameScreenController implements Initializable {
                 // go to video screen or tab 
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
-                if(isRecorded){
-                     if (file != null) {
-                    try {
-                         intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".draw";
-                         dos.writeUTF(intofile);
-                         
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                if (isRecorded) {
+                    if (file != null) {
+                        try {
+                            System.out.println("file Written");
+
+                            intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".draw";
+                            dos.writeUTF(intofile);
+                            System.out.println(intofile);
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                }
-                    fos.close();
+                   /* try {
+                        fos.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                    }*/
                     recBtn.setDisable(false);
                     isRecorded = false;
                 }
@@ -305,6 +332,9 @@ public class GameScreenController implements Initializable {
         for (Button b : boardBtns) {
             resetBtn(b);
         }
+        
+        recBtn.setDisable(false);
+        isRecorded = false;
     }
     
     
