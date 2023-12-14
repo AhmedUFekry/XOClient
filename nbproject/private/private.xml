@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/LoginScreenBase.java</file>
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/StartScreenController.java</file>
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/GameScreenBase.java</file>
@@ -11,6 +12,10 @@
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/XOClient.java</file>
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/ChooseLevelScreenBase.java</file>
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/EnterPlayerNamesScreenBase.java</file>
+=======
+            <file>file:/C:/Users/LENOVO/Documents/GitHub/XOClient/src/xoclient/Screens/OnlineListScreen.fxml</file>
+            <file>file:/C:/Users/LENOVO/Documents/GitHub/XOClient/src/xoclient/Screens/OnlineListScreenController.java</file>
+>>>>>>> OnlineListScreen
         </group>
     </open-files>
 </project-private>
