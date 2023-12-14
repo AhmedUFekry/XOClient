@@ -5,7 +5,6 @@
  */
 package ChooseLevelScreen;
 
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import xoclient.Navigate;
-import xoclient.Screens.GameScreenController;
 
 /**
  * FXML Controller class

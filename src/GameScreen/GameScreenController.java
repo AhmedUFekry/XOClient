@@ -22,15 +22,7 @@ import javafx.scene.image.ImageView;
  * @author LENOVO
  */
 public class GameScreenController implements Initializable {
-     // Logic variables
-    private ArrayList<Button> boardBtns;                //BoardButtons
-    //  private int gameId;                                 // to store game Id 
-    private int turn;
-    private static int _scoreP1 = 0;
-    private static int _scoreP2 = 0;
-    private String[] players = {"X", "O"};
-    private String p1ayMoves;
- 
+   
 
     @FXML
     private Button button1;
@@ -91,6 +83,7 @@ public class GameScreenController implements Initializable {
     private ImageView player1Img;
 
     public void initialize(URL location, ResourceBundle resources) {
+
      /**************** Game Logic Init */
    //  gameId = 0;
         player1Img.setImage(new Image(getClass().getResource("/Icons/girl.png").toExternalForm()));
@@ -227,5 +220,9 @@ public class GameScreenController implements Initializable {
     @FXML
     private void startRecord(ActionEvent event) {
     }
+
+  
+    }
+
    
 }
