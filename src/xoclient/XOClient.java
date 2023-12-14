@@ -20,7 +20,7 @@ public class XOClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/xoclient/ScreensOnlineListScreenController.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/xoclient/Screens/OnlineListScreenController.fxml"));
 
         Scene scene = new Scene(root);
 
