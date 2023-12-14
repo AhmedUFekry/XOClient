@@ -15,8 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import xoclient.Screens.ChooseLevelScreenController;
-import xoclient.Screens.StartScreenController;
+import screens.ChooseLevelScreenController;
  public class Navigate{
      private static Scene scene;
      private static Stage stage;

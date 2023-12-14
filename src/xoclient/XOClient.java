@@ -5,16 +5,14 @@
  */
 package xoclient;
 
-import xoclient.Screens.StartScreenBase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import xoclient.Screens.LoginScreenBase;
+import screens.LoginScreenBase;
 
-import xoclient.Screens.StartScreenBase;
 
 
 /**
@@ -26,7 +24,7 @@ public class XOClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/xoclient/Screens/OnlineListScreenController.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/screens/StartScreen.fxml"));
 
 
         Scene scene = new Scene(root);
