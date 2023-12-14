@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Profile.ProfileScreenController">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Matches Played : ">
+               <font>
+                  <Font name="Baskerville Old Face" size="30.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="170.0" top="-200.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="totalMatchesLabel" alignment="CENTER" contentDisplay="CENTER" text="0">
+               <font>
+                  <Font name="Baskerville Old Face" size="30.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="410.0" top="-200.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Win : ">
+               <font>
+                  <Font name="Baskerville Old Face" size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="80.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="winLabel" alignment="CENTER" contentDisplay="CENTER" text="0">
+               <font>
+                  <Font name="Baskerville Old Face" size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="170.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Draw : ">
+               <font>
+                  <Font name="Baskerville Old Face" size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="240.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="drawLabel" alignment="CENTER" contentDisplay="CENTER" text="0">
+               <font>
+                  <Font name="Baskerville Old Face" size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="350.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Lose : ">
+               <font>
+                  <Font name="Baskerville Old Face" size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="430.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="loseLabel" alignment="CENTER" contentDisplay="CENTER" text="0">
+               <font>
+                  <Font name="Baskerville Old Face" size="27.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="520.0" />
+               </GridPane.margin>
+            </Label>
+            <Button fx:id="showRecordsBtn" mnemonicParsing="false" onAction="#displayRecordOnline" text="Play Records">
+               <font>
+                  <Font name="Baskerville Old Face" size="25.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="-200.0" left="220.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </center>
+   <top>
+      <GridPane prefHeight="103.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="-Infinity" prefWidth="130.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="356.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="-Infinity" prefWidth="114.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="47.0" prefWidth="387.0" text="Profile" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Baskerville Old Face" size="40.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <VBox alignment="TOP_CENTER" prefHeight="103.0" prefWidth="114.0" GridPane.columnIndex="2">
+               <children>
+                  <ImageView fx:id="player2Img" fitHeight="122.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@../Icons/boy.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="txtUserName" alignment="CENTER" prefHeight="42.0" prefWidth="114.0" text="UserName">
+                     <font>
+                        <Font name="Baskerville Old Face" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#goBack" prefHeight="24.0" prefWidth="92.0" text="Back">
+               <font>
+                  <Font name="Baskerville Old Face" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/backBtn.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </top>
+</BorderPane>
