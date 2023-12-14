@@ -17,17 +17,17 @@
             <Font name="System Italic" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="singButton" layoutX="42.0" layoutY="164.0" mnemonicParsing="false" onAction="#showChooseLevelScreen" prefHeight="59.0" prefWidth="77.0" text="Single">
+      <Button fx:id="singleButton" layoutX="42.0" layoutY="164.0" mnemonicParsing="false" onAction="#goToChooseLevelScreen" prefHeight="59.0" prefWidth="77.0" text="Single">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="dualButton" layoutX="194.0" layoutY="164.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="77.0" text="Dual">
+      <Button fx:id="dualButton" layoutX="194.0" layoutY="164.0" mnemonicParsing="false" onAction="#goToEntrePlayerName" prefHeight="59.0" prefWidth="77.0" text="Dual">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="onlButton" layoutX="352.0" layoutY="164.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="77.0" text="Online">
+      <Button fx:id="onlButton" layoutX="352.0" layoutY="164.0" mnemonicParsing="false" onAction="#goToLogIn" prefHeight="59.0" prefWidth="77.0" text="Online">
          <font>
             <Font name="System Italic" size="15.0" />
          </font>
