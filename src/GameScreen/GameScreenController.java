@@ -6,9 +6,11 @@
 package GameScreen;
 
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import xoclient.Navigate;
+import xoclient.XOClient;
 
 /**
  *
@@ -27,7 +30,9 @@ import xoclient.Navigate;
 public class GameScreenController implements Initializable {
    
      // Logic variables
+     Random random = new Random();
     private ArrayList<Button> boardBtns;                //BoardButtons
+    XOClient ticTacToiAI = new  XOClient();
     //  private int gameId;                                 // to store game Id 
     
     private int turn;
@@ -35,6 +40,7 @@ public class GameScreenController implements Initializable {
     private static int _scoreP2 = 0;
     private String[] players = {"X","O"};
     private String p1ayMoves;
+   
 
     @FXML
     private Button button1;
@@ -79,6 +85,7 @@ public class GameScreenController implements Initializable {
     private ImageView exitImg;
     @FXML
     private ImageView recImg;
+    private Button Button;
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -90,6 +97,7 @@ public class GameScreenController implements Initializable {
         p1ayMoves = "";
         scoreP1.setText("0");
         scoreP2.setText("0");
+      
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
         exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
@@ -99,35 +107,78 @@ public class GameScreenController implements Initializable {
             setUpBtn(button);
         });
         /*********************************/ 
-    }
     
+    }
        private void setUpBtn(Button btn) {
 
-        btn.addEventHandler(ActionEvent.ACTION, e -> {
-            int index;
-            setPlayerSymbol(btn);
-            index = boardBtns.indexOf(btn);
-            p1ayMoves = p1ayMoves + index;
-            btn.setDisable(true);
-            checkResult();
-        });
+       btn.addEventHandler(ActionEvent.ACTION, e ->{
+           btn.setText("X");
+           btn.setDisable(true);
+          computerMove(btn);
+           checkResult();
+       
+       });
+        
+       }
+    
+    /*   public void makeAIMove(){
+           int move = ticTacToiAI.getBoardState();
+           pickButton(move);
+       
+       }*/
+      private void pickButton(int index){
+          boardBtns.get(index).setText("O");
+          boardBtns.get(index).setDisable(true);
+      
+      
+      }
+     /* public void getBoardState(){
+          String [] board = new String[3];
+          for(int i=0;i< boardBtns.size();i++){
+              board[i]= boardBtns.get(i).getText();
+          }
+          
 
-    }
-
+      }*/
     public void resetBtn(Button btn) {
         btn.setDisable(false);
         btn.setText(" ");
     }
 
-    public void setPlayerSymbol(Button btn) {
-        if (turn % 2 == 0) {
-            btn.setText("X");
-            turn = 1;
-        } else {
-            btn.setText("O");
+
+  /*  public void setPlayerSymbol(Button btn) {
+      
+    if (turn % 2 == 0) {
+        btn.setText("X");
+        turn = 1;
+    } else {
+        computerMove(btn);  // Call the computerMove method for the computer's turn
+       
+    }
+}*/
+private void computerMove(Button btn) {  // handle computer move 
+
+    while (true) {
+        int index = random.nextInt(9);
+
+        if (boardBtns.get(index).getText().isEmpty()) {
+           // boardBtns.get(index).setText("O");
+           // boardBtns.get(index).setDisable(true);
+           pickButton(index);
+            p1ayMoves += index;
+            checkResult();
             turn = 0;
+            break;
         }
     }
+}
+
+
+
+
+
+    
+
 
     public void checkResult() {
         String result = null;
@@ -208,7 +259,13 @@ public class GameScreenController implements Initializable {
         for (Button b : boardBtns) {
             resetBtn(b);
         }
+            // pickButton(random.nextInt(9)); //make computer pickbutton
+        
+      
+     
+      
     }
+
 
     @FXML
     private void exitTheGame(ActionEvent event) throws IOException {
