@@ -12,7 +12,7 @@ package GameLogic;
 public class ComputerPlayer implements PlayInterface{
 
     @Override
-    public void playable() {
+    public void makeMove() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

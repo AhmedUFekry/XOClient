@@ -84,12 +84,11 @@ public class StartScreenController implements Initializable {
 
     @FXML
     private void goToLogIn(ActionEvent event) throws IOException {
-       /* FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
         Parent root = loader.load();
         Navigate.navigateTo(root, event);
-        */
-       GameTemplate f = new GameTemplate();
-      f.showSymbolChoiceDialog();
+        
+       
     }
     
 }
