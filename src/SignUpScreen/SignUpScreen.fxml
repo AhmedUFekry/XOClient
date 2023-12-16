@@ -87,14 +87,14 @@
                   <Insets left="350.0" />
                </GridPane.margin>
             </RadioButton>
-            <Label contentDisplay="RIGHT" prefHeight="31.0" prefWidth="110.0" text="Password" GridPane.rowIndex="2">
+            <Label contentDisplay="RIGHT" prefHeight="31.0" prefWidth="115.0" text="Password" GridPane.rowIndex="2">
                <font>
                   <Font name="Baskerville Old Face" size="20.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Icons/R__1_-removebg-preview.png" />
+                        <Image url="@../Icons/lock.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -122,7 +122,7 @@
                   <Insets left="200.0" right="100.0" />
                </GridPane.margin>
             </PasswordField>
-            <Button fx:id="signInBtn" alignment="CENTER" contentDisplay="RIGHT" layoutX="239.0" mnemonicParsing="false" onAction="#signInMethod" prefHeight="43.0" prefWidth="123.0" text="Sign In" GridPane.rowIndex="4">
+            <Button fx:id="signUpBtn" alignment="CENTER" contentDisplay="RIGHT" layoutX="239.0" mnemonicParsing="false" onAction="#signUpMethod" prefHeight="43.0" prefWidth="138.0" text="Sign Up" GridPane.rowIndex="4">
                <font>
                   <Font name="Baskerville Old Face" size="20.0" />
                </font>
@@ -145,7 +145,7 @@
                   <Insets left="170.0" top="60.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="signOutBtn" mnemonicParsing="false" onAction="#signoutMethod" prefHeight="31.0" prefWidth="100.0" text="Sign Out" GridPane.rowIndex="4">
+            <Button fx:id="signInBtn" mnemonicParsing="false" onAction="#signInMethod" prefHeight="31.0" prefWidth="100.0" text="Sign In" GridPane.rowIndex="4">
                <font>
                   <Font name="Baskerville Old Face" size="20.0" />
                </font>

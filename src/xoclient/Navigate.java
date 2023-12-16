@@ -23,6 +23,7 @@ import javafx.stage.Stage;
         showScene();
     }
     
+    
     // navigate by event parameter
     public static void navigateTo(Parent distinationRoot, Event event){
         scene = new Scene(distinationRoot);

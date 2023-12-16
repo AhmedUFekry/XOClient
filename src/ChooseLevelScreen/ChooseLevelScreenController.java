@@ -24,13 +24,13 @@ import xoclient.Navigate;
 public class ChooseLevelScreenController implements Initializable {
 
     @FXML
-    private Button backBtn;
-    @FXML
     private Button easyBtn;
     @FXML
     private Button mediamBtn;
     @FXML
     private Button hardBtn;
+    @FXML
+    private Button btnBack;
 
     /**
      * Initializes the controller class.
@@ -39,14 +39,7 @@ public class ChooseLevelScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
-    @FXML
-    private void backToHomeScreen(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
-         Parent root = loader.load();
-         Navigate.navigateTo(root, event);
-    }
-
+    
     @FXML
     private void goToEasy(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
@@ -66,5 +59,13 @@ public class ChooseLevelScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
           Parent root = loader.load();
           Navigate.navigateTo(root, event);
+    }
+
+    @FXML
+    private void goToHomeScreen(ActionEvent event) throws IOException {
+        System.out.println("Back");
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
+         Parent root = loader.load();
+         Navigate.navigateTo(root, event);
     }
 }

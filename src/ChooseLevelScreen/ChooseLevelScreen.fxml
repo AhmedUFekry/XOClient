@@ -35,10 +35,7 @@
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="76.0" prefWidth="600.0" spacing="100.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#backToHomeScreen" prefHeight="35.0" prefWidth="95.0" text="Back">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
+            <Button fx:id="btnBack1" mnemonicParsing="false" onAction="#goToHomeScreen" prefHeight="35.0" prefWidth="95.0" text="Back">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -49,6 +46,9 @@
                <font>
                   <Font name="Baskerville Old Face" size="16.0" />
                </font>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </Button>
             <Label contentDisplay="CENTER" prefHeight="63.0" prefWidth="147.0" text="Choose Level">
                <font>

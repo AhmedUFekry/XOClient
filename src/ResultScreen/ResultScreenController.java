@@ -40,6 +40,9 @@ public class ResultScreenController implements Initializable {
     @FXML
     private Label txtCounter;
     
+    private  String video;
+    
+    
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
@@ -48,7 +51,7 @@ public class ResultScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-         String video = "/videos/draw.mp4";
+        video = "/videos/winner.mp4";
         Media media = new Media(getClass().getResource(video).toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         resVideo.setMediaPlayer(mediaPlayer);
@@ -63,8 +66,23 @@ public class ResultScreenController implements Initializable {
     }
 
     @FXML
-    private void playAgain(ActionEvent event) {
+    private void playAgain(ActionEvent event) throws IOException {
+         FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
+         Parent root = loader.load();
+         Navigate.navigateTo(root, event);
     }
-    
+    public void setResult(char result){
+         switch(result){
+             case 'X':
+                 video = "/videos/winner.mp4";
+                break;
+             case 'O':
+                 video = "/videos/loser.mp4";
+                 break;
+             default:
+                 video = "/videos/draw.mp4";
+         }
+        resultTxt.setText("Teh Winner is "+result);
+    }
 }
 

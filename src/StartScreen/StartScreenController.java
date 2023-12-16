@@ -17,6 +17,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import xoclient.Navigate;
 
+import GameLogic.GameTemplate;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+
 /**
 =======
 import javafx.fxml.FXMLLoader;
@@ -64,24 +70,26 @@ public class StartScreenController implements Initializable {
     
     @FXML
     private void goToChooseLevelScreen(ActionEvent event) throws IOException {
-           FXMLLoader loader = new FXMLLoader (getClass().getResource("/ChooseLevelScreen/ChooseLevelScreen.fxml"));
-            Parent root = loader.load();
-            Navigate.navigateTo(root, event);
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/ChooseLevelScreen/ChooseLevelScreen.fxml"));
+         Parent root = loader.load();
+         Navigate.navigateTo(root, event);
     }
 
     @FXML
     private void goToEntrePlayerName(ActionEvent event) throws IOException {
-          FXMLLoader loader = new FXMLLoader (getClass().getResource("/EnterNameScreen/EnterPlayerNamesScreen.fxml")) ;
-          Parent root = loader.load();
-          Navigate.navigateTo(root, event);
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/EnterNameScreen/EnterPlayerNamesScreen.fxml")) ;
+        Parent root = loader.load();
+        Navigate.navigateTo(root, event);
     }
 
     @FXML
     private void goToLogIn(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
-          Parent root = loader.load();
-          Navigate.navigateTo(root, event);
-
+       /* FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
+        Parent root = loader.load();
+        Navigate.navigateTo(root, event);
+        */
+       GameTemplate f = new GameTemplate();
+      f.showSymbolChoiceDialog();
     }
     
 }

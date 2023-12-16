@@ -63,7 +63,7 @@
                   <Font name="Baskerville Old Face" size="15.0" />
                </font>
             </PasswordField>
-            <Label contentDisplay="RIGHT" prefHeight="31.0" prefWidth="110.0" text="Password" GridPane.rowIndex="1">
+            <Label contentDisplay="RIGHT" prefHeight="31.0" prefWidth="130.0" text="Password" GridPane.rowIndex="1">
                <font>
                   <Font name="Baskerville Old Face" size="20.0" />
                </font>
@@ -77,7 +77,7 @@
             </Label>
          </children>
       </GridPane>
-      <Button fx:id="signInBtn" contentDisplay="RIGHT" layoutX="239.0" layoutY="273.0" mnemonicParsing="false" onAction="#signInMethod" prefHeight="43.0" prefWidth="123.0" text="Sign In">
+      <Button fx:id="signInBtn" contentDisplay="RIGHT" layoutX="239.0" layoutY="273.0" mnemonicParsing="false" onAction="#signIn" prefHeight="43.0" prefWidth="123.0" text="Sign In">
          <font>
             <Font name="Baskerville Old Face" size="20.0" />
          </font>
@@ -94,7 +94,7 @@
             <Font name="Baskerville Old Face" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="signOutBtn" layoutX="362.0" layoutY="346.0" mnemonicParsing="false" onAction="#signoutMethod" prefHeight="31.0" prefWidth="100.0" text="Sign Out">
+      <Button fx:id="signOutBtn" layoutX="362.0" layoutY="346.0" mnemonicParsing="false" onAction="#signUptMethod" prefHeight="31.0" prefWidth="100.0" text="Sign Up">
          <font>
             <Font name="Baskerville Old Face" size="20.0" />
          </font>
