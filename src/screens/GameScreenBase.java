@@ -77,11 +77,13 @@ public  class GameScreenBase extends BorderPane {
     String timeStamp ;
     String timeStampAfterReplace ;
     String newFileName ;
-    String recordsDirPath = "D:\\ITI Native 9 month\\Java\\Laps\\JavaProject\\XOClient\\GameRecords";
+    String recordsDirPath = "./GameRecords";
     File file ;
     FileOutputStream fos;
     DataOutputStream dos;
     String intofile;
+    private RecordGame recoder;
+
 
     
     //protected final ImageView imageView1;
@@ -133,6 +135,7 @@ public  class GameScreenBase extends BorderPane {
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
         exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
+           
             System.out.println("hello");
         });
         boardBtns.forEach(button -> {
@@ -344,12 +347,8 @@ public  class GameScreenBase extends BorderPane {
          exitBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
-                if(isRecorded){
-                    try {
-                        fos.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(GameScreenBase.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                 if (isRecorded) {
+                    recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "no ");
                     isRecorded = false;
                 }
                 Navigate.navigateTo(new StartScreenBase(),e);
@@ -366,7 +365,10 @@ public  class GameScreenBase extends BorderPane {
         recBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                recoder = new RecordGame(recBtn);
+                recoder.startRecord();
                 isRecorded = true;
+               /* isRecorded = true;
                 timeStamp = new Timestamp(System.currentTimeMillis()).toString();
                 timeStampAfterReplace = timeStamp.replace(":", "-");
                 newFileName = timeStampAfterReplace + ".txt";
@@ -377,7 +379,7 @@ public  class GameScreenBase extends BorderPane {
                     recBtn.setDisable(true);
                     }catch(Exception ex) {
                         ex.printStackTrace();                        
-                    }
+                    }*/
                     
             }
         });
@@ -437,15 +439,15 @@ public  class GameScreenBase extends BorderPane {
             index = boardBtns.indexOf(btn);
             p1ayMoves = p1ayMoves + index;
             //recorded game****************************
-            if (isRecorded) {
+           /* if (isRecorded) {
                /* if (file != null) {
                     try {
                         dos.writeInt(index);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                }*/
-            }
+                }
+            }*/
             //*******************************************************************************************************************************
             btn.setDisable(true);
             try {
@@ -511,18 +513,9 @@ public  class GameScreenBase extends BorderPane {
             if (result.matches("XXX")) {
                 ++_scoreP1;                    
                 System.out.println("X wins ");
-                if(isRecorded){
-                     if (file != null) {
-                    try {
-                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".X wins ";
-                        System.err.println(intofile);
-                        
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                    fos.close();
-                    recBtn.setDisable(false);
+                
+               if(isRecorded){
+                   recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "X");
                     isRecorded = false;
                 }
                 restartGame();
@@ -530,38 +523,20 @@ public  class GameScreenBase extends BorderPane {
                 // go to video screen or tab 
             } else if (result.matches("OOO")) {
                 ++_scoreP2;
-                System.out.println("O wins ");
+                System.out.println("O winssssssssss ");
+                
                 
                 if(isRecorded){
-                     if (file != null) {
-                    try {
-                        intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".O wins ";
-                        System.err.println(intofile);
-                        
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                    fos.close();
-                    recBtn.setDisable(false);
+                     recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "O");
                     isRecorded = false;
                 }
                 restartGame();
                 // go to video screen or tab 
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
-                if(isRecorded){
-                     if (file != null) {
-                    try {
-                         intofile = p1ayMoves + "." + txtPlayer1.getText() + "." + txtPlayer2.getText() + ".draw";
-                         dos.writeUTF(intofile);
-                         
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                    fos.close();
-                    recBtn.setDisable(false);
+               if(isRecorded){
+                   recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "draw");
+
                     isRecorded = false;
                 }
                 restartGame();

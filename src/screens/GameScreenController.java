@@ -84,6 +84,7 @@ public class GameScreenController implements Initializable {
     private static int _scoreP2 = 0;
     private String[] players = {"X", "O"};
     private String p1ayMoves;
+    private RecordGame recoder;
 
     public void initialize(URL location, ResourceBundle resources) {
         /**************** Game Logic Init */
@@ -126,7 +127,9 @@ public class GameScreenController implements Initializable {
         recBtn.addEventHandler(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                isRecorded = true;
+                recoder = new RecordGame(recBtn);
+                recoder.startRecord();
+              /* isRecorded = true;
                 timeStamp = new Timestamp(System.currentTimeMillis()).toString();
                 timeStampAfterReplace = timeStamp.replace(":", "-");
                 newFileName = timeStampAfterReplace + ".txt";
@@ -137,7 +140,7 @@ public class GameScreenController implements Initializable {
                     // Your code for recording goes here
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
+                }*/
 
             }
         });
@@ -220,8 +223,9 @@ public class GameScreenController implements Initializable {
             
             if (result.matches("XXX")) {
                 ++_scoreP1;
-                System.out.println("X wins ");
-                if (isRecorded) {
+               // System.out.println("X winsssssssssssssss ");
+                recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "X");
+             /*   if (isRecorded) {
                     try {
                         if (file != null) {
                             try {
@@ -245,15 +249,16 @@ public class GameScreenController implements Initializable {
                         Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                }
+                }*/
                 restartGame();
 
                 // go to video screen or tab 
-            } else if (result.matches("OOO")) {
+            } else if(result.matches("OOO")) {
                 ++_scoreP2;
-                System.out.println("O wins ");
+                System.out.println("O wins");
+                recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "O");
 
-                if (isRecorded) {
+            /*    if (isRecorded) {
                     if (file != null) {
                         try {
                             System.out.println("file Written");
@@ -270,15 +275,16 @@ public class GameScreenController implements Initializable {
                     //    fos.close();
                     } catch (IOException ex) {
                         Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                    }
                     recBtn.setDisable(false);
                     isRecorded = false;
-                }
+                }*/
                 restartGame();
                 // go to video screen or tab 
-            } else if (p1ayMoves.length() == 9) {
+            }else if(p1ayMoves.length() == 9){
                 System.out.println("draw");
-                if (isRecorded) {
+                recoder.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "draw");
+               /* if (isRecorded) {
                     if (file != null) {
                         try {
                             System.out.println("file Written");
@@ -295,12 +301,12 @@ public class GameScreenController implements Initializable {
                         fos.close();
                     } catch (IOException ex) {
                         Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                    }
                     recBtn.setDisable(false);
                     isRecorded = false;
-                }
+                }*/
                 restartGame();
-            }
+            };
         }
     }
 
