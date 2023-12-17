@@ -5,24 +5,18 @@
  */
 package GameLogic;
 
+import javafx.scene.control.Button;
+
 /**
  *
  * @author DELL
  */
 public abstract class GameTemplate {
-   public void GameTemplate(){
-       init();
-       start();
-       play();
-       checkResult();
-       playVideo();
-       restart();
-   }
-   public abstract void init();
+ 
+   
    public abstract void start();
-   public abstract void play();
+   public abstract void play(Button btn);
    public abstract void checkResult();
-   public void playVideo(){}
    public abstract void restart();
 
   

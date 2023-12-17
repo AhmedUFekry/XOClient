@@ -5,6 +5,7 @@
  */
 package GameScreen;
 
+import GameLogic.GameTemplate;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
@@ -27,7 +28,7 @@ import xoclient.Navigate;
  *
  * @author LENOVO
  */
-public class GameScreenController implements Initializable {
+public class GameScreenController extends GameTemplate implements Initializable {
    
      // Logic variables
     private ArrayList<Button> boardBtns;                //BoardButtons
@@ -83,29 +84,33 @@ public class GameScreenController implements Initializable {
     @FXML
     private ImageView recImg;
 
+    @Override
     public void initialize(URL location, ResourceBundle resources){
 
      /**************** Game Logic Init */
-   //  gameId = 0;
-
-
         turn = 0;
         p1ayMoves = "";
+        // init UI
         scoreP1.setText("0");
         scoreP2.setText("0");
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
        
-        exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
-            System.out.println("hello");
-        });
-        boardBtns.forEach(button -> {
-            setUpBtn(button);
-        });
+        // START GAME 
+        start();
         /*********************************/ 
     }
-    
-       private void setUpBtn(Button btn) {
+    @Override
+    public void start() {
+        exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
+            System.out.println("hello");
+            });
+        boardBtns.forEach(button -> {
+            play(button);
+        });
+    }
+    @Override
+    public void play(Button btn) {
 
         btn.addEventHandler(ActionEvent.ACTION, e -> {
             int index;
@@ -116,22 +121,7 @@ public class GameScreenController implements Initializable {
             checkResult();
         });
     }
-
-    public void resetBtn(Button btn) {
-        btn.setDisable(false);
-        btn.setText(" ");
-    }
-
-    public void setPlayerSymbol(Button btn) {
-        if (turn % 2 == 0) {
-            btn.setText("X");
-            turn = 1;
-        } else {
-            btn.setText("O");
-            turn = 0;
-        }
-    }
-
+     @Override
     public void checkResult() {
         String result = null;
         System.out.println("playMoves :"+p1ayMoves);
@@ -165,7 +155,7 @@ public class GameScreenController implements Initializable {
                     result = null;
 
             };
-            
+            System.out.println("result : "+result);
             if (result.matches("XXX")) {
               
                     ++_scoreP1;
@@ -178,7 +168,7 @@ public class GameScreenController implements Initializable {
                     // showTheVideo('X');
                     
                     
-                    restartGame();
+                    restart();
                     // go to video screen or tab 
              
             } else if (result.matches("OOO")) {
@@ -186,18 +176,18 @@ public class GameScreenController implements Initializable {
                 System.out.println("O wins ");
                // showTheVideo('O');
                
-                restartGame();
+                restart();
                 // go to video screen or tab 
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
-              //  showTheVideo('D');
-                restartGame();
+              
+                restart();
             }
         
         }
     }
-
-    public void restartGame() {
+    @Override
+    public void restart() {
         // u should add code to store Game Records here 
         /*
         
@@ -224,6 +214,20 @@ public class GameScreenController implements Initializable {
         }
         for (Button b : boardBtns) {
             resetBtn(b);
+        }
+    }
+    public void resetBtn(Button btn) {
+        btn.setDisable(false);
+        btn.setText(" ");
+    }
+
+    public void setPlayerSymbol(Button btn) {
+        if (turn % 2 == 0) {
+            btn.setText("X");
+            turn = 1;
+        } else {
+            btn.setText("O");
+            turn = 0;
         }
     }
 
@@ -253,4 +257,13 @@ public class GameScreenController implements Initializable {
             ActionEvent event = null;
             Navigate.navigateTo(root, event);
     }
+
+    
+  
+
+ 
+
+  
+
+
 }
