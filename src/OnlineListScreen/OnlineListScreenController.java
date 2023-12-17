@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import xoclient.Navigate;
 
@@ -36,6 +37,7 @@ public class OnlineListScreenController implements Initializable {
     private Button singlrModeBtn;
     @FXML
     private ListView<String> listView;
+    VBox vb ;
 
     /**
      * Initializes the controller class.
@@ -43,6 +45,8 @@ public class OnlineListScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        
         ObservableList<String> items = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3");
         listView.setItems(items);
         listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>(){
