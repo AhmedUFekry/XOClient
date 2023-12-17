@@ -36,14 +36,16 @@ import xoclient.Navigate;
 public class StartScreenController implements Initializable {
     String dirName = "GameRecords";
     String newFileName = "2023-12-14 03-35-25.408.txt";
-    String recordsDirPath = "D:\\ITI Native 9 month\\Java\\Laps\\JavaProject\\XOClient\\GameRecords";
+    String recordsDirPath = "./GameRecords";
     String dirPath = "D:\\ITI Native 9 month\\Java\\Laps\\JavaProject\\XOClient";
     File dir ;
     File file ;
-    List<File> recordsList;
+    File[] recordsList;
     FileInputStream fis;
     DataInputStream dis;
     String game;
+    String[] gameee;
+    Recordings recordings;
     
     private Label label;
     @FXML
@@ -63,9 +65,25 @@ public class StartScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dir = new File(dirPath, dirName);
-        recordsList = new ArrayList<>();
-        recordsList = Arrays.asList(dir.listFiles());
+        recordings = new Recordings(recordsDirPath);
+        gameee = recordings.getRecordedGamesList();
+        for (int x=0; x<gameee.length; x++)
+        System.out.println(gameee[x]);
+        
+        dir = new File(recordsDirPath);
+        recordsList = dir.listFiles();
+        /*if (recordsList != null) {
+            // Display the list of files in the TextArea
+            StringBuilder fileList = new StringBuilder();
+            for (File file : recordsList) {
+                fileList.append(file.getAbsolutePath()).append("\n");
+            }
+            System.out.println(fileList.toString());
+        } else {
+            System.out.println("No files in the specified directory.");
+        }*/
+        
+        
         
         onlButton.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
             @Override
@@ -78,6 +96,8 @@ public class StartScreenController implements Initializable {
                 primaryStage.show();
             }
         });
+        
+        
         showRecBtn.addEventHandler(ActionEvent.ACTION,new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -157,7 +177,7 @@ public class StartScreenController implements Initializable {
          FXMLLoader loader = new FXMLLoader(getClass().getResource("/RecordScreen/RecordsScreen.fxml"));
          Parent root = loader.load();
          RecordsScreenController recScreen = loader.getController();
-         recScreen.files = recordsList;
+        // recScreen.files = recordsList;
          Navigate.navigateTo(root, event);
     }
     
