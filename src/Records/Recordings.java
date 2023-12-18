@@ -17,12 +17,12 @@ public class Recordings {
     
      private File dir;
     private File file;
-    private String recordsDirPath = "./GameRecords";
+    private String recordsDirPath ;//= "./GameRecords";
     private File[] recordsList;
     private FileInputStream fis;
     private DataInputStream dis;
 
-    Recordings(String recordsDirPath) {
+    public Recordings(String recordsDirPath) {
         this.recordsDirPath = recordsDirPath;
         dir = new File(recordsDirPath);
 
