@@ -7,12 +7,9 @@ package GameScreen;
 
 import GameLogic.BoardState;
 import GameLogic.GameTemplate;
-<<<<<<< HEAD
 import Records.RecordGame;
-=======
 import static GameLogic.MarkSymbol.*;
 import GameLogic.MiniMaxAI;
->>>>>>> 1aabea25ace206782cacc7fa0aad8d1f2991711d
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,15 +41,12 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private static int _scoreP2 = 0;
     private String[] players = {"X","O"};
     private String p1ayMoves;
-<<<<<<< HEAD
     private RecordGame recordGame;
     private boolean isRecord;
             
-=======
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
      Random random ;
     private int mode;
->>>>>>> 1aabea25ace206782cacc7fa0aad8d1f2991711d
 
     @FXML
     private Button button1;
