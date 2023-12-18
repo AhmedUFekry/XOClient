@@ -3,33 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/LoginScreenBase.java</file>
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/StartScreenController.java</file>
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/GameScreenBase.java</file>
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/StartScreenBase.java</file>
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/SignUpScreenBase.java</file>
+            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/Records/GameRecord.java</file>
+            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/Records/Recordings.java</file>
+            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Navigate.java</file>
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/XOClient.java</file>
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/ChooseLevelScreenBase.java</file>
-            <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/xoclient/Screens/EnterPlayerNamesScreenBase.java</file>
-=======
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/Screens/ResultScreenController.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/Screens/ResultScreenBase.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/Navigate.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/XOClient.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/OnlineListScreen/OnlineListScreenController.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/GameScreen/GameScreenController.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/Screens/CustomController.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/Screens/customBase.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/OnlineListScreen/CustomListCell.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/xoclient/Screens/GameScreenBase.java</file>
->>>>>>> a51df0c6deba6a073b029c9c5020f28d17e341c8
-=======
-            <file>file:/C:/Users/Geforce/Documents/GitHub/XOClient/src/xoclient/XOClient.java</file>
-            <file>file:/C:/Users/Geforce/Documents/GitHub/XOClient/src/GameLogic/GameTemplate.java</file>
-            <file>file:/C:/Users/Geforce/Documents/GitHub/XOClient/src/GameScreen/GameScreenController.java</file>
->>>>>>> 0013cfd05a20ae7ee13a2c69a70f6029fb9de5ba
         </group>
     </open-files>
 </project-private>
