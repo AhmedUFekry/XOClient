@@ -50,18 +50,18 @@ public class Client extends Thread {
         }
     }
 
-    @Override
-    public void run() {
-        while (true) {
-
-            try {
-                out = ears.readLine();
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
+//    @Override
+//    public void run() {
+//        while (true) {
+//
+//            try {
+//                out = ears.readLine();
+//            } catch (IOException ex) {
+//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
+//    }
 
     public void setEars(DataInputStream ears) {
         this.ears = ears;
