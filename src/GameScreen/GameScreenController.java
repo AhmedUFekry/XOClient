@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +41,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private String[] players = {"X","O"};
     private String p1ayMoves;
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
+     Random random ;
     private int mode;
 
     @FXML
@@ -97,7 +99,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
         scoreP2.setText("0");
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
-       
+       random=new Random();
         // START GAME 
         start();
         /*********************************/ 
@@ -113,7 +115,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
             // mode 3 for hard
             // mode 4 for dual mode 
             if(mode == 1)
-                // add play easy mode here 
+               playEasy(button);
             else if(mode == 2)
                 playMid(button); 
             else if (mode == 3)//add hard mode play here
@@ -146,6 +148,33 @@ public class GameScreenController extends GameTemplate implements Initializable 
         checkResult();  
         });
     }
+        private void playEasy(Button btn) {
+
+       btn.addEventHandler(ActionEvent.ACTION, e ->{
+           btn.setText("X");
+           btn.setDisable(true);
+          computerMoveEasy(btn);
+           checkResult();
+       
+       });
+        
+       }
+        private void computerMoveEasy(Button btn) {  // handle computer move 
+
+    while (true) {
+        int index = random.nextInt(9);
+
+        if (boardBtns.get(index).getText().isEmpty()) {
+           // boardBtns.get(index).setText("O");
+           // boardBtns.get(index).setDisable(true);
+           pickButton(index);
+           
+            checkResult();
+            turn = 0;
+            break;
+        }
+    }
+}
      @Override
     public void checkResult() {
         String result = null;
@@ -284,7 +313,13 @@ public class GameScreenController extends GameTemplate implements Initializable 
         pickButton(move);
     }
 
-    /// pick button  
+      private void pickButton(int index){
+          boardBtns.get(index).setText("O");
+          boardBtns.get(index).setDisable(true);
+           p1ayMoves += index;
+      
+      
+      }
         
     
     
