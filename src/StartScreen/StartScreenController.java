@@ -5,6 +5,7 @@
  */
 package StartScreen;
 
+import ExtraComponent.ExtraComponent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,7 +41,7 @@ import xoclient.Navigate;
 public class StartScreenController implements Initializable {
     
     private Label label;
-
+    private String serverData;
 
     @FXML
     private Button singleButton;
@@ -84,11 +85,23 @@ public class StartScreenController implements Initializable {
 
     @FXML
     private void goToLogIn(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
-        Parent root = loader.load();
-        Navigate.navigateTo(root, event);
+        serverData = ExtraComponent.openDialog("Server Connection", "Enter the server Data");
+        if (serverData != null && serverData.length() != 0) {
+            System.out.println("Entered data: " + serverData);
+            FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
+            Parent root = loader.load();
+            Navigate.navigateTo(root, event);
+        }
+        /*else if(serverData.length() == 0){
+            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Can't Connect to the server");
+            alert.show(); 
+        }*/
         
+        
+      
        
     }
-    
+ /*   public void getServerData(String server){
+        serverData = server;
+    }*/
 }

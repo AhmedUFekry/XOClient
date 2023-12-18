@@ -5,6 +5,7 @@
  */
 package ChooseLevelScreen;
 
+import GameScreen.GameScreenController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,6 +45,8 @@ public class ChooseLevelScreenController implements Initializable {
     private void goToEasy(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
           Parent root = loader.load();
+          GameScreenController gameController =loader.getController();
+          gameController.setMode(1);
           Navigate.navigateTo(root, event);
     }
 
@@ -51,14 +54,20 @@ public class ChooseLevelScreenController implements Initializable {
     private void startMediumMode(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
           Parent root = loader.load();
+          GameScreenController gameController =loader.getController();
+          gameController.setMode(2);
           Navigate.navigateTo(root, event);
+          
     }
 
     @FXML
     private void startHardMode(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
           Parent root = loader.load();
+          GameScreenController gameController =loader.getController();
+          gameController.setMode(3);
           Navigate.navigateTo(root, event);
+          
     }
 
     @FXML

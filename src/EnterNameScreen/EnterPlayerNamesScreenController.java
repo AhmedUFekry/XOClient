@@ -55,6 +55,7 @@ public class EnterPlayerNamesScreenController implements Initializable {
           Parent root = loader.load();
           GameScreenController gameController =loader.getController();
           gameController.setPlayerNames(txtFieldPlayer1.getText(),txtFieldPlayer2.getText());
+          gameController.setMode(4);
           Navigate.navigateTo(root, event);
     }
      @FXML
