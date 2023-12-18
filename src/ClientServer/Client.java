@@ -32,36 +32,32 @@ public class Client extends Thread {
         return ears;
     }
 
-    public Client(DataInputStream ears, Socket skt, PrintStream ps) {
-        this();
-        this.ears = ears;
-        this.ps = ps;
-        this.skt = skt;
-        
-    }
-
-    public Client() {
+    public void run(){
         try {
-            this.skt = new Socket("127.0.0.1", 5005);
+           
+            this.skt = new Socket("192.168.137.1", 5048);
             this.ears = new DataInputStream(this.skt.getInputStream());
             this.ps = new PrintStream(this.skt.getOutputStream());
+            ps.println("Test >>>>>>>>");
+            String result = ears.readLine();
+            System.out.println(result);
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        
+            try {
+                ps.close();
+                ears.close();
+                skt.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            
         }
     }
 
-//    @Override
-//    public void run() {
-//        while (true) {
-//
-//            try {
-//                out = ears.readLine();
-//            } catch (IOException ex) {
-//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
-//    }
+    public Client() {
+     this.run();
+    }
+
 
     public void setEars(DataInputStream ears) {
         this.ears = ears;

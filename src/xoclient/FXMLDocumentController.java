@@ -5,6 +5,7 @@
  */
 package xoclient;
 
+import ClientServer.Client;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,6 +26,9 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
+        Client c = new Client();
+        
+        
     }
     
     @Override
