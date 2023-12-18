@@ -32,7 +32,7 @@ public class RecordGame {
     private String intofile;
     private Button recBtn;
 
-    RecordGame(Button recordButton) {
+    public RecordGame(Button recordButton) {
         recBtn = recordButton;
     }
 

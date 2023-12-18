@@ -59,7 +59,7 @@ public class ProfileScreenController implements Initializable {
 
     @FXML
     private void displayRecordOnline(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/RecordScreen/RecordsScreen.fxml")) ;
           Parent root = loader.load();
           Navigate.navigateTo(root, event);
     }
