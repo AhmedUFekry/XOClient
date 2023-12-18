@@ -5,21 +5,30 @@
  */
 package ExtraComponent;
 
+import java.io.IOException;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import xoclient.Navigate;
 
 /**
  *
  * @author DELL
  */
 public class ExtraComponent {
-    public Alert showAlertChooseSymbol(Alert.AlertType type, String title , String headerTxt){
+    public static Alert showAlertChooseSymbol(Alert.AlertType type, String title , String headerTxt){
         // Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         // alert.setTitle("Symbol");
         //   alert.setHeaderText("You want play with");
@@ -29,28 +38,20 @@ public class ExtraComponent {
            return alert; 
     }
     
-    public void showSymbolChoiceDialog(){
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setTitle("Choose Symbol");
-       // dialog.setHeaderText("Choose X or O");
-        ButtonType buttonX = new ButtonType("X");
-       ButtonType buttonO = new ButtonType("O");
+    public static String openDialog(String title, String contentText){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(title);
+       // dialog.setHeaderText("Enter Data:");
+        dialog.setContentText(contentText);
         
-        
-        DialogPane dialogPane = new DialogPane();
-        dialogPane.setMinSize(250, 50);
-        Label contentLabel = new Label("You want play with..");
-        contentLabel.setMinSize(250, 40);
-        contentLabel.setAlignment(javafx.geometry.Pos.CENTER);
-        contentLabel.setFont(new Font("Baskerville Old Face", 25.0));
-        dialogPane.setContent(new HBox(contentLabel));
-      //  buttonX.setFont(new Font("Baskerville Old Face", 20.0));
-        dialogPane.getButtonTypes().addAll(buttonX,buttonO);
-
-        // Set custom dialog pane to the dialog
-        dialog.setDialogPane(dialogPane);
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(symbol -> System.out.println("Selected symbol: " + symbol));
-
+       // TextField input = dialog.getEditor();
+        
+       /* if(input.getText() != null && input.getText().length() != 0){
+            return 
+        }*/
+       return result.orElse(null);
     }
+
 }
+

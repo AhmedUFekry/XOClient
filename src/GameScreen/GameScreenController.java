@@ -5,16 +5,20 @@
  */
 package GameScreen;
 
+import GameLogic.BoardState;
 import GameLogic.GameTemplate;
+<<<<<<< HEAD
 import Records.RecordGame;
+=======
+import static GameLogic.MarkSymbol.*;
+import GameLogic.MiniMaxAI;
+>>>>>>> 1aabea25ace206782cacc7fa0aad8d1f2991711d
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,9 +44,15 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private static int _scoreP2 = 0;
     private String[] players = {"X","O"};
     private String p1ayMoves;
+<<<<<<< HEAD
     private RecordGame recordGame;
     private boolean isRecord;
             
+=======
+    MiniMaxAI ticTacToeAI = new MiniMaxAI();
+     Random random ;
+    private int mode;
+>>>>>>> 1aabea25ace206782cacc7fa0aad8d1f2991711d
 
     @FXML
     private Button button1;
@@ -101,7 +111,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
         scoreP2.setText("0");
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
-       
+       random=new Random();
         // START GAME 
         start();
         /*********************************/ 
@@ -112,7 +122,20 @@ public class GameScreenController extends GameTemplate implements Initializable 
             System.out.println("hello");
             });
         boardBtns.forEach(button -> {
-            play(button);
+            // mode 1 for easy mode
+            // mode 2 for mid mode
+            // mode 3 for hard
+            // mode 4 for dual mode 
+            if(mode == 1)
+               playEasy(button);
+            else if(mode == 2)
+                playMid(button); 
+            else if (mode == 3)//add hard mode play here
+                playMid(button); 
+            else if(mode == 4){
+                play(button);    
+            }
+                
         });
     }
     @Override
@@ -127,6 +150,43 @@ public class GameScreenController extends GameTemplate implements Initializable 
             checkResult();
         });
     }
+    public void playMid(Button button) {
+        button.setOnMouseClicked(mouseEvent -> {
+        button.setText(X.getMark());
+        int index = boardBtns.indexOf(button);
+         p1ayMoves += index;
+        button.setDisable(true);
+        makeComputerMove();
+        checkResult();  
+        });
+    }
+        private void playEasy(Button btn) {
+
+       btn.addEventHandler(ActionEvent.ACTION, e ->{
+           btn.setText("X");
+           btn.setDisable(true);
+          computerMoveEasy(btn);
+           checkResult();
+       
+       });
+        
+       }
+        private void computerMoveEasy(Button btn) {  // handle computer move 
+
+    while (true) {
+        int index = random.nextInt(9);
+
+        if (boardBtns.get(index).getText().isEmpty()) {
+           // boardBtns.get(index).setText("O");
+           // boardBtns.get(index).setDisable(true);
+           pickButton(index);
+           
+            checkResult();
+            turn = 0;
+            break;
+        }
+    }
+}
      @Override
     public void checkResult() {
         String result = null;
@@ -211,22 +271,18 @@ public class GameScreenController extends GameTemplate implements Initializable 
         
         */
         
-        p1ayMoves = "";                               // reset moves 
+        p1ayMoves = BLANK.getMark();                               // reset moves 
         scoreP1.setText("" + _scoreP1);                // update scores on the screen 
         scoreP2.setText("" + _scoreP2);                  // update scores on the screen
         if (turn % 2 == 0) {                                // check for whose turn ? 
             //player 1 turn 
             player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
             player2Symbol.setStyle("-fx-border-color: black; -fx-border-width: 0px;");
-            player1Symbol.setText("X");
-            player2Symbol.setText("O");
             turn = 1;
         } else {
             //player 2 turn
             player2Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");        // set border 
             player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 0px;");
-            player1Symbol.setText("O");
-            player2Symbol.setText("X");
             turn = 0;
         }
         for (Button b : boardBtns) {
@@ -235,15 +291,15 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
     public void resetBtn(Button btn) {
         btn.setDisable(false);
-        btn.setText(" ");
+        btn.setText(BLANK.getMark());
     }
 
     public void setPlayerSymbol(Button btn) {
         if (turn % 2 == 0) {
-            btn.setText("X");
+            btn.setText(X.getMark());
             turn = 1;
         } else {
-            btn.setText("O");
+            btn.setText(O.getMark());
             turn = 0;
         }
     }
@@ -281,11 +337,35 @@ public class GameScreenController extends GameTemplate implements Initializable 
             ActionEvent event = null;
             Navigate.navigateTo(root, event);
     }
-
     
+    public void makeComputerMove(){
+        int move = ticTacToeAI.minMaxDecision(getBoardState());    
+        pickButton(move);
+    }
+
+      private void pickButton(int index){
+          boardBtns.get(index).setText("O");
+          boardBtns.get(index).setDisable(true);
+           p1ayMoves += index;
+      
+      
+      }
+        
+    
+    
+    public BoardState getBoardState(){
+        String[] board = new String[9];
+
+        for (int i = 0; i < boardBtns.size(); i++) {
+            board[i] = boardBtns.get(i).getText();
+        }
+        return new BoardState(0,board);
+    }
   
 
- 
+    public void setMode(int mode){
+        this.mode = mode;
+    }
 
   
 

@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="XOClient.jar" size="11743097" download="eager" />
+=======
+    <jar href="XOClient.jar" size="11745937" download="eager" />
+>>>>>>> 1aabea25ace206782cacc7fa0aad8d1f2991711d
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="XOClient" >
     <param name="requiredFXVersion" value="8.0+"/>
