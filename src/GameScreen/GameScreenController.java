@@ -5,11 +5,15 @@
  */
 package GameScreen;
 
+import GameLogic.GameTemplate;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +28,7 @@ import xoclient.Navigate;
  *
  * @author LENOVO
  */
-public class GameScreenController implements Initializable {
+public class GameScreenController extends GameTemplate implements Initializable {
    
      // Logic variables
     private ArrayList<Button> boardBtns;                //BoardButtons
@@ -80,28 +84,33 @@ public class GameScreenController implements Initializable {
     @FXML
     private ImageView recImg;
 
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
 
      /**************** Game Logic Init */
-   //  gameId = 0;
-
-
         turn = 0;
         p1ayMoves = "";
+        // init UI
         scoreP1.setText("0");
         scoreP2.setText("0");
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
-        exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
-            System.out.println("hello");
-        });
-        boardBtns.forEach(button -> {
-            setUpBtn(button);
-        });
+       
+        // START GAME 
+        start();
         /*********************************/ 
     }
-    
-       private void setUpBtn(Button btn) {
+    @Override
+    public void start() {
+        exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
+            System.out.println("hello");
+            });
+        boardBtns.forEach(button -> {
+            play(button);
+        });
+    }
+    @Override
+    public void play(Button btn) {
 
         btn.addEventHandler(ActionEvent.ACTION, e -> {
             int index;
@@ -111,24 +120,8 @@ public class GameScreenController implements Initializable {
             btn.setDisable(true);
             checkResult();
         });
-
     }
-
-    public void resetBtn(Button btn) {
-        btn.setDisable(false);
-        btn.setText(" ");
-    }
-
-    public void setPlayerSymbol(Button btn) {
-        if (turn % 2 == 0) {
-            btn.setText("X");
-            turn = 1;
-        } else {
-            btn.setText("O");
-            turn = 0;
-        }
-    }
-
+     @Override
     public void checkResult() {
         String result = null;
         System.out.println("playMoves :"+p1ayMoves);
@@ -162,25 +155,39 @@ public class GameScreenController implements Initializable {
                     result = null;
 
             };
-            
+            System.out.println("result : "+result);
             if (result.matches("XXX")) {
-                ++_scoreP1;                    
-                System.out.println("X wins ");
-                restartGame();
-                // go to video screen or tab 
+              
+                    ++_scoreP1;
+                    System.out.println("X wins ");
+                  
+                    
+                    //    ResultScreen.ResultScreenController controller = loader.getController();
+                    //    controller.setResult(result);
+                    
+                    // showTheVideo('X');
+                    
+                    
+                    restart();
+                    // go to video screen or tab 
+             
             } else if (result.matches("OOO")) {
                 ++_scoreP2;
                 System.out.println("O wins ");
-                restartGame();
+               // showTheVideo('O');
+               
+                restart();
                 // go to video screen or tab 
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
-                restartGame();
+              
+                restart();
             }
+        
         }
     }
-
-    public void restartGame() {
+    @Override
+    public void restart() {
         // u should add code to store Game Records here 
         /*
         
@@ -209,6 +216,20 @@ public class GameScreenController implements Initializable {
             resetBtn(b);
         }
     }
+    public void resetBtn(Button btn) {
+        btn.setDisable(false);
+        btn.setText(" ");
+    }
+
+    public void setPlayerSymbol(Button btn) {
+        if (turn % 2 == 0) {
+            btn.setText("X");
+            turn = 1;
+        } else {
+            btn.setText("O");
+            turn = 0;
+        }
+    }
 
     @FXML
     private void exitTheGame(ActionEvent event) throws IOException {
@@ -228,4 +249,21 @@ public class GameScreenController implements Initializable {
         txtPlayer1.setText(player1);
         txtPlayer2.setText(player2);
     }
+    public void showTheVideo() throws IOException{
+              FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
+            Parent root;
+
+            root = loader.load();
+            ActionEvent event = null;
+            Navigate.navigateTo(root, event);
+    }
+
+    
+  
+
+ 
+
+  
+
+
 }

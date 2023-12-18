@@ -57,5 +57,12 @@ public class EnterPlayerNamesScreenController implements Initializable {
           gameController.setPlayerNames(txtFieldPlayer1.getText(),txtFieldPlayer2.getText());
           Navigate.navigateTo(root, event);
     }
+     @FXML
+    private void goToHomeScreen(ActionEvent event) throws IOException {
+        System.out.println("Back");
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
+         Parent root = loader.load();
+         Navigate.navigateTo(root, event);
+    }
     
 }

@@ -46,21 +46,23 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void goBackBtn(ActionEvent event) throws IOException {
+         System.out.println("Back");
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
-          Parent root = loader.load();
-          Navigate.navigateTo(root, event);
+         Parent root = loader.load();
+         Navigate.navigateTo(root, event);
     }
 
     @FXML
-    private void signInMethod(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
+    private void signIn(ActionEvent event) throws IOException {
+         FXMLLoader loader = new FXMLLoader (getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
           Parent root = loader.load();
           Navigate.navigateTo(root, event);
+        
     }
 
     @FXML
-    private void signoutMethod(ActionEvent event) throws IOException {
-         FXMLLoader loader = new FXMLLoader (getClass().getResource("/SignUpScreen/SignUpScreen.fxml")) ;
+    private void signUptMethod(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/SignUpScreen/SignUpScreen.fxml")) ;
           Parent root = loader.load();
           Navigate.navigateTo(root, event);
     }
