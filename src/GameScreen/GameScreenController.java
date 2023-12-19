@@ -7,6 +7,7 @@ package GameScreen;
 
 import GameLogic.BoardState;
 import GameLogic.GameTemplate;
+import Records.RecordGame;
 import static GameLogic.MarkSymbol.*;
 import GameLogic.MiniMax;
 import GameLogic.MiniMaxAI;
@@ -42,6 +43,9 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private static int _scoreP2 = 0;
     private String[] players = {"X","O"};
     private String p1ayMoves;
+    private RecordGame recordGame;
+    private boolean isRecord;
+            
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
      Random random ;
     public int mode;
@@ -117,6 +121,8 @@ public class GameScreenController extends GameTemplate implements Initializable 
     
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        
+        
 
      /**************** Game Logic Init */
     // mode=2;
@@ -267,7 +273,10 @@ public class GameScreenController extends GameTemplate implements Initializable 
               
                     ++_scoreP1;
                     System.out.println("X wins ");
-                  
+                    if(isRecord){
+                        recordGame.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "X");
+                        isRecord = false;
+                    }
                     
                     //    ResultScreen.ResultScreenController controller = loader.getController();
                     //    controller.setResult(result);
@@ -282,11 +291,19 @@ public class GameScreenController extends GameTemplate implements Initializable 
                 ++_scoreP2;
                 System.out.println("O wins ");
                // showTheVideo('O');
+               if(isRecord){
+                        recordGame.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "O");
+                        isRecord = false;
+                    }
                
                 restart();
                 // go to video screen or tab 
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
+                if(isRecord){
+                        recordGame.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "draw");
+                        isRecord = false;
+                    }
               
                 restart();
             }
@@ -337,6 +354,12 @@ public class GameScreenController extends GameTemplate implements Initializable 
 
     @FXML
     private void exitTheGame(ActionEvent event) throws IOException {
+        if(isRecord)
+        {
+            recordGame.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "draw");
+            isRecord = false;
+        }
+        
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
           Parent root = loader.load();
           Navigate.navigateTo(root, event);
@@ -344,9 +367,9 @@ public class GameScreenController extends GameTemplate implements Initializable 
 
     @FXML
     private void startRecord(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
-          Parent root = loader.load();
-          Navigate.navigateTo(root, event);
+        isRecord = true;
+        recordGame = new RecordGame(recBtn);
+        recordGame.startRecord();
     }
 
     public void setPlayerNames(String player1, String player2) {
@@ -354,7 +377,8 @@ public class GameScreenController extends GameTemplate implements Initializable 
         txtPlayer2.setText(player2);
     }
     public void showTheVideo() throws IOException{
-              FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
+        
+            FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
             Parent root;
 
             root = loader.load();

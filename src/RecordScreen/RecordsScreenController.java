@@ -7,6 +7,7 @@ package RecordScreen;
  */
 
 import OnlineListScreen.CustomListCell;
+import Records.Recordings;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,13 +31,16 @@ public class RecordsScreenController implements Initializable {
     @FXML
     private ListView<String> recordListView;
     private ObservableList<String> items;
+    private Recordings recordings;
+    private String[] recs;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+            
         // TODO
-             items = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3");
+             items = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3 ", "item 4");
              recordListView.setItems(items);
              recordListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>(){
             @Override
@@ -45,6 +49,9 @@ public class RecordsScreenController implements Initializable {
             }
             
         });  
+            /*recordings = new Recordings("./XOClient/GameRecords");
+            recs = recordings.getRecordedGamesList();
+            System.out.println(recs[0]);*/
     }    
     
 }
