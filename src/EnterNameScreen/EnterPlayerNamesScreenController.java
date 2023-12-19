@@ -51,11 +51,13 @@ public class EnterPlayerNamesScreenController implements Initializable {
 
     @FXML
     private void startTwoPlayergame(ActionEvent event) throws IOException {
+        GameScreenController controller = new GameScreenController(4);
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
+        loader.setController(controller);
           Parent root = loader.load();
-          GameScreenController gameController =loader.getController();
-          gameController.setPlayerNames(txtFieldPlayer1.getText(),txtFieldPlayer2.getText());
-          gameController.setMode(4);
+          controller.setPlayerNames(txtFieldPlayer1.getText(),txtFieldPlayer2.getText());
+          //gameController.setMode(4);
+        //GameScreenController.mode = 4;
           Navigate.navigateTo(root, event);
     }
      @FXML

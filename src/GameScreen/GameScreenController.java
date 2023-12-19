@@ -42,7 +42,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private String p1ayMoves;
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
      Random random ;
-    private int mode;
+    public int mode;
 
     @FXML
     private Button button1;
@@ -88,10 +88,17 @@ public class GameScreenController extends GameTemplate implements Initializable 
     @FXML
     private ImageView recImg;
 
+    
+   public GameScreenController(int m ){
+        mode = m;
+    }
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
      /**************** Game Logic Init */
+    // mode=2;
         turn = 0;
         p1ayMoves = "";
         // init UI
@@ -100,6 +107,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
        random=new Random();
+        System.out.println("GameScreen.GameScreenController.initialize()"+mode);
         // START GAME 
         start();
         /*********************************/ 
@@ -333,7 +341,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
   
 
-    public void setMode(int mode){
+  public void setMode(int mode){
         this.mode = mode;
     }
 

@@ -43,29 +43,36 @@ public class ChooseLevelScreenController implements Initializable {
     
     @FXML
     private void goToEasy(ActionEvent event) throws IOException {
+        GameScreenController controller = new GameScreenController(1);
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
+        loader.setController(controller);
           Parent root = loader.load();
-          GameScreenController gameController =loader.getController();
-          gameController.setMode(1);
+         // gameController.setMode(1);
+        // GameScreenController.mode = 1;
           Navigate.navigateTo(root, event);
     }
 
     @FXML
     private void startMediumMode(ActionEvent event) throws IOException {
+        GameScreenController controller = new GameScreenController(2);
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
+        loader.setController(controller);
           Parent root = loader.load();
-          GameScreenController gameController =loader.getController();
-          gameController.setMode(2);
+          
+      //  GameScreenController gameController =loader.getController();
+      //    gameController.setMode(2);
+       //GameScreenController.mode = 2;
           Navigate.navigateTo(root, event);
           
     }
 
     @FXML
     private void startHardMode(ActionEvent event) throws IOException {
+        GameScreenController controller = new GameScreenController(3);
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
+        loader.setController(controller);
           Parent root = loader.load();
-          GameScreenController gameController =loader.getController();
-          gameController.setMode(3);
+      //  GameScreenController.mode = 3;
           Navigate.navigateTo(root, event);
           
     }
