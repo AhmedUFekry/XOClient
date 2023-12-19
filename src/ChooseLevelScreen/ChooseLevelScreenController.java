@@ -5,6 +5,7 @@
  */
 package ChooseLevelScreen;
 
+import ExtraComponent.ExtraComponent;
 import GameScreen.GameScreenController;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +16,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BorderPane;
 import xoclient.Navigate;
 
 /**
@@ -31,7 +35,9 @@ public class ChooseLevelScreenController implements Initializable {
     @FXML
     private Button hardBtn;
     @FXML
-    private Button btnBack;
+    private BorderPane rootPane;
+    @FXML
+    private Button btnBack1;
 
     /**
      * Initializes the controller class.
@@ -39,6 +45,8 @@ public class ChooseLevelScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/choose.jpg");
+        rootPane.setBackground(new Background(background));
     }    
     
     @FXML
@@ -46,10 +54,10 @@ public class ChooseLevelScreenController implements Initializable {
         GameScreenController controller = new GameScreenController(1);
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
         loader.setController(controller);
-          Parent root = loader.load();
-         // gameController.setMode(1);
+        Parent root = loader.load();
+        // gameController.setMode(1);
         // GameScreenController.mode = 1;
-          Navigate.navigateTo(root, event);
+        Navigate.navigateTo(root, event);
     }
 
     @FXML
@@ -57,13 +65,11 @@ public class ChooseLevelScreenController implements Initializable {
         GameScreenController controller = new GameScreenController(2);
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
         loader.setController(controller);
-          Parent root = loader.load();
-          
-      //  GameScreenController gameController =loader.getController();
-      //    gameController.setMode(2);
-       //GameScreenController.mode = 2;
-          Navigate.navigateTo(root, event);
-          
+        Parent root = loader.load();
+        //  GameScreenController gameController =loader.getController();
+        //    gameController.setMode(2);
+        //GameScreenController.mode = 2;
+        Navigate.navigateTo(root, event);  
     }
 
     @FXML
@@ -72,7 +78,6 @@ public class ChooseLevelScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
         loader.setController(controller);
           Parent root = loader.load();
-      //  GameScreenController.mode = 3;
           Navigate.navigateTo(root, event);
           
     }

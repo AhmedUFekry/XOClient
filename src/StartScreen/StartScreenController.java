@@ -16,13 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import xoclient.Navigate;
 
-import GameLogic.GameTemplate;
-import java.util.Optional;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 
 /**
 =======
@@ -50,6 +48,8 @@ public class StartScreenController implements Initializable {
     private Button dualButton;
     @FXML
     private Button onlButton;
+    @FXML
+    private AnchorPane rootPane;
 
     
     private void handleButtonAction(ActionEvent event) {
@@ -66,6 +66,9 @@ public class StartScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/up_1.png");
+       // BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/s.jpg");
+        rootPane.setBackground(new Background(background));
     }    
 
     

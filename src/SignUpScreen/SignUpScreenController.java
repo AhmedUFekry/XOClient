@@ -5,6 +5,7 @@
  */
 package SignUpScreen;
 
+import ExtraComponent.ExtraComponent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BorderPane;
 import xoclient.Navigate;
 
 /**
@@ -37,6 +41,8 @@ public class SignUpScreenController implements Initializable {
     private Button signInBtn;
     @FXML
     private Button signUpBtn;
+    @FXML
+    private BorderPane rootPane;
 
     /**
      * Initializes the controller class.
@@ -44,6 +50,8 @@ public class SignUpScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/hi.jpeg");
+        rootPane.setBackground(new Background(background));
     }    
 
     @FXML

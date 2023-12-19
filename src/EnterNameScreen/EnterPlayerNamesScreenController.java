@@ -5,6 +5,7 @@
  */
 package EnterNameScreen;
 
+import ExtraComponent.ExtraComponent;
 import GameScreen.GameScreenController;
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +19,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 import xoclient.Navigate;
 
 /**
@@ -39,6 +43,8 @@ public class EnterPlayerNamesScreenController implements Initializable {
     private ImageView backImg;
     @FXML
     private ImageView playImg;
+    @FXML
+    private Pane rootPane;
 
     /**
      * Initializes the controller class.
@@ -46,7 +52,8 @@ public class EnterPlayerNamesScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/hi.jpeg");
+        rootPane.setBackground(new Background(background));
     }    
 
     @FXML

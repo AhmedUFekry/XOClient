@@ -5,23 +5,14 @@
  */
 package ExtraComponent;
 
-import java.io.IOException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import xoclient.Navigate;
+import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 
 /**
  *
@@ -41,16 +32,22 @@ public class ExtraComponent {
     public static String openDialog(String title, String contentText){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle(title);
-       // dialog.setHeaderText("Enter Data:");
-        dialog.setContentText(contentText);
-        
+        dialog.setContentText(contentText); 
         Optional<String> result = dialog.showAndWait();
-       // TextField input = dialog.getEditor();
-        
-       /* if(input.getText() != null && input.getText().length() != 0){
-            return 
-        }*/
        return result.orElse(null);
+    }
+    public static BackgroundImage setBackgroundImg(String imgPath){
+       Image backgroundImage = new Image(imgPath);
+
+        // Create a BackgroundImage
+        BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+        );
+        return background;
     }
 
 }
