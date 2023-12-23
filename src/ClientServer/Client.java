@@ -35,7 +35,7 @@ public class Client extends Thread {
     public void run(){
         try {
            
-            this.skt = new Socket("192.168.137.1", 5048);
+            this.skt = new Socket("192.168.153.1", 5050);
             this.ears = new DataInputStream(this.skt.getInputStream());
             this.ps = new PrintStream(this.skt.getOutputStream());
             ps.println("Test >>>>>>>>");
