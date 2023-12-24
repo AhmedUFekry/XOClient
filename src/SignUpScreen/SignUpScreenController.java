@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,6 +87,26 @@ public class SignUpScreenController implements Initializable {
     @FXML
     public void signUpMethod(ActionEvent event) throws IOException {
        if(isValidate()){
+           List<DTOPlayerData>playerList = new ArrayList<>();
+            DTOPlayerData player =new DTOPlayerData();
+    player.setUserName(userNameTxtfield.getText());
+   
+   // player.setEmaiL(controller.emailTxtfield.getText());
+    player.setPassword(pass.getText());
+  
+    player.setIsMale(false);
+    playerList.add(player);
+  
+    //DataOperation operation = new DataOperation("sign up",playerList);
+      GsonBuilder builder = new GsonBuilder();
+    Gson gson = builder.create();
+    Client client = new Client();
+    System.out.println(gson.toJson(player));
+    //client.out(gson.toJson(operation));
+    System.out .println("connection to server done");
+    client.start();
+           
+           
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
           Parent root = loader.load();
          
@@ -93,34 +115,10 @@ public class SignUpScreenController implements Initializable {
               
           
           }
-       
-          DTOPlayerData player =new DTOPlayerData();
-    player.setUserName(userNameTxtfield.getText());
    
-   // player.setEmaiL(controller.emailTxtfield.getText());
-    player.setPassword(pass.getText());
-  
-    player.setIsMale(false);
-  
-    GsonBuilder builder = new GsonBuilder();
-    Gson gson = builder.create();
-    // sendToServer();
-    System.out.println(gson.toJson(player));
-    System.out .println("connection to server done");
-
-       
     
     }
-       private void sendToServer(String data) {
-        // Create an instance of the Client class
-        Client client = new Client();
-
-        // Set the output data to be sent to the server
-        client.setOut(data);
-
-        // Start the thread to establish connection and send data
-        client.start();
-       }
+       
     private Boolean isValidate(){
          if( userNameTxtfield.getText().length()==0||emailTxtfield.getText().length()==0|| pass.getText().length()==0||conPass.getText().length()==0){
          

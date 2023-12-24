@@ -5,10 +5,12 @@
  */
 package ClientServer;
 
+import SignUpScreen.DTOPlayerData;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +40,8 @@ public class Client extends Thread {
             this.skt = new Socket("192.168.153.1", 5050);
             this.ears = new DataInputStream(this.skt.getInputStream());
             this.ps = new PrintStream(this.skt.getOutputStream());
-            ps.println("Test >>>>>>>>");
+            
+            ps.println(out);
             String result = ears.readLine();
             System.out.println(result);
         } catch (IOException ex) {
@@ -78,4 +81,19 @@ public class Client extends Thread {
     public void setPs(PrintStream ps) {
         this.ps = ps;
     }
+
+    public void out(String toJson) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    public class DataOperation{
+        private String operation;
+        private List<DTOPlayerData>players;
+        public void setOperation(String operation){
+            this.operation = operation;
+        
+        }
+       
 }
+}
+
+
