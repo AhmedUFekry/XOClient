@@ -5,15 +5,20 @@
  */
 package StartScreen;
 
+import ClientServer.Client;
 import ExtraComponent.ExtraComponent;
+import NetworkManager.NetworkManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -56,9 +61,6 @@ public class StartScreenController implements Initializable {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
     }
-    
-
-
     /**
      * Initializes the controller class.
      */
@@ -87,24 +89,40 @@ public class StartScreenController implements Initializable {
     }
 
     @FXML
-    private void goToLogIn(ActionEvent event) throws IOException {
+    private void goToLogIn(ActionEvent event){
         serverData = ExtraComponent.openDialog("Server Connection", "Enter the server Data");
-        if (serverData != null && serverData.length() != 0) {
+        if (serverData != null && !serverData.isEmpty()) {
             System.out.println("Entered data: " + serverData);
-            FXMLLoader loader = new FXMLLoader (getClass().getResource("/LoginScreen/LoginScreen.fxml")) ;
-            Parent root = loader.load();
-            Navigate.navigateTo(root, event);
-        }
-        /*else if(serverData.length() == 0){
-            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Can't Connect to the server");
+           // Client client = new Client();
+           NetworkManager.setIpServer(serverData);
+            // Use CompletableFuture for handling the asynchronous result
+            CompletableFuture<String> resultFuture = new CompletableFuture<>();
+             // Set the callback for the result 
+            resultFuture.thenAccept(result -> {
+               Platform.runLater(() -> {
+                   if ("connected successfully".equals(result)) {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginScreen/LoginScreen.fxml"));
+                            Parent root = loader.load();
+                            Navigate.navigateTo(root, event);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        // Handle start connect to the server failure
+                        System.out.println("cant connect tot the server" + result);
+                        Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Can not connect to the server");
+                        alert.show();
+                    }
+                });
+            });
+            // Use the client from the NetworkManager
+            Client client = NetworkManager.getClient();
+            client.setSendDataToServer("start");
+            client.setCallback(resultFuture);
+        }else if(serverData.isEmpty()){
+            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "please enter the server ip");
             alert.show(); 
-        }*/
-        
-        
-      
-       
+        }
     }
- /*   public void getServerData(String server){
-        serverData = server;
-    }*/
 }
