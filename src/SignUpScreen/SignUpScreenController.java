@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
@@ -52,6 +53,8 @@ public class SignUpScreenController implements Initializable {
     @FXML
     private RadioButton femaleRadiobtn;
     @FXML
+    private ToggleGroup genderToggleGroup;
+    @FXML
     private Button signInBtn;
     @FXML
     private Button signUpBtn;
@@ -72,6 +75,13 @@ public class SignUpScreenController implements Initializable {
         // TODO
         BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/hi.jpeg");
         rootPane.setBackground(new Background(background));
+          // Create a ToggleGroup
+        genderToggleGroup = new ToggleGroup();
+
+        // Associate ToggleGroup with radio buttons
+        maleRadiobtn.setToggleGroup(genderToggleGroup);
+        femaleRadiobtn.setToggleGroup(genderToggleGroup);
+        
     }    
 
     @FXML
@@ -83,16 +93,20 @@ public class SignUpScreenController implements Initializable {
 
     @FXML
     private void signUpMethod(ActionEvent event) throws IOException {
-        if(isValidate()){
+        if(isValidate()&&isPasswordMatched()){
            List<DTOPlayerData>playerList = new ArrayList<>();
             DTOPlayerData player =new DTOPlayerData();
-    player.setUserName(userNameTxtfield.getText());
-     player.setUserName(fullNameTxtfield.getText());
+    
+     player.setFullName(fullNameTxtfield.getText());
+     player.setUserName(userNameTxtfield.getText());
    
     player.setEmail(emailTxtfield.getText());
     player.setPassword(pass.getText());
+    
+   
   
-    player.setIsMale(false);
+    //player.setIsMale(false);
+     player.setIsMale(maleRadiobtn.isSelected()); // Set true for male, false for female
     playerList.add(player);
   
     DataOperation operation = new DataOperation("sign up",playerList);
@@ -141,6 +155,9 @@ public class SignUpScreenController implements Initializable {
           client.setSendDataToServer(gson.toJson(operation));
           client.setCallback(resultFuture);
         }
+        else{
+        System.out.println("not vaildate");
+        }
        
     }
                  
@@ -149,7 +166,8 @@ public class SignUpScreenController implements Initializable {
         
         
           if( fullNameTxtfield.getText().length()==0|| userNameTxtfield.getText().length()==0||emailTxtfield.getText().length()==0|| pass.getText().length()==0||conPass.getText().length()==0){
-         
+             
+       
             if( fullNameTxtfield.getText().length()==0){
              fullNameTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               fullNameTxtfield.setPromptText("you should entre valid full name");
@@ -192,12 +210,32 @@ public class SignUpScreenController implements Initializable {
               else{
               conPass.setStyle("-fx-border-color:; -fx-border-width: ");
                       }
+             return false;
+             
+          }
+           
          
-          return false;
-                 }
-         return true;
-       
+      
+      return true;
+      
+      
     }
+    private boolean isPasswordMatched(){
+          if(!conPass.getText().equals(pass.getText()) ){
+                   pass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
+                    conPass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
+             
+              return false;
+             }
+           else{
+                   pass.setStyle("-fx-border-color: ; -fx-border-width:");
+                    conPass.setStyle("-fx-border-color: ; -fx-border-width:");
+              return true;
+           }
+            
+    
+    }
+    
 
        
 
