@@ -18,18 +18,12 @@ public class NetworkManager {
     private static InetAddress ipServer;
     // Private constructor to prevent instantiation
     private NetworkManager() {}
-    public static void setIpServer(String host){
-         try {
+    public static void setIpServer(String host) throws UnknownHostException{
             NetworkManager.ipServer = InetAddress.getByName(host);
             System.out.println("valid host " + host);
-        } catch (UnknownHostException e) {
-            // Handle the case where the host is invalid
-            System.out.println("Error: Invalid host " + host);
-            e.printStackTrace();
-        }
-
+        
     }
-    public static Client getClient() {
+    public static synchronized Client getClient() {
         if (client == null || !client.isAlive()) {
             if (ipServer == null) {
                 throw new IllegalStateException("Server IP address not set. Call setServerIP() before getClient().");

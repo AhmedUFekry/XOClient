@@ -10,8 +10,11 @@ import ExtraComponent.ExtraComponent;
 import NetworkManager.NetworkManager;
 import java.io.IOException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,7 +47,7 @@ import xoclient.Navigate;
 public class StartScreenController implements Initializable {
     
     private Label label;
-    private String serverData;
+    private String serverData = null;
 
     @FXML
     private Button singleButton;
@@ -92,35 +95,47 @@ public class StartScreenController implements Initializable {
     private void goToLogIn(ActionEvent event){
         serverData = ExtraComponent.openDialog("Server Connection", "Enter the server Data");
         if (serverData != null && !serverData.isEmpty()) {
-            System.out.println("Entered data: " + serverData);
-           // Client client = new Client();
-           NetworkManager.setIpServer(serverData);
-            // Use CompletableFuture for handling the asynchronous result
-            CompletableFuture<String> resultFuture = new CompletableFuture<>();
-             // Set the callback for the result 
-            resultFuture.thenAccept(result -> {
-               Platform.runLater(() -> {
-                   if ("connected successfully".equals(result)) {
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginScreen/LoginScreen.fxml"));
-                            Parent root = loader.load();
-                            Navigate.navigateTo(root, event);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        // Handle start connect to the server failure
-                        System.out.println("cant connect tot the server" + result);
-                        Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Can not connect to the server");
-                        alert.show();
-                    }
+            try {
+                System.out.println("Entered data: " + serverData);
+                // Client client = new Client();
+                NetworkManager.setIpServer(serverData);
+                // Use CompletableFuture for handling the asynchronous result
+                CompletableFuture<String> resultFuture = new CompletableFuture<>();
+                // Set the callback for the result
+                resultFuture.whenComplete((result, exception)-> {
+                    Platform.runLater(() -> {
+                        if(exception != null){
+                            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", exception.getMessage());
+                            alert.show();
+                        }else{
+                            if ("connected successfully".equals(result)) {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginScreen/LoginScreen.fxml"));
+                                    Parent root = loader.load();
+                                    Navigate.navigateTo(root, event);
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            } else {
+                                // Handle start connect to the server failure
+                                System.out.println("cant connect tot the server" + result);
+                                Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Can not connect to the server");
+                                alert.show();
+                            }
+                        }});
                 });
-            });
-            // Use the client from the NetworkManager
-            Client client = NetworkManager.getClient();
-            client.setSendDataToServer("start");
-            client.setCallback(resultFuture);
-        }else if(serverData.isEmpty()){
+                // Use the client from the NetworkManager
+                Client client = NetworkManager.getClient();
+                client.setSendDataToServer("start");
+                client.setCallback(resultFuture);
+            } catch (UnknownHostException ex) {
+               // ex.printStackTrace();
+                Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Unknown Host Exception: Enter the correct IP.");
+                alert.show();
+            }
+        }else if (serverData == null) {
+            System.out.println("dialog is closed");
+        }else if(serverData.isEmpty() ){
             Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "please enter the server ip");
             alert.show(); 
         }

@@ -114,8 +114,8 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private ImageView imgSymbol9;
 
     
-   public GameScreenController(int m ){
-        mode = m;
+   public GameScreenController(int mode){
+        this.mode = mode;
     }
     
     

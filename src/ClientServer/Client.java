@@ -8,8 +8,10 @@ package ClientServer;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -53,14 +55,22 @@ public class Client extends Thread {
           } else {
                System.out.println("Error: InetAddress is null. Please set a valid host using setIpServer.");
           }
-        } catch (IOException ex) {
+        } catch(UnknownHostException e){
+             e.printStackTrace();
+           notifyCallback("Error: Unknown Host Exception - Enter the correct IP.");
+        } catch(ConnectException ex){
+            notifyCallback("Error: Connection refused: The server may not be running or is unreachable.");
+        }catch(SocketException es){
+            notifyCallback("Error: Network is unreachable: connect");
+        }
+        catch (IOException ex) {
             ex.printStackTrace();
-           notifyCallback("Error: " + ex.getMessage());
+            notifyCallback("Error: " + ex.getMessage());
         } finally {
             closeResources();
         }
     }
-
+// Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Unknown Host Exception: Enter the correct IP."); alert.show();
     public Client(InetAddress ipServer) {
         this.ipServer = ipServer;
     }
@@ -71,7 +81,13 @@ public class Client extends Thread {
     // get the answer from the server and notify the result and call setCallback to take action
     private void notifyCallback(String result) {
         if (callback != null) {
-            callback.complete(result);
+            //if excepion throws catch it and send it to the caller
+            if(result.startsWith("Error:")){
+                // If the result starts with "Error:", it indicates an exception occurred
+                callback.completeExceptionally(new RuntimeException(result));
+            }else{
+                callback.complete(result);
+            }
         }
     }
 
@@ -98,7 +114,7 @@ public class Client extends Thread {
         try {
             if (ps != null) ps.close();
             if (ears != null) ears.close();
-            if (skt != null) skt.close();
+            if (skt != null && !skt.isClosed()) skt.close();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
