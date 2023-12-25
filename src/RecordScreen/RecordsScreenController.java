@@ -77,7 +77,7 @@ public class RecordsScreenController implements Initializable {
                     System.out.println(fPlayerName);
                     System.out.println(sPlayerName);
                     System.out.println(gameResult);
-                    GameScreenController gameController = new GameScreenController(gameMovments);
+                    GameScreenController gameController = new GameScreenController(gameMovments , true);
                     FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml"));
                     loader.setController(gameController);
                     Parent root = loader.load();

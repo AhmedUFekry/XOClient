@@ -127,7 +127,8 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private ImageView imgSymbol9;
 
     
-   public GameScreenController(int[] recordedMovmentss){     
+   public GameScreenController(int[] recordedMovmentss , boolean recordedGamee){   
+       recordedGame = recordedGamee;
        recordedMovments = recordedMovmentss;
         
     }
@@ -183,9 +184,9 @@ public void playRecordedGame(int[] game) {
     
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        
-        playRecordedGame(recordedMovments);
-        System.out.println("the mooooooooooove " + recordedMovments[6]);
+        if(recordedGame){
+             playRecordedGame(recordedMovments);
+        }
         
         
        // System.out.println(recordedMovments[3]);
