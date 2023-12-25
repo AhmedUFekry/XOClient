@@ -50,6 +50,8 @@ public class StartScreenController implements Initializable {
     private Button onlButton;
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Button displayRecordedGamesbtn;
 
     
     private void handleButtonAction(ActionEvent event) {
@@ -107,4 +109,12 @@ public class StartScreenController implements Initializable {
  /*   public void getServerData(String server){
         serverData = server;
     }*/
+
+    @FXML
+    private void displayRecordedGamesbtn(ActionEvent event) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/RecordScreen/RecordsScreen.fxml")) ;
+          Parent root = loader.load();
+          Navigate.navigateTo(root, event);
+    }
 }

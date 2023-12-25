@@ -17,14 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
-<<<<<<< HEAD
-=======
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
->>>>>>> fekry3
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -45,44 +42,7 @@ import xoclient.Navigate;
 public class GameScreenController extends GameTemplate implements Initializable {
 
 
-    /**
-     * @return the recordedMovments
-     */
-    public int[] getRecordedMovments() {
-        return recordedMovments;
-    }
-
-    /**
-     * @param recordedMovments the recordedMovments to set
-     */
-    public void setRecordedMovments(int[] recordedMovments) {
-        this.recordedMovments = recordedMovments;
-    }
-    
-public void playRecordedGame(int[] game) {
-    recBtn.setDisable(true);
-    new Thread(() -> {
-        boolean turnn = true;
-        for (int i = 0; i < game.length; i++) {
-            try {
-                final int move = game[i];
-                final boolean isXPlayerTurn = turnn; // Capture the turn outside the lambda
-                Platform.runLater(() -> {
-                    if (isXPlayerTurn) {
-                        boardBtns.get(move).setText("X");
-                    } else {
-                        boardBtns.get(move).setText("O");
-                    }
-                });
-                turnn = !turnn; // Toggle the turn
-                Thread.sleep(500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }).start();
-}
-    
+     
    
      // Logic variables
     private ArrayList<Button> boardBtns;                //BoardButtons
@@ -167,13 +127,66 @@ public void playRecordedGame(int[] game) {
     private ImageView imgSymbol9;
 
     
+   public GameScreenController(int[] recordedMovmentss){     
+       recordedMovments = recordedMovmentss;
+        
+    }
    public GameScreenController(int m ){
         mode = m;
     }
+   
+   
+      /**
+     * @return the recordedMovments
+     */
+    public int[] getRecordedMovments() {
+        return recordedMovments;
+    }
+
+    /**
+     * @param recordedMovments the recordedMovments to set
+     */
+    public void setRecordedMovments(int[] recordedMovments) {
+        this.recordedMovments = recordedMovments;
+    }
+    
+public void playRecordedGame(int[] game) {
+    recBtn.setDisable(true);
+    scoreP1.setVisible(false);
+    scoreP2.setVisible(false);
+    new Thread(() -> {
+        boolean turnn = true;
+        for (int i = 0; i < game.length; i++) {
+            try {
+                final int move = game[i];
+                final boolean isXPlayerTurn = turnn; // Capture the turn outside the lambda
+                Platform.runLater(() -> {
+                    if (isXPlayerTurn) {
+                        //boardBtns.get(move).setText("X");
+                         symbolsImgs.get(move).setImage(new Image(XIMG.getMark()));
+                        
+                    } else {
+                        //boardBtns.get(move).setText("O");
+                        symbolsImgs.get(move).setImage(new Image(OIMG.getMark()));
+                    }
+                });
+                turnn = !turnn; // Toggle the turn
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }).start();
+}
+
     
     
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        
+        playRecordedGame(recordedMovments);
+        System.out.println("the mooooooooooove " + recordedMovments[6]);
+        
         
        // System.out.println(recordedMovments[3]);
         
@@ -211,10 +224,9 @@ public void playRecordedGame(int[] game) {
                 playMid(button); 
             else if (mode == 3)//add hard mode play here
                 playHardMode(button); 
-            else if(mode == 4){
+            else if(mode == 4)
                 play(button);    
-            }
-                
+               
         });
     }
     @Override
@@ -440,8 +452,7 @@ public void playRecordedGame(int[] game) {
             ActionEvent event = null;
             Navigate.navigateTo(root, event);
     }
-<<<<<<< HEAD
-=======
+
     
     public void disableGamePad(){
     
@@ -452,7 +463,7 @@ public void playRecordedGame(int[] game) {
     
     }
 
->>>>>>> fekry3
+
     
     public void makeComputerMove(){
         int move = ticTacToeAI.minMaxDecision(getBoardState());    

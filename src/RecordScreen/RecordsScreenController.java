@@ -77,14 +77,17 @@ public class RecordsScreenController implements Initializable {
                     System.out.println(fPlayerName);
                     System.out.println(sPlayerName);
                     System.out.println(gameResult);
-                    FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
-                     Parent root = loader.load();
-                     GameScreenController gameController =loader.getController();
-                     gameController.setPlayerNames(gameRecord.getFirstPlayerName(),gameRecord.getSecondPlayerName());
-                     //gameController.setRecordedMovments(gameRecord.getGameMoves());
-                     gameController.disableGamePad();
-                     gameController.playRecordedGame(gameMovments);
-                     Navigate.navigateTo(root, event);
+                    GameScreenController gameController = new GameScreenController(gameMovments);
+                    FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml"));
+                    loader.setController(gameController);
+                    Parent root = loader.load();
+                    
+                    //GameScreenController gameController =loader.getController();
+                    gameController.setPlayerNames(gameRecord.getFirstPlayerName(),gameRecord.getSecondPlayerName());
+                    gameController.setRecordedMovments(gameRecord.getGameMoves());
+                    gameController.disableGamePad();
+                    gameController.playRecordedGame(gameMovments);
+                    Navigate.navigateTo(root, event);
                     // backBtn.setText(fPlayerName);
                     
                     

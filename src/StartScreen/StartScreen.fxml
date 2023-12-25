@@ -32,5 +32,10 @@
             <Font name="Baskerville Old Face" size="24.0" />
          </font>
       </Button>
+      <Button fx:id="displayRecordedGamesbtn" layoutX="209.0" layoutY="117.0" mnemonicParsing="false" onAction="#displayRecordedGamesbtn" text="Recorded Games">
+         <font>
+            <Font name="Baskerville Old Face" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
