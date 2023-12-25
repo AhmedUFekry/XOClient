@@ -16,7 +16,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
+=======
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+>>>>>>> fekry3
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 import xoclient.Navigate;
 
 /**
@@ -31,6 +41,46 @@ import xoclient.Navigate;
  * @author LENOVO
  */
 public class GameScreenController extends GameTemplate implements Initializable {
+
+
+    /**
+     * @return the recordedMovments
+     */
+    public int[] getRecordedMovments() {
+        return recordedMovments;
+    }
+
+    /**
+     * @param recordedMovments the recordedMovments to set
+     */
+    public void setRecordedMovments(int[] recordedMovments) {
+        this.recordedMovments = recordedMovments;
+    }
+    
+public void playRecordedGame(int[] game) {
+    recBtn.setDisable(true);
+    new Thread(() -> {
+        boolean turnn = true;
+        for (int i = 0; i < game.length; i++) {
+            try {
+                final int move = game[i];
+                final boolean isXPlayerTurn = turnn; // Capture the turn outside the lambda
+                Platform.runLater(() -> {
+                    if (isXPlayerTurn) {
+                        boardBtns.get(move).setText("X");
+                    } else {
+                        boardBtns.get(move).setText("O");
+                    }
+                });
+                turnn = !turnn; // Toggle the turn
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }).start();
+}
+    
    
      // Logic variables
     private ArrayList<Button> boardBtns;                //BoardButtons
@@ -43,6 +93,9 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private String p1ayMoves;
     private RecordGame recordGame;
     private boolean isRecord;
+    private int[] recordedMovments;
+    private boolean recordedGame;
+
             
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
      Random random ;
@@ -95,6 +148,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         
+       // System.out.println(recordedMovments[3]);
         
 
      /**************** Game Logic Init */
@@ -112,6 +166,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
     @Override
     public void start() {
+
         exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
             System.out.println("hello");
             });
@@ -331,6 +386,19 @@ public class GameScreenController extends GameTemplate implements Initializable 
             ActionEvent event = null;
             Navigate.navigateTo(root, event);
     }
+<<<<<<< HEAD
+=======
+    
+    public void disableGamePad(){
+    
+        for (int i = 0; i < 9; i++) {
+            boardBtns.get(i).setDisable(true);
+        }
+    
+    
+    }
+
+>>>>>>> fekry3
     
     public void makeComputerMove(){
         int move = ticTacToeAI.minMaxDecision(getBoardState());    
