@@ -5,6 +5,7 @@
  */
 package LoginScreen;
 
+import ExtraComponent.ExtraComponent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Pane;
 import xoclient.Navigate;
 
 /**
@@ -35,6 +39,8 @@ public class LoginScreenController implements Initializable {
     private Button signInBtn;
     @FXML
     private Button signOutBtn;
+    @FXML
+    private Pane rootPane;
 
     /**
      * Initializes the controller class.
@@ -42,6 +48,8 @@ public class LoginScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/up.png");
+        rootPane.setBackground(new Background(background));
     }    
 
     @FXML

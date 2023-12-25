@@ -13,8 +13,8 @@ package GameLogic;
 public enum MarkSymbol {
     X("X"),
     O("O"),
-    XIMG("x.png"),
-    OIMG("o.png"),
+    XIMG("/Icons/x.png"),
+    OIMG("/Icons/o.png"),
     BLANK("");
 
     private final String mark;

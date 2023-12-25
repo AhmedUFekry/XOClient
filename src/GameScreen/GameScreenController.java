@@ -9,6 +9,7 @@ import GameLogic.BoardState;
 import GameLogic.GameTemplate;
 import Records.RecordGame;
 import static GameLogic.MarkSymbol.*;
+import GameLogic.MiniMax;
 import GameLogic.MiniMaxAI;
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +33,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import xoclient.Navigate;
@@ -85,7 +87,7 @@ public void playRecordedGame(int[] game) {
      // Logic variables
     private ArrayList<Button> boardBtns;                //BoardButtons
     //  private int gameId;                                 // to store game Id 
-    
+    private ArrayList<ImageView> symbolsImgs;
     private int turn;
     private static int _scoreP1 = 0;
     private static int _scoreP2 = 0;
@@ -99,7 +101,8 @@ public void playRecordedGame(int[] game) {
             
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
      Random random ;
-    private int mode;
+    public int mode;
+    private MiniMax miniMax = new MiniMax();
 
     @FXML
     private Button button1;
@@ -144,7 +147,31 @@ public void playRecordedGame(int[] game) {
     private ImageView exitImg;
     @FXML
     private ImageView recImg;
+    @FXML
+    private ImageView imgSymbol1;
+    @FXML
+    private ImageView imgSymbol2;
+    @FXML
+    private ImageView imgSymbol3;
+    @FXML
+    private ImageView imgSymbol4;
+    @FXML
+    private ImageView imgSymbol5;
+    @FXML
+    private ImageView imgSymbol6;
+    @FXML
+    private ImageView imgSymbol7;
+    @FXML
+    private ImageView imgSymbol8;
+    @FXML
+    private ImageView imgSymbol9;
 
+    
+   public GameScreenController(int m ){
+        mode = m;
+    }
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources){
         
@@ -152,6 +179,7 @@ public void playRecordedGame(int[] game) {
         
 
      /**************** Game Logic Init */
+    // mode=2;
         turn = 0;
         p1ayMoves = "";
         // init UI
@@ -159,7 +187,9 @@ public void playRecordedGame(int[] game) {
         scoreP2.setText("0");
         player1Symbol.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         boardBtns = new ArrayList<>(Arrays.asList(button1, button2, button3, button4, button5, button6, button7, button8, button9));
+        symbolsImgs = new ArrayList<>(Arrays.asList(imgSymbol1,imgSymbol2,imgSymbol3,imgSymbol4,imgSymbol5,imgSymbol6,imgSymbol7,imgSymbol8,imgSymbol9));
        random=new Random();
+        System.out.println("GameScreen.GameScreenController.initialize()"+mode);
         // START GAME 
         start();
         /*********************************/ 
@@ -180,7 +210,7 @@ public void playRecordedGame(int[] game) {
             else if(mode == 2)
                 playMid(button); 
             else if (mode == 3)//add hard mode play here
-                playMid(button); 
+                playHardMode(button); 
             else if(mode == 4){
                 play(button);    
             }
@@ -194,6 +224,11 @@ public void playRecordedGame(int[] game) {
             int index;
             setPlayerSymbol(btn);
             index = boardBtns.indexOf(btn);
+            if(turn == 0 )
+                 symbolsImgs.get(index).setImage(new Image(XIMG.getMark()));
+            else
+                symbolsImgs.get(index).setImage(new Image(OIMG.getMark()));
+           p1ayMoves += index;
             p1ayMoves = p1ayMoves + index;
             btn.setDisable(true);
             checkResult();
@@ -203,16 +238,34 @@ public void playRecordedGame(int[] game) {
         button.setOnMouseClicked(mouseEvent -> {
         button.setText(X.getMark());
         int index = boardBtns.indexOf(button);
-         p1ayMoves += index;
+        symbolsImgs.get(index).setImage(new Image(XIMG.getMark()));
+        p1ayMoves += index;
         button.setDisable(true);
         makeComputerMove();
         checkResult();  
         });
     }
-        private void playEasy(Button btn) {
+    private void playHardMode(Button button){
+         button.setOnMouseClicked(mouseEvent -> {
+            button.setText(X.getMark());
+            int index = boardBtns.indexOf(button);
+            symbolsImgs.get(index).setImage(new Image(XIMG.getMark()));
+            p1ayMoves += index;
+            button.setDisable(true);
+            int result =miniMax.miniMax(boardBtns, 100, false,true);
+             pickButton(result);
+             checkResult();
+            
+         });   
+    }
+    
+    private void playEasy(Button btn) {
 
        btn.addEventHandler(ActionEvent.ACTION, e ->{
            btn.setText("X");
+           int index = boardBtns.indexOf(btn);
+           symbolsImgs.get(index).setImage(new Image(XIMG.getMark()));
+           p1ayMoves += index;
            btn.setDisable(true);
           computerMoveEasy(btn);
            checkResult();
@@ -220,21 +273,21 @@ public void playRecordedGame(int[] game) {
        });
         
        }
-        private void computerMoveEasy(Button btn) {  // handle computer move 
+    private void computerMoveEasy(Button btn) {  // handle computer move 
 
-    while (true) {
-        int index = random.nextInt(9);
+            while (true) {
+                int index = random.nextInt(9);
 
-        if (boardBtns.get(index).getText().isEmpty()) {
-           // boardBtns.get(index).setText("O");
-           // boardBtns.get(index).setDisable(true);
-           pickButton(index);
-           
-            checkResult();
-            turn = 0;
-            break;
-        }
-    }
+                if (boardBtns.get(index).getText().isEmpty()) {
+                   // boardBtns.get(index).setText("O");
+                   // boardBtns.get(index).setDisable(true);
+                   pickButton(index);
+
+                    checkResult();
+                    turn = 0;
+                    break;
+                }
+            }
 }
      @Override
     public void checkResult() {
@@ -346,6 +399,7 @@ public void playRecordedGame(int[] game) {
     public void setPlayerSymbol(Button btn) {
         if (turn % 2 == 0) {
             btn.setText(X.getMark());
+            
             turn = 1;
         } else {
             btn.setText(O.getMark());
@@ -405,14 +459,13 @@ public void playRecordedGame(int[] game) {
         pickButton(move);
     }
 
-      private void pickButton(int index){
-          boardBtns.get(index).setText("O");
+    private void pickButton(int index){
+          boardBtns.get(index).setText(O.getMark());
+          symbolsImgs.get(index).setImage(new Image(OIMG.getMark()));
           boardBtns.get(index).setDisable(true);
            p1ayMoves += index;
-      
-      
       }
-        
+       
     
     
     public BoardState getBoardState(){
@@ -425,7 +478,7 @@ public void playRecordedGame(int[] game) {
     }
   
 
-    public void setMode(int mode){
+  public void setMode(int mode){
         this.mode = mode;
     }
 

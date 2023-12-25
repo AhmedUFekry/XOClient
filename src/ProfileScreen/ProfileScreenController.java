@@ -5,6 +5,7 @@
  */
 package ProfileScreen;
 
+import ExtraComponent.ExtraComponent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BorderPane;
 import xoclient.Navigate;
 
 /**
@@ -41,6 +45,8 @@ public class ProfileScreenController implements Initializable {
     private Label loseLabel;
     @FXML
     private Button showRecordsBtn;
+    @FXML
+    private BorderPane rootPane;
 
     /**
      * Initializes the controller class.
@@ -48,6 +54,8 @@ public class ProfileScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/back.jpg");
+        rootPane.setBackground(new Background(background));
     }    
 
     @FXML
