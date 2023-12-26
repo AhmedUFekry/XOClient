@@ -33,4 +33,7 @@ public class NetworkManager {
         }
         return client;
     }
+    public static synchronized Boolean isClientAlive(){
+        return client.isAlive();
+    }
 }
