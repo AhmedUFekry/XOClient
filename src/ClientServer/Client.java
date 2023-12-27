@@ -26,6 +26,10 @@ public class Client extends Thread {
     private String recieveDatafromServer;
     private CompletableFuture<String> callback;
     private InetAddress ipServer;
+
+    public Client() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
  
     public void setSendDataToServer(String send){

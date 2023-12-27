@@ -10,6 +10,8 @@ import DTO.DTOPlayerData;
 import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
 import NetworkManager.NetworkManager;
+import OnlineListScreen.OnlineListScreenController;
+import ProfileScreen.ProfileScreenController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -103,6 +105,8 @@ public class LoginScreenController implements Initializable {
                      }else{
                          String playerName = result;
                           System.out.println("Player name "+playerName);
+                                     OnlineListScreenController.PlayerName = playerName;
+                         
                          try{
                             FXMLLoader loader = new FXMLLoader (getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
                             Parent root = loader.load();

@@ -14,6 +14,10 @@ import java.util.List;
 public class DataOperation {
     private String operation;
     private List<DTOPlayerData> players; 
+
+    public DataOperation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public void setOperation(String operation) {
         this.operation = operation;
     }
