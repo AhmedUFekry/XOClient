@@ -31,9 +31,10 @@ public class XOClient extends Application {
         //OnlineListScreenController controller = loader.getController();
        
         Scene scene = new Scene(root);
-
+        
         stage.setScene(scene);
         stage.show();
+        Navigate.setHomeScreen(root);
     }
     
     /**

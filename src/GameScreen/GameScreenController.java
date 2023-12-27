@@ -11,21 +11,46 @@ import Records.RecordGame;
 import static GameLogic.MarkSymbol.*;
 import GameLogic.MiniMax;
 import GameLogic.MiniMaxAI;
+import ResultScreen.ResultScreenController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import xoclient.Navigate;
 
 /**
@@ -163,12 +188,12 @@ public class GameScreenController extends GameTemplate implements Initializable 
 
         btn.addEventHandler(ActionEvent.ACTION, e -> {
             int index;
-            setPlayerSymbol(btn);
             index = boardBtns.indexOf(btn);
             if(turn == 0 )
                  symbolsImgs.get(index).setImage(new Image(XIMG.getMark()));
             else
                 symbolsImgs.get(index).setImage(new Image(OIMG.getMark()));
+            setPlayerSymbol(btn);
            p1ayMoves += index;
             btn.setDisable(true);
             checkResult();
@@ -281,6 +306,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
                     
                     restart();
                     // go to video screen or tab 
+                    showTheVideo('x');
              
             } else if (result.matches("OOO")) {
                 ++_scoreP2;
@@ -293,6 +319,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
                
                 restart();
                 // go to video screen or tab 
+                showTheVideo('o');
             } else if (p1ayMoves.length() == 9) {
                 System.out.println("draw");
                 if(isRecord){
@@ -301,17 +328,13 @@ public class GameScreenController extends GameTemplate implements Initializable 
                     }
               
                 restart();
+                showTheVideo('d');
             }
         
         }
     }
     @Override
     public void restart() {
-        // u should add code to store Game Records here 
-        /*
-        
-        
-        */
         
         p1ayMoves = BLANK.getMark();                               // reset moves 
         scoreP1.setText("" + _scoreP1);                // update scores on the screen 
@@ -339,7 +362,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
 
     public void setPlayerSymbol(Button btn) {
-        if (turn % 2 == 0) {
+        if (turn == 0) {
             btn.setText(X.getMark());
             turn = 1;
         } else {
@@ -372,14 +395,96 @@ public class GameScreenController extends GameTemplate implements Initializable 
         txtPlayer1.setText(player1);
         txtPlayer2.setText(player2);
     }
-    public void showTheVideo() throws IOException{
+  /*  public void showTheVideo(char gameResult){
         
-            FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
-            Parent root;
+        try {
+            ResultScreenController controller = new ResultScreenController(gameResult);
+            FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml"));
+            loader.setController(controller);
+            Parent root = loader.load();
+            System.out.println("Before Navigate.navigateTo");
+            Navigate.navigateTo(root);
+            Duration delayDuration = Duration.seconds(5); // Adjust the delay time as needed
+            Timeline timeline = new Timeline(new KeyFrame(delayDuration, this::goBackToHomeScreen));
+            timeline.play();
+        } catch (IOException ex) {
+            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
+   /* public void showTheVideo(char gameResult){
+        String video;
+        switch(gameResult){
+             case 'x':
+                 video = "/videos/winner.mp4";
+                break;
+             case 'o':
+                 video = "/videos/loser.mp4";
+                 break;
+             default:
+                 video = "/videos/draw.mp4";
+         }
+            Media media = new Media(getClass().getResource(video).toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView mediaView = new MediaView(mediaPlayer);
+             // Create a StackPane to hold the mediaView
+           
+            // Set the size of the stage (adjust as needed)
+            
+            // Create buttons
+            Button playButton = new Button("Play");
+            Button stopButton = new Button("Stop");
+            TextField countTextField = new TextField("6");
+            
+            VBox vbox = new VBox(mediaView, playButton, stopButton, countTextField);
 
-            root = loader.load();
-            ActionEvent event = null;
+            // Create a Scene with the VBox
+            Scene videoScene = new Scene(vbox);
+
+            // Create a new Stage for the video
+            Stage videoStage = new Stage();
+            videoStage.setScene(videoScene);
+            videoStage.setWidth(600);
+            videoStage.setHeight(500);
+            // Set an action to be performed after the video playback
+            mediaPlayer.setOnEndOfMedia(() -> {
+                // Stop the video and close the stage
+                mediaPlayer.stop();
+                videoStage.close();
+            });
+            mediaView.setFitWidth(videoStage.getWidth());
+            mediaView.setFitHeight(videoStage.getHeight());
+
+            // Show the video stage
+            videoStage.show();
+
+            // Play the video
+            mediaPlayer.play();
+            Duration countdownDuration = Duration.seconds(10); // Set the countdown duration
+
+            // Create a pause transition to close the stage after the specified duration
+            PauseTransition pauseTransition = new PauseTransition(countdownDuration);
+          
+             pauseTransition.setOnFinished(event -> {
+                // Update the countTextField and close the stage
+                countTextField.setText("0");
+                videoStage.close();
+            });
+            pauseTransition.play();
+            pauseTransition.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
+                long secondsRemaining = Math.round(countdownDuration.toSeconds() - pauseTransition.getCurrentTime().toSeconds());
+                countTextField.setText(String.valueOf(secondsRemaining));
+            });
+
+    }*/
+    
+    private void goBackToHomeScreen(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/StartScreen/StartScreen.fxml"));
+            Parent root = loader.load();
             Navigate.navigateTo(root, event);
+        } catch (IOException ex) {
+            Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void makeComputerMove(){
@@ -412,6 +517,11 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
 
   
-
+public void showTheVideo(char gameResult){
+       new ResultScreen.ResultUI(gameResult);
+       
+        
+       
+}
 
 }

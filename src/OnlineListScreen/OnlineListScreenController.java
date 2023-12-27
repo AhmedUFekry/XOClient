@@ -5,6 +5,7 @@
  */
 package OnlineListScreen;
 
+import DTO.DTOPlayerData;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,6 +39,7 @@ public class OnlineListScreenController implements Initializable {
     @FXML
     private ListView<String> listView;
     VBox vb ;
+    private ObservableList<String> items;
 
     /**
      * Initializes the controller class.
@@ -45,17 +47,15 @@ public class OnlineListScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        
-        ObservableList<String> items = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3");
+        items = FXCollections.observableArrayList("Item 1", "Item 2", "Item 3");
         listView.setItems(items);
         listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>(){
             @Override
             public ListCell<String> call(ListView<String> param) {
              return new  CustomListCell();
-            }
-            
-        });       
+            }  
+        });  
+        listView.setOnMouseClicked(event -> handleListViewClicked());
     }    
 
     @FXML
@@ -78,5 +78,20 @@ public class OnlineListScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
          Parent root = loader.load();
          Navigate.navigateTo(root, event);
-    }   
+    } 
+
+    private void handleListViewClicked() {
+       int item = listView.getSelectionModel().getSelectedIndex();
+       
+        System.out.println("OnlineListScreen.OnlineListScreenController.handleListViewClicked()"+items.get(item));
+        
+        String currentPlayer = "Curent Player";
+        String invitedPlayer = items.get(item);
+        
+        
+    }
+    private void sendRequest(String invitedPlayer){
+        DTOPlayerData invitedPlayerData = new DTOPlayerData();
+        
+    }
 }

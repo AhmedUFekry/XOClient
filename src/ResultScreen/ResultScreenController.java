@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -41,17 +42,29 @@ public class ResultScreenController implements Initializable {
     private Label txtCounter;
     
     private  String video;
+    private char result;
+    @FXML
+    private BorderPane resultRoot;
     
-    
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    public ResultScreenController(char result){
+        this.result = result;
     }
-    
+            
+            
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        video = "/videos/winner.mp4";
+       switch(result){
+             case 'x':
+                 video = "/videos/winner.mp4";
+                break;
+             case 'o':
+                 video = "/videos/loser.mp4";
+                 break;
+             default:
+                 video = "/videos/draw.mp4";
+         }
+        resultTxt.setText("The Winner is "+result);
         Media media = new Media(getClass().getResource(video).toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         resVideo.setMediaPlayer(mediaPlayer);
@@ -71,7 +84,7 @@ public class ResultScreenController implements Initializable {
          Parent root = loader.load();
          Navigate.navigateTo(root, event);
     }
-    public void setResult(char result){
+    /*public void setResult(char result){
          switch(result){
              case 'X':
                  video = "/videos/winner.mp4";
@@ -82,7 +95,8 @@ public class ResultScreenController implements Initializable {
              default:
                  video = "/videos/draw.mp4";
          }
-        resultTxt.setText("Teh Winner is "+result);
-    }
+        resultTxt.setText("The Winner is "+result);
+    }*/
+    
 }
 
