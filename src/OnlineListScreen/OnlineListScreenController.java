@@ -59,7 +59,7 @@ public class OnlineListScreenController implements Initializable {
     private ObservableList<String> items;
 
     private DTOPlayerData currentPlayer;
-   
+   public static String playerName;
 
     /**
      * Initializes the controller class.
@@ -92,7 +92,7 @@ public class OnlineListScreenController implements Initializable {
         
         List<DTOPlayerData> playerList = new ArrayList<>();
             DTOPlayerData player = new DTOPlayerData();
-            player.setUserName(PlayerName);
+            player.setUserName(playerName);
            
             playerList.add(player);
             DataOperation operation = new DataOperation("profile", playerList);
@@ -116,8 +116,6 @@ public class OnlineListScreenController implements Initializable {
                                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/ProfileScreen/ProfileScreen.fxml")) ;
                                  loader.setController(profile);
                                   currentPlayer = dataReceived; 
-                                 
-                                 
                                 // profile.setPlayerData(dataReceived);
 
                                 Parent root = loader.load();

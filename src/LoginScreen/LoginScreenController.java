@@ -88,11 +88,11 @@ public class LoginScreenController implements Initializable {
                  }
              });
          });
-        Client client = NetworkManager.getClient();
-        client.setSendDataToServer("exit");
-        client.setCallback(resultFuture);
-        System.out.println("client after" +NetworkManager.isClientAlive());
-         }else{
+            Client client = NetworkManager.getClient();
+            client.setSendDataToServer("exit");
+            client.setCallback(resultFuture);
+            System.out.println("client after" +NetworkManager.isClientAlive());
+        }else{
             try {
                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
                 Parent root = loader.load();
@@ -107,7 +107,7 @@ public class LoginScreenController implements Initializable {
 
     @FXML
     private void signIn(ActionEvent event){
-        if(NetworkManager.isClientAlive()){
+         if(NetworkManager.isClientAlive()){
             if(isValidate()){
                 List<DTOPlayerData> playerList = new ArrayList<>();
                 DTOPlayerData player = new DTOPlayerData();
@@ -123,7 +123,7 @@ public class LoginScreenController implements Initializable {
                  // Set the callback for the result
                  resultFuture.thenAccept(result->{
                      Platform.runLater(() ->{
-                          if ("error".equals(result)){
+                          if("error".equals(result)){
                              txtFieldPassword.setStyle("-fx-border-color: red ; -fx-border-width:2px");
                              txtFieldPassword.setPromptText("Please Enter valid Password");
                              txtFieldPlayerName.setStyle("-fx-border-color: red ; -fx-border-width:2px");
@@ -137,6 +137,7 @@ public class LoginScreenController implements Initializable {
                              alert.show();
                          }else{
                              String playerName = result;
+                             OnlineListScreenController.playerName = playerName;
                               System.out.println("Player name "+playerName);
                              try{
                                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
@@ -152,18 +153,18 @@ public class LoginScreenController implements Initializable {
               client.setSendDataToServer(gson.toJson(operation));
               client.setCallback(resultFuture);
               System.out.println("client after " +NetworkManager.isClientAlive());
-         }else{
-            try {
-                FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
-                Parent root = loader.load();
-                Navigate.navigateTo(root, event);
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
+        }else{
+           try {
+               FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
+               Parent root = loader.load();
+               Navigate.navigateTo(root, event);
+               } catch (IOException ex) {
+                   Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }
         }
-
-    }
+    
 
     @FXML
     private void signUptMethod(ActionEvent event) throws IOException{

@@ -96,67 +96,65 @@ public class SignUpScreenController implements Initializable {
 
     @FXML
     private void signUpMethod(ActionEvent event) throws IOException {
-        if(isValidate()&&isPasswordMatched()){
-           List<DTOPlayerData>playerList = new ArrayList<>();
-            DTOPlayerData player =new DTOPlayerData();
+        if(NetworkManager.isClientAlive()){
+            if(isValidate()&&isPasswordMatched()){
+               List<DTOPlayerData>playerList = new ArrayList<>();
+                DTOPlayerData player =new DTOPlayerData();
 
-     player.setFullName(fullNameTxtfield.getText());
-     player.setUserName(userNameTxtfield.getText());
+                player.setFullName(fullNameTxtfield.getText());
+                player.setUserName(userNameTxtfield.getText());
+                player.setEmail(emailTxtfield.getText());
+                player.setPassword(pass.getText());
+                //player.setIsMale(false);
+                 player.setIsMale(maleRadiobtn.isSelected()); // Set true for male, false for female
+                playerList.add(player);
 
-    player.setEmail(emailTxtfield.getText());
-    player.setPassword(pass.getText());
+                DataOperation operation = new DataOperation("sign up",playerList);
+                  GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+                //Client client = new Client();
+                System.out.println(gson.toJson(operation));
+                //client.out(gson.toJson(operation));
+                 CompletableFuture<String> resultFuture = new CompletableFuture<>();
+                System.out .println("connection to server done");
+                //client.start();
+               resultFuture.thenAccept(result->{
+                     Platform.runLater(() ->{
+                          if ("error".equals(result)){
 
-
-
-    //player.setIsMale(false);
-     player.setIsMale(maleRadiobtn.isSelected()); // Set true for male, false for female
-    playerList.add(player);
-
-    DataOperation operation = new DataOperation("sign up",playerList);
-      GsonBuilder builder = new GsonBuilder();
-    Gson gson = builder.create();
-    //Client client = new Client();
-    System.out.println(gson.toJson(operation));
-    //client.out(gson.toJson(operation));
-     CompletableFuture<String> resultFuture = new CompletableFuture<>();
-    System.out .println("connection to server done");
-    //client.start();
-   resultFuture.thenAccept(result->{
-                 Platform.runLater(() ->{
-                      if ("error".equals(result)){
-
-                        userNameTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
-                        userNameTxtfield.setPromptText("Please Enter valid Password");
-                        emailTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
-                        emailTxtfield.setPromptText("Please Enter valid UserName");
-                        Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "This user is already exist");
-                         alert.show();
-                         System.out.println("cant sign up " + result);
-                     }
-                     else{
-                          try {
-                              String playerName = result;
-                              System.out.println("Player name "+playerName);
-                              OnlineListScreenController.PlayerName = playerName;
+                            userNameTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
+                            userNameTxtfield.setPromptText("Please Enter valid Password");
+                            emailTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
+                            emailTxtfield.setPromptText("Please Enter valid UserName");
+                            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "This user is already exist");
+                             alert.show();
+                             System.out.println("cant sign up " + result);
+                         }
+                         else{
+                              try {
+                                  String playerName = result;
+                                  System.out.println("Player name "+playerName);
+                                  OnlineListScreenController.playerName = playerName;
 
 
-                              FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
-                              Parent root = loader.load();
+                                  FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
+                                  Parent root = loader.load();
 
-                              //sendToServer(player);
-                              Navigate.navigateTo(root, event);
-                          } catch (IOException ex) {
-                              Logger.getLogger(SignUpScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                          }
+                                  //sendToServer(player);
+                                  Navigate.navigateTo(root, event);
+                              } catch (IOException ex) {
+                                  Logger.getLogger(SignUpScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                              }
+                         }
                      });
-                });
-              Client client = NetworkManager.getClient();
-              client.setSendDataToServer(gson.toJson(operation));
-              client.setCallback(resultFuture);
-            }
-            else{
-                System.out.println("not vaildate");
-            }
+                    });
+                  Client client = NetworkManager.getClient();
+                  client.setSendDataToServer(gson.toJson(operation));
+                  client.setCallback(resultFuture);
+                }
+                else{
+                    System.out.println("not vaildate");
+                }
         }else{
             try {
                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
@@ -166,8 +164,8 @@ public class SignUpScreenController implements Initializable {
                     Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
     }
+
 
 
     private Boolean isValidate(){
@@ -211,22 +209,15 @@ public class SignUpScreenController implements Initializable {
             else{
               pass.setStyle("-fx-border-color: ; -fx-border-width: ");
                       }
-             if( conPass.getText().length()==0){
+            if( conPass.getText().length()==0){
               conPass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
                conPass.setPromptText("you should entre match password");
-            }
-              else{
-              conPass.setStyle("-fx-border-color:; -fx-border-width: ");
-                      }
+            }else{
+                conPass.setStyle("-fx-border-color:; -fx-border-width: ");
+              }
              return false;
-
           }
-
-
-
       return true;
-
-
     }
     private boolean isPasswordMatched(){
           if(!conPass.getText().equals(pass.getText()) ){
@@ -240,11 +231,5 @@ public class SignUpScreenController implements Initializable {
                     conPass.setStyle("-fx-border-color: ; -fx-border-width:");
               return true;
            }
-
-
-    }
-
-
-
-
+        }
 }

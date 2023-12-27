@@ -5,26 +5,16 @@
  */
 package ProfileScreen;
 
-import ClientServer.Client;
 import DTO.DTOPlayerData;
-import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
-import NetworkManager.NetworkManager;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.CompletableFuture;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
