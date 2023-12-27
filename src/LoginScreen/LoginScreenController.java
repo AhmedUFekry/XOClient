@@ -10,6 +10,8 @@ import DTO.DTOPlayerData;
 import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
 import NetworkManager.NetworkManager;
+import OnlineListScreen.OnlineListScreenController;
+import ProfileScreen.ProfileScreenController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -63,7 +65,7 @@ public class LoginScreenController implements Initializable {
         // TODO
         BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/up.png");
         rootPane.setBackground(new Background(background));
-    }    
+    }
 
     @FXML
     private void goBackBtn(ActionEvent event) throws IOException {
@@ -79,7 +81,7 @@ public class LoginScreenController implements Initializable {
                         FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
                         Parent root = loader.load();
                         Navigate.navigateTo(root, event);
-                        
+
                     } catch (IOException ex) {
                         Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -160,7 +162,7 @@ public class LoginScreenController implements Initializable {
                 }
             }
         }
-        
+
     }
 
     @FXML
@@ -191,5 +193,5 @@ public class LoginScreenController implements Initializable {
         }
         return true;
     }
-    
+
 }

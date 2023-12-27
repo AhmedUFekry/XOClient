@@ -11,6 +11,8 @@ import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
 import LoginScreen.LoginScreenController;
 import NetworkManager.NetworkManager;
+import OnlineListScreen.OnlineListScreenController;
+import ProfileScreen.ProfileScreenController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -82,8 +84,8 @@ public class SignUpScreenController implements Initializable {
         // Associate ToggleGroup with radio buttons
         maleRadiobtn.setToggleGroup(genderToggleGroup);
         femaleRadiobtn.setToggleGroup(genderToggleGroup);
-        
-    }    
+
+    }
 
     @FXML
     private void signInMethod(ActionEvent event) throws IOException {
@@ -94,55 +96,57 @@ public class SignUpScreenController implements Initializable {
 
     @FXML
     private void signUpMethod(ActionEvent event) throws IOException {
-        if(NetworkManager.isClientAlive()){
-            if(isValidate()&&isPasswordMatched()){
-               List<DTOPlayerData>playerList = new ArrayList<>();
-                DTOPlayerData player =new DTOPlayerData();
+        if(isValidate()&&isPasswordMatched()){
+           List<DTOPlayerData>playerList = new ArrayList<>();
+            DTOPlayerData player =new DTOPlayerData();
 
-            player.setFullName(fullNameTxtfield.getText());
-            player.setUserName(userNameTxtfield.getText());
+     player.setFullName(fullNameTxtfield.getText());
+     player.setUserName(userNameTxtfield.getText());
 
-           player.setEmail(emailTxtfield.getText());
-           player.setPassword(pass.getText());
-
+    player.setEmail(emailTxtfield.getText());
+    player.setPassword(pass.getText());
 
 
-        //player.setIsMale(false);
-         player.setIsMale(maleRadiobtn.isSelected()); // Set true for male, false for female
-        playerList.add(player);
 
-        DataOperation operation = new DataOperation("sign up",playerList);
-          GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        //Client client = new Client();
-        System.out.println(gson.toJson(operation));
-        //client.out(gson.toJson(operation));
-         CompletableFuture<String> resultFuture = new CompletableFuture<>();
-        System.out .println("connection to server done");
-        //client.start();
-       resultFuture.thenAccept(result->{
-                     Platform.runLater(() ->{
-                          if ("error".equals(result)){
+    //player.setIsMale(false);
+     player.setIsMale(maleRadiobtn.isSelected()); // Set true for male, false for female
+    playerList.add(player);
 
-                            userNameTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
-                            userNameTxtfield.setPromptText("Please Enter valid Password");
-                            emailTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
-                            emailTxtfield.setPromptText("Please Enter valid UserName");
-                            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "This user is already exist");
-                             alert.show();
-                             System.out.println("cant sign up " + result);
-                         }
-                         else{
-                              try {
-                                  String playerName = result;
-                                  System.out.println("Player name "+playerName);
-                                  FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
-                                  Parent root = loader.load();
-                                  //sendToServer(player);
-                                  Navigate.navigateTo(root, event);
-                              } catch (IOException ex) {
-                                  Logger.getLogger(SignUpScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                              }
+    DataOperation operation = new DataOperation("sign up",playerList);
+      GsonBuilder builder = new GsonBuilder();
+    Gson gson = builder.create();
+    //Client client = new Client();
+    System.out.println(gson.toJson(operation));
+    //client.out(gson.toJson(operation));
+     CompletableFuture<String> resultFuture = new CompletableFuture<>();
+    System.out .println("connection to server done");
+    //client.start();
+   resultFuture.thenAccept(result->{
+                 Platform.runLater(() ->{
+                      if ("error".equals(result)){
+
+                        userNameTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
+                        userNameTxtfield.setPromptText("Please Enter valid Password");
+                        emailTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
+                        emailTxtfield.setPromptText("Please Enter valid UserName");
+                        Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "This user is already exist");
+                         alert.show();
+                         System.out.println("cant sign up " + result);
+                     }
+                     else{
+                          try {
+                              String playerName = result;
+                              System.out.println("Player name "+playerName);
+                              OnlineListScreenController.PlayerName = playerName;
+
+
+                              FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
+                              Parent root = loader.load();
+
+                              //sendToServer(player);
+                              Navigate.navigateTo(root, event);
+                          } catch (IOException ex) {
+                              Logger.getLogger(SignUpScreenController.class.getName()).log(Level.SEVERE, null, ex);
                           }
                      });
                 });
@@ -162,37 +166,37 @@ public class SignUpScreenController implements Initializable {
                     Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-       
+
     }
-                 
-  
+
+
     private Boolean isValidate(){
-        
-        
+
+
           if( fullNameTxtfield.getText().length()==0|| userNameTxtfield.getText().length()==0||emailTxtfield.getText().length()==0|| pass.getText().length()==0||conPass.getText().length()==0){
-             
-       
+
+
             if( fullNameTxtfield.getText().length()==0){
              fullNameTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               fullNameTxtfield.setPromptText("you should entre valid full name");
             }
-            
+
               else {
               fullNameTxtfield.setStyle("-fx-border-color: ; -fx-border-width: ");
                       }
-        
-      
-         
+
+
+
             if( userNameTxtfield.getText().length()==0){
              userNameTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               userNameTxtfield.setPromptText("you should entre valid username");
             }
-            
+
               else {
               userNameTxtfield.setStyle("-fx-border-color: ; -fx-border-width: ");
                       }
-            
-            
+
+
             if( emailTxtfield.getText().length()==0){
              emailTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               emailTxtfield.setPromptText("you should entre valid email");
@@ -215,20 +219,20 @@ public class SignUpScreenController implements Initializable {
               conPass.setStyle("-fx-border-color:; -fx-border-width: ");
                       }
              return false;
-             
+
           }
-           
-         
-      
+
+
+
       return true;
-      
-      
+
+
     }
     private boolean isPasswordMatched(){
           if(!conPass.getText().equals(pass.getText()) ){
                    pass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
                     conPass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
-             
+
               return false;
              }
            else{
@@ -236,11 +240,11 @@ public class SignUpScreenController implements Initializable {
                     conPass.setStyle("-fx-border-color: ; -fx-border-width:");
               return true;
            }
-            
-    
-    }
-    
 
-       
+
+    }
+
+
+
 
 }

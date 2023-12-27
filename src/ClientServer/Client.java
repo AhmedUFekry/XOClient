@@ -37,7 +37,7 @@ public class Client extends Thread {
     private CompletableFuture<String> callback;
     private InetAddress ipServer;
     private volatile boolean isRunning = true; // Flag to control the client thread
- 
+
     public void setSendDataToServer(String send){
         this.sendDataToServer = send;
     }
@@ -56,9 +56,9 @@ public class Client extends Thread {
                 System.out.println("ClientServer.Client.run()");
                 this.ears = new DataInputStream(this.skt.getInputStream());
                 this.ps = new PrintStream(this.skt.getOutputStream());
-                
+
                 Thread thread = new Thread(()->{
-                    while (isRunning) {                        
+                    while (isRunning) {
                     synchronized (this){
                     if(sendDataToServer!= null )
                         ps.println(sendDataToServer);
@@ -72,7 +72,7 @@ public class Client extends Thread {
                 thread.setDaemon(true);
                 thread.start();
                 System.out.println("sendDataToserver "+sendDataToServer);
-             while(isRunning){  
+             while(isRunning){
                 recieveDatafromServer = ears.readLine();
                 System.out.println("recieveDatafromServer "+recieveDatafromServer);
                 if (recieveDatafromServer.equals("Server is closing")) {
@@ -89,7 +89,7 @@ public class Client extends Thread {
                  }
                 // Notify the callback with the received data
                 notifyCallback(recieveDatafromServer);
-                
+
            }
             }else {
                System.out.println("Error: InetAddress is null. Please set a valid host using setIpServer.");
@@ -112,7 +112,7 @@ public class Client extends Thread {
     public Client(InetAddress ipServer) {
         this.ipServer = ipServer;
     }
-    
+
     public void setCallback(CompletableFuture<String> callback) {
         this.callback = callback;
     }
