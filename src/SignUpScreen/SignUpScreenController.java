@@ -9,6 +9,7 @@ import ClientServer.Client;
 import DTO.DTOPlayerData;
 import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
+import LoginScreen.LoginScreenController;
 import NetworkManager.NetworkManager;
 import OnlineListScreen.OnlineListScreenController;
 import ProfileScreen.ProfileScreenController;
@@ -83,8 +84,8 @@ public class SignUpScreenController implements Initializable {
         // Associate ToggleGroup with radio buttons
         maleRadiobtn.setToggleGroup(genderToggleGroup);
         femaleRadiobtn.setToggleGroup(genderToggleGroup);
-        
-    }    
+
+    }
 
     @FXML
     private void signInMethod(ActionEvent event) throws IOException {
@@ -98,19 +99,19 @@ public class SignUpScreenController implements Initializable {
         if(isValidate()&&isPasswordMatched()){
            List<DTOPlayerData>playerList = new ArrayList<>();
             DTOPlayerData player =new DTOPlayerData();
-    
+
      player.setFullName(fullNameTxtfield.getText());
      player.setUserName(userNameTxtfield.getText());
-   
+
     player.setEmail(emailTxtfield.getText());
     player.setPassword(pass.getText());
-    
-   
-  
+
+
+
     //player.setIsMale(false);
      player.setIsMale(maleRadiobtn.isSelected()); // Set true for male, false for female
     playerList.add(player);
-  
+
     DataOperation operation = new DataOperation("sign up",playerList);
       GsonBuilder builder = new GsonBuilder();
     Gson gson = builder.create();
@@ -123,7 +124,7 @@ public class SignUpScreenController implements Initializable {
    resultFuture.thenAccept(result->{
                  Platform.runLater(() ->{
                       if ("error".equals(result)){
-                       
+
                         userNameTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
                         userNameTxtfield.setPromptText("Please Enter valid Password");
                         emailTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
@@ -137,61 +138,65 @@ public class SignUpScreenController implements Initializable {
                               String playerName = result;
                               System.out.println("Player name "+playerName);
                               OnlineListScreenController.PlayerName = playerName;
-                              
-                              
+
+
                               FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
                               Parent root = loader.load();
-                              
+
                               //sendToServer(player);
                               Navigate.navigateTo(root, event);
                           } catch (IOException ex) {
                               Logger.getLogger(SignUpScreenController.class.getName()).log(Level.SEVERE, null, ex);
                           }
-              
-          
-          
-                            }
-                 
-                 });
-            });
-    Client client = NetworkManager.getClient();
-          client.setSendDataToServer(gson.toJson(operation));
-          client.setCallback(resultFuture);
-        }
-        else{
-        System.out.println("not vaildate");
-        }
-       
+                     });
+                });
+              Client client = NetworkManager.getClient();
+              client.setSendDataToServer(gson.toJson(operation));
+              client.setCallback(resultFuture);
+            }
+            else{
+                System.out.println("not vaildate");
+            }
+        }else{
+            try {
+                FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
+                Parent root = loader.load();
+                Navigate.navigateTo(root, event);
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
     }
-                 
-  
+
+
     private Boolean isValidate(){
-        
-        
+
+
           if( fullNameTxtfield.getText().length()==0|| userNameTxtfield.getText().length()==0||emailTxtfield.getText().length()==0|| pass.getText().length()==0||conPass.getText().length()==0){
-             
-       
+
+
             if( fullNameTxtfield.getText().length()==0){
              fullNameTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               fullNameTxtfield.setPromptText("you should entre valid full name");
             }
-            
+
               else {
               fullNameTxtfield.setStyle("-fx-border-color: ; -fx-border-width: ");
                       }
-        
-      
-         
+
+
+
             if( userNameTxtfield.getText().length()==0){
              userNameTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               userNameTxtfield.setPromptText("you should entre valid username");
             }
-            
+
               else {
               userNameTxtfield.setStyle("-fx-border-color: ; -fx-border-width: ");
                       }
-            
-            
+
+
             if( emailTxtfield.getText().length()==0){
              emailTxtfield.setStyle("-fx-border-color:red ;-fx-border-width:1px");
               emailTxtfield.setPromptText("you should entre valid email");
@@ -214,20 +219,20 @@ public class SignUpScreenController implements Initializable {
               conPass.setStyle("-fx-border-color:; -fx-border-width: ");
                       }
              return false;
-             
+
           }
-           
-         
-      
+
+
+
       return true;
-      
-      
+
+
     }
     private boolean isPasswordMatched(){
           if(!conPass.getText().equals(pass.getText()) ){
                    pass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
                     conPass.setStyle("-fx-border-color:red ; -fx-border-width:1px");
-             
+
               return false;
              }
            else{
@@ -235,11 +240,11 @@ public class SignUpScreenController implements Initializable {
                     conPass.setStyle("-fx-border-color: ; -fx-border-width:");
               return true;
            }
-            
-    
-    }
-    
 
-       
+
+    }
+
+
+
 
 }

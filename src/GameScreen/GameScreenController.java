@@ -121,10 +121,6 @@ public class GameScreenController extends GameTemplate implements Initializable 
     
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        
-        
-
-     /**************** Game Logic Init */
     // mode=2;
         turn = 0;
         p1ayMoves = "";
@@ -174,7 +170,6 @@ public class GameScreenController extends GameTemplate implements Initializable 
             else
                 symbolsImgs.get(index).setImage(new Image(OIMG.getMark()));
            p1ayMoves += index;
-            p1ayMoves = p1ayMoves + index;
             btn.setDisable(true);
             checkResult();
         });
@@ -335,6 +330,8 @@ public class GameScreenController extends GameTemplate implements Initializable 
         for (Button b : boardBtns) {
             resetBtn(b);
         }
+        for(ImageView img : symbolsImgs)
+            removeSymbol(img);
     }
     public void resetBtn(Button btn) {
         btn.setDisable(false);
@@ -344,7 +341,6 @@ public class GameScreenController extends GameTemplate implements Initializable 
     public void setPlayerSymbol(Button btn) {
         if (turn % 2 == 0) {
             btn.setText(X.getMark());
-            
             turn = 1;
         } else {
             btn.setText(O.getMark());
@@ -410,8 +406,9 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
   
 
-  public void setMode(int mode){
-        this.mode = mode;
+    //remove the image from the button
+    private void removeSymbol(ImageView img) {
+        img.setImage(null);
     }
 
   

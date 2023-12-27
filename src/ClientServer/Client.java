@@ -5,6 +5,9 @@
  */
 package ClientServer;
 
+import ExtraComponent.ExtraComponent;
+import LoginScreen.LoginScreenController;
+import StartScreen.StartScreenController;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,6 +19,13 @@ import java.net.UnknownHostException;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import xoclient.Navigate;
 
 public class Client extends Thread {
 
@@ -26,12 +36,8 @@ public class Client extends Thread {
     private String recieveDatafromServer;
     private CompletableFuture<String> callback;
     private InetAddress ipServer;
+    private volatile boolean isRunning = true; // Flag to control the client thread
 
-    public Client() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
- 
     public void setSendDataToServer(String send){
         this.sendDataToServer = send;
     }
@@ -45,18 +51,47 @@ public class Client extends Thread {
 
     public void run(){
         try {
-            if (ipServer != null) {
+            if (ipServer != null ) {
                 this.skt = new Socket(ipServer, 5050);
                 System.out.println("ClientServer.Client.run()");
                 this.ears = new DataInputStream(this.skt.getInputStream());
                 this.ps = new PrintStream(this.skt.getOutputStream());
-                ps.println(sendDataToServer);
+
+                Thread thread = new Thread(()->{
+                    while (isRunning) {
+                    synchronized (this){
+                    if(sendDataToServer!= null )
+                        ps.println(sendDataToServer);
+                    sendDataToServer = null;
+                    try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }}});
+                thread.setDaemon(true);
+                thread.start();
                 System.out.println("sendDataToserver "+sendDataToServer);
+             while(isRunning){
                 recieveDatafromServer = ears.readLine();
                 System.out.println("recieveDatafromServer "+recieveDatafromServer);
+                if (recieveDatafromServer.equals("Server is closing")) {
+                        System.out.println("server closed");
+                       // notifyCallback(recieveDatafromServer);
+                       stopClient(); // Stop the client when server is closing
+                       showServerClosedAlert();
+                        break;
+                    }
+                 if("client exit".equalsIgnoreCase(recieveDatafromServer)){
+                    notifyCallback(recieveDatafromServer);
+                    stopClient();
+                    break;
+                 }
                 // Notify the callback with the received data
                 notifyCallback(recieveDatafromServer);
-          } else {
+
+           }
+            }else {
                System.out.println("Error: InetAddress is null. Please set a valid host using setIpServer.");
           }
         } catch(UnknownHostException e){
@@ -66,11 +101,10 @@ public class Client extends Thread {
             notifyCallback("Error: Connection refused: The server may not be running or is unreachable.");
         }catch(SocketException es){
             notifyCallback("Error: Network is unreachable: connect");
-        }
-        catch (IOException ex) {
+        }catch (IOException ex) {
             ex.printStackTrace();
             notifyCallback("Error: " + ex.getMessage());
-        } finally {
+        }finally {
             closeResources();
         }
     }
@@ -78,7 +112,7 @@ public class Client extends Thread {
     public Client(InetAddress ipServer) {
         this.ipServer = ipServer;
     }
-    
+
     public void setCallback(CompletableFuture<String> callback) {
         this.callback = callback;
     }
@@ -123,4 +157,21 @@ public class Client extends Thread {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    public void stopClient() {
+        isRunning = false; // Set the flag to stop the client
+        closeResources();
+    }
+    private void showServerClosedAlert() {
+        Platform.runLater(() -> {
+            Alert alert = ExtraComponent.showAlertChooseSymbol(
+                        Alert.AlertType.ERROR,
+                        "Error",
+                        "The server is closing. Please try again later.");
+                 alert.showAndWait();
+              // Get the controller for the StartScreen
+                //navigate here
+            }
+        );
+    }
+
 }
