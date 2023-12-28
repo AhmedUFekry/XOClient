@@ -195,8 +195,6 @@ public class OnlineListScreenController implements Initializable {
           });          
           client.setSendDataToServer(gson.toJson(request));
           System.out.println("Data send to request for a game "+gson.toJson(request));
-          client.setCallback(resultFuture);
-
-          
+          client.setCallback(resultFuture);  
     }
 }
