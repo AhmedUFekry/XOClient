@@ -5,6 +5,7 @@
  */
 package OnlineListScreen;
 
+import DTO.DTOPlayerData;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -17,7 +18,7 @@ import javafx.scene.text.Font;
  *
  * @author DELL
  */
-public class CustomListCell extends ListCell<String> {
+public class CustomListCell extends ListCell<DTOPlayerData> {
 
     protected final HBox cell;
     protected final ImageView playerImage;
@@ -96,13 +97,15 @@ public class CustomListCell extends ListCell<String> {
 
     
    @Override
-   protected void updateItem(String item, boolean empty) {
+   protected void updateItem(DTOPlayerData item, boolean empty) {
        super.updateItem(item, empty);
 
        if (item != null && !empty) {
          //Set icon, label, and button properties
          //icon.setImage(new Image("/girlIcon.png"));
-           playerName.setText(item);
+           playerName.setText(item.getFullName());
+           statusTxt.setText("Online");
+           playerImage.setImage(new Image(getClass().getResource("/Icons/boy.png").toExternalForm()));
         //   inviteBtn.setText("Button");
            setGraphic(cell);
        }else {

@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/ProfileScreen/ProfileScreenController.java</file>
             <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/OnlineListScreen/OnlineListScreenController.java</file>
-            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/LoginScreen/LoginScreenController.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/DTO/DataOperation.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/NetworkManager/NetworkManager.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/DTO/SendRequest.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/OnlineListScreen/CustomListCell.java</file>
         </group>
     </open-files>
 </project-private>

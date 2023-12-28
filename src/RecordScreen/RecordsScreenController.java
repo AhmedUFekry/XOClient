@@ -45,7 +45,8 @@ public class RecordsScreenController implements Initializable {
              recordListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>(){
             @Override
             public ListCell<String> call(ListView<String> param) {
-             return new  CustomListCell();
+             //return new  CustomListCell();
+             return null;
             }
             
         });  

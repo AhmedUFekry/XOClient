@@ -30,21 +30,11 @@ import xoclient.Navigate;
 public class ResultScreenController implements Initializable {
     
     private Label label;
-    @FXML
     private MediaView resVideo;
-    @FXML
     private Label resultTxt;
-    @FXML
-    private Button exitBtn;
-    @FXML
-    private Button playAgainBtn;
-    @FXML
-    private Label txtCounter;
     
     private  String video;
     private char result;
-    @FXML
-    private BorderPane resultRoot;
     
     public ResultScreenController(char result){
         this.result = result;
@@ -71,14 +61,12 @@ public class ResultScreenController implements Initializable {
         mediaPlayer.play();
     }    
 
-    @FXML
     private void exitTheGame(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
           Parent root = loader.load();
           Navigate.navigateTo(root, event);
     }
 
-    @FXML
     private void playAgain(ActionEvent event) throws IOException {
          FXMLLoader loader = new FXMLLoader (getClass().getResource("/ResultScreen/ResultScreen.fxml")) ;
          Parent root = loader.load();

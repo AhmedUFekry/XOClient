@@ -11,7 +11,6 @@ import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
 import NetworkManager.NetworkManager;
 import OnlineListScreen.OnlineListScreenController;
-import ProfileScreen.ProfileScreenController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -121,7 +120,7 @@ public class LoginScreenController implements Initializable {
                  // Use CompletableFuture for handling the asynchronous result
                 CompletableFuture<String> resultFuture = new CompletableFuture<>();
                  // Set the callback for the result
-                 resultFuture.thenAccept(result->{
+                 resultFuture.thenAccept(result-> {
                      Platform.runLater(() ->{
                           if("error".equals(result)){
                              txtFieldPassword.setStyle("-fx-border-color: red ; -fx-border-width:2px");
