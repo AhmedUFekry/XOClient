@@ -5,8 +5,10 @@
  */
 package ExtraComponent;
 
+import ResultScreen.ResultScreenBase;
 import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BackgroundImage;
@@ -29,6 +31,7 @@ public class ExtraComponent {
            return alert; 
     }
     
+    
     public static String openDialog(String title, String contentText){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle(title);
@@ -49,6 +52,13 @@ public class ExtraComponent {
         );
         return background;
     }
-
+    public static Alert requestAlert(String playerName){
+        Alert alert = new Alert(Alert.AlertType.NONE);
+       ResultScreenBase testAlert = new ResultScreenBase();
+       DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setContent(testAlert.paneRoot);
+        dialogPane.getButtonTypes().clear(); 
+        return alert;
+    }
 }
 

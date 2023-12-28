@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
  */
 public class NetworkManager {
     private static Client client;
-    private static InetAddress ipServer;
+    private static InetAddress ipServer; 
     // Private constructor to prevent instantiation
     private NetworkManager() {}
     public static void setIpServer(String host) throws UnknownHostException{
