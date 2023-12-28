@@ -125,7 +125,7 @@ public class SignUpScreenController implements Initializable {
                             userNameTxtfield.setPromptText("Please Enter valid Password");
                             emailTxtfield.setStyle("-fx-border-color: red ; -fx-border-width:2px");
                             emailTxtfield.setPromptText("Please Enter valid UserName");
-                            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "This user is already exist");
+                            Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "This user is already exist");
                              alert.show();
                              System.out.println("cant sign up " + result);
                          }

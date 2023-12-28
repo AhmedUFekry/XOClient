@@ -105,7 +105,7 @@ public class StartScreenController implements Initializable {
                 resultFuture.whenComplete((result, exception)-> {
                     Platform.runLater(() -> {
                         if(exception != null){
-                            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", exception.getMessage());
+                            Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", exception.getMessage());
                             alert.show();
                         }else{
                             if ("connected successfully".equals(result)) {
@@ -119,7 +119,7 @@ public class StartScreenController implements Initializable {
                             } else {
                                 // Handle start connect to the server failure
                                 System.out.println("cant connect tot the server" + result);
-                                Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Can not connect to the server");
+                                Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "Can not connect to the server");
                                 alert.show();
                             }
                         }});
@@ -130,13 +130,13 @@ public class StartScreenController implements Initializable {
                 client.setCallback(resultFuture);
             } catch (UnknownHostException ex) {
                // ex.printStackTrace();
-                Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "Unknown Host Exception: Enter the correct IP.");
+                Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "Unknown Host Exception: Enter the correct IP.");
                 alert.show();
             }
         }else if (serverData == null) {
             System.out.println("dialog is closed");
         }else if(serverData.isEmpty() ){
-            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "please enter the server ip");
+            Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "please enter the server ip");
             alert.show(); 
         }
     }

@@ -163,7 +163,7 @@ public class Client extends Thread {
     }
     private void showServerClosedAlert() {
         Platform.runLater(() -> {
-            Alert alert = ExtraComponent.showAlertChooseSymbol(
+            Alert alert = ExtraComponent.showAlert(
                         Alert.AlertType.ERROR,
                         "Error",
                         "The server is closing. Please try again later.");
