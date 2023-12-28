@@ -41,12 +41,9 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-<<<<<<< HEAD
 import javafx.util.Callback;
 import javax.print.DocFlavor;
-=======
 import javafx.stage.Stage;
->>>>>>> a580625f5498b687fcd2b896627ace87d298574b
 import xoclient.Navigate;
 
 /**
@@ -63,18 +60,17 @@ public class OnlineListScreenController implements Initializable {
     @FXML
     private Button singlrModeBtn;
     @FXML
-<<<<<<< HEAD
-    private ListView<String> listView;
 
-    VBox vb;
+    /*private ListView<String> listView;
+
     private ObservableList<String> items;
 
     private DTOPlayerData currentPlayer;
     public static String playerName;
     public List<DTOPlayerData> playerList;
-    public List<String> availablePlayerNames;
+    public List<String> availablePlayerNames;*/
     
-=======
+
     private ListView<DTOPlayerData> listView;
     
     VBox vb ;
@@ -82,19 +78,18 @@ public class OnlineListScreenController implements Initializable {
 
    private DTOPlayerData currentPlayer;
    public static String playerName;
-   private ObservableList<DTOPlayerData> availabLeList;
->>>>>>> a580625f5498b687fcd2b896627ace87d298574b
+   public ObservableList<DTOPlayerData> availabLeList;
+
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-<<<<<<< HEAD
 
         ////////////////////////////////
-        availablePlayerNames = new ArrayList<>();
-        playerList = new ArrayList<>();
+       // availablePlayerNames = new ArrayList<>();
+       // playerList = new ArrayList<>();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         CompletableFuture<String> resultFuture = new CompletableFuture<>();
@@ -109,11 +104,17 @@ public class OnlineListScreenController implements Initializable {
                     java.lang.reflect.Type listType = new TypeToken<ArrayList<DTOPlayerData>>() {
                     }.getType();
                     List<DTOPlayerData> playerLists = gson.fromJson(result, listType);
+                    
+                      availabLeList = FXCollections.observableArrayList(playerLists);
 
-                    for(int i = 0 ; i < 2; i++){
+                       listView.setItems(availabLeList);
+                       listView.setCellFactory((ListView<DTOPlayerData> param) -> new  CustomListCell());  
+                       listView.setOnMouseClicked(event -> handleListViewClicked());
+
+                    /*for(int i = 0 ; i < 2; i++){
                         availablePlayerNames.add(playerLists.get(i).getUserName()); 
-                    }
-                    items = FXCollections.observableArrayList(availablePlayerNames);
+                    }*/
+                   /* items = FXCollections.observableArrayList(availablePlayerNames);
                     listView.setItems(items);
                     listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
                         @Override
@@ -122,6 +123,7 @@ public class OnlineListScreenController implements Initializable {
                         }
                     });
                     listView.setOnMouseClicked(event -> handleListViewClicked());
+                    */
 
                 }
             });
@@ -131,21 +133,10 @@ public class OnlineListScreenController implements Initializable {
         Client client = NetworkManager.getClient();
         client.setSendDataToServer("availableUsers");
         client.setCallback(resultFuture);
-
-        ///////////////////////////////
-        // TODO
     }
-=======
-        // TODODTO
-        DTOPlayerData player = new DTOPlayerData("aya", "aya", "email", "1234", 0, 0, 0, true, true, true);
-        DTOPlayerData player2 = new DTOPlayerData("rwan2", "aya", "", "", 1, 0, 2, true, true, true);
-        availabLeList = FXCollections.observableArrayList(player, player2);
+       
+       
 
-        listView.setItems(availabLeList);
-        listView.setCellFactory((ListView<DTOPlayerData> param) -> new  CustomListCell());  
-        listView.setOnMouseClicked(event -> handleListViewClicked());
-    }    
->>>>>>> a580625f5498b687fcd2b896627ace87d298574b
 
     @FXML
     private void logoutMethod(ActionEvent event) throws IOException {
@@ -157,50 +148,7 @@ public class OnlineListScreenController implements Initializable {
 
     @FXML
     private void goToProfileScreen(ActionEvent event) throws IOException {
-<<<<<<< HEAD
 
-        List<DTOPlayerData> playerList = new ArrayList<>();
-        DTOPlayerData player = new DTOPlayerData();
-        player.setUserName(playerName);
-
-        playerList.add(player);
-        DataOperation operation = new DataOperation("profile", playerList);
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        System.out.println(gson.toJson(operation));
-        CompletableFuture<String> resultFuture = new CompletableFuture<>();
-        // Set the callback for the result
-        resultFuture.thenAccept(result -> {
-            Platform.runLater(() -> {
-                if (result.equals("error")) {
-                    Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
-                    alert.show();
-                    System.out.println("cant login " + result);
-                } else {
-                    try {
-                        DTOPlayerData dataReceived = new Gson().fromJson(result, DTOPlayerData.class);
-                        System.out.println("OnlineListScreen.OnlineListScreenController.goToProfileScreen()" + dataReceived.getPassword());
-                        ProfileScreenController profile = new ProfileScreenController(dataReceived);
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileScreen/ProfileScreen.fxml"));
-                        loader.setController(profile);
-                        currentPlayer = dataReceived;
-                        // profile.setPlayerData(dataReceived);
-
-                        Parent root = loader.load();
-                        Navigate.navigateTo(root, event);
-                    } catch (IOException ex) {
-                        Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-            });
-
-        }
-        );
-        Client client = NetworkManager.getClient();
-        client.setSendDataToServer(gson.toJson(operation));
-        client.setCallback(resultFuture);
-=======
         List<DTOPlayerData> playerList = new ArrayList<>();
             DTOPlayerData player = new DTOPlayerData();
             player.setUserName(playerName.trim());
@@ -240,7 +188,6 @@ public class OnlineListScreenController implements Initializable {
           Client client = NetworkManager.getClient();
           client.setSendDataToServer(gson.toJson(operation));
           client.setCallback(resultFuture);
->>>>>>> a580625f5498b687fcd2b896627ace87d298574b
     }
 
     @FXML
@@ -251,20 +198,7 @@ public class OnlineListScreenController implements Initializable {
     }
 
     private void handleListViewClicked() {
-<<<<<<< HEAD
-        int item = listView.getSelectionModel().getSelectedIndex();
-
-        System.out.println("OnlineListScreen.OnlineListScreenController.handleListViewClicked()" + items.get(item));
-
-        String currentPlayer = "Curent Player";
-        String invitedPlayer = items.get(item);
-
-    }
-
-    private void sendRequest(String invitedPlayer) {
-        DTOPlayerData invitedPlayerData = new DTOPlayerData();
-
-=======
+        
        int item = listView.getSelectionModel().getSelectedIndex();
        if (item >= 0) {
             System.out.println("OnlineListScreen.OnlineListScreenController.handleListViewClicked()"+item);
@@ -320,14 +254,5 @@ public class OnlineListScreenController implements Initializable {
           client.setSendDataToServer(gson.toJson(request));
           System.out.println("Data send to request for a game "+gson.toJson(request));
           client.setCallback(resultFuture);
-
-          
->>>>>>> a580625f5498b687fcd2b896627ace87d298574b
-    }
-
-    private static class Type {
-
-        public Type() {
-        }
     }
 }
