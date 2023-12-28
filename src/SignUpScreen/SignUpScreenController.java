@@ -12,7 +12,6 @@ import ExtraComponent.ExtraComponent;
 import LoginScreen.LoginScreenController;
 import NetworkManager.NetworkManager;
 import OnlineListScreen.OnlineListScreenController;
-import ProfileScreen.ProfileScreenController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -135,11 +134,8 @@ public class SignUpScreenController implements Initializable {
                                   String playerName = result;
                                   System.out.println("Player name "+playerName);
                                   OnlineListScreenController.playerName = playerName;
-
-
                                   FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml"));
                                   Parent root = loader.load();
-
                                   //sendToServer(player);
                                   Navigate.navigateTo(root, event);
                               } catch (IOException ex) {

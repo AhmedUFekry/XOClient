@@ -8,7 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="XOClient.jar" size="12286758" download="eager" />
+=======
+    <jar href="XOClient.jar" size="12316273" download="eager" />
+>>>>>>> a580625f5498b687fcd2b896627ace87d298574b
     <jar href="lib\gson-2.2.4.jar" size="190418" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="XOClient" >
