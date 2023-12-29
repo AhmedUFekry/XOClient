@@ -17,18 +17,19 @@ public class Recordings {
     
      private File dir;
     private File file;
-    private String recordsDirPath ;//= "./GameRecords";
+    private String recordsDirPath = "src/GameRecordss";//= "./GameRecords";
     private File[] recordsList;
     private FileInputStream fis;
     private DataInputStream dis;
 
-    public Recordings(String recordsDirPath) {
-        this.recordsDirPath = recordsDirPath;
-        dir = new File(recordsDirPath);
+    public Recordings() {
+        //this.recordsDirPath = recordsDirPath;
+        //dir = new File(recordsDirPath);
 
     }
 
     public String[] getRecordedGamesList() {
+        dir = new File("src/GameRecordss");
         String[] Str;
         recordsList = dir.listFiles();
         StringBuilder fileList = new StringBuilder();
@@ -38,9 +39,9 @@ public class Recordings {
                 //file.getName();
                 fileList.append(file.getName()).append("#");
             }
-            //System.out.println(fileList.toString());
+            System.out.println(fileList.toString());
             Str = splitter(fileList.toString() , "#");
-            getRecord(Str[8]);
+            //getRecord(Str[4]);
             return  Str;
             
         } else {
@@ -101,14 +102,14 @@ public class Recordings {
                     
                     //////////////
                     gameMovmentsInteger = new int[gameMovments.length()];
-                    for(int i = 0 ; i < gameMovments.length() ; i++){
+                    for(int i = 0 ; i < gameMovments.length() - 1 ; i++){
                         
                           char charValue = gameMovments.charAt(i);
                           int intValue = charValue - '0';
                           gameMovmentsInteger[i] = intValue; 
                           System.out.println(gameMovmentsInteger[i]);
                     }
-                    recordObject.setGameMoves(gameMovmentsInteger);
+                    
                     /////////////
                     
                     recordObject.setGameMoves(gameMovmentsInteger);

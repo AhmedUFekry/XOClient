@@ -25,7 +25,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -59,6 +62,9 @@ import xoclient.Navigate;
  * @author LENOVO
  */
 public class GameScreenController extends GameTemplate implements Initializable {
+
+
+     
    
      // Logic variables
     private ArrayList<Button> boardBtns;                //BoardButtons
@@ -71,6 +77,9 @@ public class GameScreenController extends GameTemplate implements Initializable 
     private String p1ayMoves;
     private RecordGame recordGame;
     private boolean isRecord;
+    private int[] recordedMovments;
+    private boolean recordedGame;
+
             
     MiniMaxAI ticTacToeAI = new MiniMaxAI();
      Random random ;
@@ -150,14 +159,76 @@ public class GameScreenController extends GameTemplate implements Initializable 
 };
     
 
-    
+   
    public GameScreenController(int mode){
         this.mode = mode;
+   }
+
+   public GameScreenController(int[] recordedMovmentss , boolean recordedGamee){   
+       recordedGame = recordedGamee;
+       recordedMovments = recordedMovmentss;
+        
     }
+  
+   
+   
+      /**
+     * @return the recordedMovments
+     */
+    public int[] getRecordedMovments() {
+        return recordedMovments;
+    }
+
+    /**
+     * @param recordedMovments the recordedMovments to set
+     */
+    public void setRecordedMovments(int[] recordedMovments) {
+        this.recordedMovments = recordedMovments;
+    }
+    
+public void playRecordedGame(int[] game) {
+    recBtn.setDisable(true);
+    scoreP1.setVisible(false);
+    scoreP2.setVisible(false);
+    new Thread(() -> {
+        boolean turnn = true;
+        for (int i = 0; i < game.length; i++) {
+            try {
+                final int move = game[i];
+                final boolean isXPlayerTurn = turnn; // Capture the turn outside the lambda
+                Platform.runLater(() -> {
+                    if (isXPlayerTurn) {
+                        //boardBtns.get(move).setText("X");
+                         symbolsImgs.get(move).setImage(new Image(XIMG.getMark()));
+                        
+                    } else {
+                        //boardBtns.get(move).setText("O");
+                        symbolsImgs.get(move).setImage(new Image(OIMG.getMark()));
+                    }
+                });
+                turnn = !turnn; // Toggle the turn
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }).start();
+}
+
     
     
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+        if(recordedGame){
+             playRecordedGame(recordedMovments);
+        }
+        
+        
+       // System.out.println(recordedMovments[3]);
+        
+
+     /**************** Game Logic Init */
     // mode=2;
         turn = 0;
         p1ayMoves = "";
@@ -175,6 +246,7 @@ public class GameScreenController extends GameTemplate implements Initializable 
     }
     @Override
     public void start() {
+
         exitBtn.addEventHandler(ActionEvent.ACTION, e -> {
             System.out.println("hello");
             });
@@ -189,10 +261,9 @@ public class GameScreenController extends GameTemplate implements Initializable 
                 playMid(button); 
             else if (mode == 3)//add hard mode play here
                 playHardMode(button); 
-            else if(mode == 4){
+            else if(mode == 4)
                 play(button);    
-            }
-                
+               
         });
     }
    
@@ -511,6 +582,18 @@ private void makeRandomMove() {
             Logger.getLogger(GameScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    
+    public void disableGamePad(){
+    
+        for (int i = 0; i < 9; i++) {
+            boardBtns.get(i).setDisable(true);
+        }
+    
+    
+    }
+
+
     
     public void makeComputerMove(){
         int move = ticTacToeAI.minMaxDecision(getBoardState());    
