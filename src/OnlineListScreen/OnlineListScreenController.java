@@ -9,6 +9,7 @@ import ClientServer.Client;
 import DTO.DTOPlayerData;
 import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
+import GameScreen.GameScreenBase;
 import GameScreen.GameScreenController;
 import NetworkManager.NetworkManager;
 import ProfileScreen.ProfileScreenController;
@@ -190,36 +191,12 @@ public class OnlineListScreenController implements Initializable {
         resultFuture.thenAccept(result->{
                  Platform.runLater(() ->{
                      System.out.println("response from server for request "+result);
-                     if(result.equalsIgnoreCase("user invited")){
-                         Alert alert = ExtraComponent.showAlert(Alert.AlertType.CONFIRMATION, "Request", "Request");
-                         ButtonType acceptButton = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
-                         ButtonType rejectButton = new ButtonType("Reject", ButtonBar.ButtonData.CANCEL_CLOSE);
-                         alert.getButtonTypes().setAll(acceptButton, rejectButton);
-                         Optional<ButtonType> resultButton = alert.showAndWait();
-                         if (resultButton.isPresent()) {
-                              if (resultButton.get() == acceptButton) {
-                                 client.setSendDataToServer("start the game"); //send to the server start the game 
-                                 System.out.println("User clicked Accept");
-                        } else if (resultButton.get() == rejectButton) {
-                            client.setSendDataToServer("rejected the game");
-                             System.out.println("User clicked Reject");
-                        }
-                        }else {
-                              System.out.println("User closed the alert without clicking a button");
-                        }
-                     }else if(result.equalsIgnoreCase("start the game")){ 
+                     if(result.equalsIgnoreCase("start the game")){
+                         client.setCurrSym("X");
+                         
+                         //Navigation
                          System.out.println(" start the game ");
-                        /* try {
-                            //if players accept to play together
-                            GameScreenController controller = new GameScreenController(4);
-                            FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
-                            loader.setController(controller);
-                            Parent root = loader.load();
-                            Navigate.navigateTo(root, event);
-                            System.out.println(" start the game ");
-                         } catch (IOException ex) {
-                             Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
-                         }*/
+                        Navigate.navigateTo(new GameScreenBase(client));
                      }else if(result.equalsIgnoreCase("rejected the game")){
                          Alert alert = ExtraComponent.showAlert(Alert.AlertType.INFORMATION, "Information ", "Rejected");
                          alert.show();
@@ -230,4 +207,5 @@ public class OnlineListScreenController implements Initializable {
           System.out.println("Data send to request for a game "+gson.toJson(request));
           client.setCallback(resultFuture);
     }
+    
 }

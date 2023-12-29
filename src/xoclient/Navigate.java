@@ -51,6 +51,13 @@ import javafx.stage.Stage;
         stage = currentStage;
         showScene();
     }
+    
+    // navigate by stage parameter
+    public static void navigateTo(Parent distinationRoot){
+        scene = new Scene(distinationRoot);
+      
+        showScene();
+    }
    
     private static void showScene(){
         stage.setScene(scene);

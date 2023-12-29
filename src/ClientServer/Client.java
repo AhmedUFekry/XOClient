@@ -5,10 +5,16 @@
  */
 package ClientServer;
 
+import DTO.MoveDTO;
+import DTO.MoveOperation;
 import ExtraComponent.ExtraComponent;
+import GameScreen.GameScreenBase;
 import GameScreen.GameScreenController;
 import LoginScreen.LoginScreenController;
 import StartScreen.StartScreenController;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -40,6 +46,24 @@ public class Client extends Thread {
     private String recieveDatafromServer;
     private CompletableFuture<String> callback;
     private InetAddress ipServer;
+    private String currSym ;
+    private MoveDTO currMoveDto ;
+
+    public MoveDTO getCurrMoveDto() {
+        return currMoveDto;
+    }
+
+    public void setCurrMoveDto(MoveDTO currMoveDto) {
+        this.currMoveDto = currMoveDto;
+    }
+
+    public String getCurrSym() {
+        return currSym;
+    }
+
+    public void setCurrSym(String currSym) {
+        this.currSym = currSym;
+    }
     private volatile boolean isRunning = true; // Flag to control the client thread
 
     public void setSendDataToServer(String send) {
@@ -83,6 +107,7 @@ public class Client extends Thread {
                 while (isRunning) {
                     recieveDatafromServer = ears.readLine();
                     if (recieveDatafromServer != null) {
+                        System.out.println(".>>>>>>>>>>>>>>>>>>>>>>>>"+ recieveDatafromServer.substring(0, 4));
                         System.out.println("recieveDatafromServer " + recieveDatafromServer);
                         if (recieveDatafromServer.equals("Server is closing")) {
                             System.out.println("server closed");
@@ -115,7 +140,8 @@ public class Client extends Thread {
                                 if (resultButton.isPresent()) {
                                     if (resultButton.get() == acceptButton) {
                                         this.setSendDataToServer("start the game");
-                                        
+                                        this.setCurrSym("O");
+                                        Navigate.navigateTo(new GameScreenBase(this));
                                         
                                         System.out.println("User clicked Accept");
                                     } else if (resultButton.get() == rejectButton) {
@@ -128,12 +154,16 @@ public class Client extends Thread {
                             });
 
                             //  break;
+                        }if(recieveDatafromServer.substring(0, 4).equals("play")){
+                            System.out.println("play");
+                           String move= recieveDatafromServer.substring(4);
+                            handleClientOperation(move);
                         }
                         // Notify the callback with the received data
                         notifyCallback(recieveDatafromServer);
                         System.out.println("after notify call back");
                     }else{
-                       //System.out.println("recieved data null");
+                       
                        
                     }
                 }
@@ -231,6 +261,11 @@ public class Client extends Thread {
         );
     }
     
+    
+    
+    public void SendMoveToServer(String msg){
+        setSendDataToServer(msg);
+    }
   /*  public void goToOnlineGameScreen(){
         try {
             Stage primaryStage = new Stage();
@@ -246,6 +281,12 @@ public class Client extends Thread {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }*/
+
+    private synchronized void handleClientOperation(String inMsg) {
+      int index = Integer.parseInt(inMsg.substring(0,1));
+      String sym = inMsg.substring(1);
+      currMoveDto = new MoveDTO(index,sym);
+    }
     
 
 }
