@@ -25,7 +25,7 @@ public class RecordGame {
     private String timeStamp;
     private String timeStampAfterReplace;
     private String newFileName;
-    private String recordsDirPath = "./GameRecords";
+    private String recordsDirPath = "src/GameRecordss";
     private File file;
     private FileOutputStream fos;
     private DataOutputStream dos;

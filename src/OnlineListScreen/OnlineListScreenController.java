@@ -23,8 +23,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +49,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javax.print.DocFlavor;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import xoclient.Navigate;
 
 /**
@@ -94,6 +100,9 @@ public class OnlineListScreenController implements Initializable {
         Gson gson = builder.create();
         CompletableFuture<String> resultFuture = new CompletableFuture<>();
         // Set the callback for the result
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+
         resultFuture.thenAccept(result -> {
             Platform.runLater(() -> {
                 if (result.equals("error")) {
@@ -130,10 +139,21 @@ public class OnlineListScreenController implements Initializable {
 
         }
         );
-        Client client = NetworkManager.getClient();
-        client.setSendDataToServer("availableUsers");
-        client.setCallback(resultFuture);
-    }
+       /* Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(3), event -> {
+                    // Add a new item to the list
+                    
+                })
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();*/
+    Client client = NetworkManager.getClient();
+    client.setSendDataToServer("availableUsers");
+    client.setCallback(resultFuture);
+};
+    
+
+
        
        
 
