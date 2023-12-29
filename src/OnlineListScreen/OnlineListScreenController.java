@@ -9,6 +9,7 @@ import ClientServer.Client;
 import DTO.DTOPlayerData;
 import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
+import GameScreen.GameScreenController;
 import NetworkManager.NetworkManager;
 import ProfileScreen.ProfileScreenController;
 import com.google.gson.Gson;
@@ -206,19 +207,22 @@ public class OnlineListScreenController implements Initializable {
                         }else {
                               System.out.println("User closed the alert without clicking a button");
                         }
-                     }else if(result.equalsIgnoreCase("start the game")){ //if players accept to play together
-                        /* GameScreenController controller = new GameScreenController(4);
-                          FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
-                          loader.setController(controller);
-                          Parent root = loader.load();
-                          Navigate.navigateTo(root, event);*/
-                          System.out.println(" start the game ");
+                     }else if(result.equalsIgnoreCase("start the game")){ 
+                         System.out.println(" start the game ");
+                        /* try {
+                            //if players accept to play together
+                            GameScreenController controller = new GameScreenController(4);
+                            FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
+                            loader.setController(controller);
+                            Parent root = loader.load();
+                            Navigate.navigateTo(root, event);
+                            System.out.println(" start the game ");
+                         } catch (IOException ex) {
+                             Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                         }*/
                      }else if(result.equalsIgnoreCase("rejected the game")){
                          Alert alert = ExtraComponent.showAlert(Alert.AlertType.INFORMATION, "Information ", "Rejected");
                          alert.show();
-                     }else if(result.equalsIgnoreCase("timeout")){
-                          Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "error");
-                          alert.show();
                      }
                 });
           });          

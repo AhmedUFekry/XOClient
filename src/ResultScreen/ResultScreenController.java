@@ -72,19 +72,5 @@ public class ResultScreenController implements Initializable {
          Parent root = loader.load();
          Navigate.navigateTo(root, event);
     }
-    /*public void setResult(char result){
-         switch(result){
-             case 'X':
-                 video = "/videos/winner.mp4";
-                break;
-             case 'O':
-                 video = "/videos/loser.mp4";
-                 break;
-             default:
-                 video = "/videos/draw.mp4";
-         }
-        resultTxt.setText("The Winner is "+result);
-    }*/
-    
 }
 
