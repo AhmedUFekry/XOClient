@@ -44,7 +44,6 @@ public class ProfileScreenController implements Initializable {
     private Label drawLabel;
     @FXML
     private Label loseLabel;
-    @FXML
     private Button showRecordsBtn;
     @FXML
     private BorderPane rootPane;
@@ -70,6 +69,7 @@ public class ProfileScreenController implements Initializable {
                        winLabel.setText(""+player.getWinMatch());
                         loseLabel.setText(""+player.getLoseMAtch());
                         drawLabel.setText(""+Draw);
+                        
                       
 
            
@@ -104,10 +104,5 @@ public class ProfileScreenController implements Initializable {
 }
 
 
-        @FXML
-        private void displayRecordOnline(ActionEvent event) throws IOException {
-            FXMLLoader loader = new FXMLLoader (getClass().getResource("/RecordScreen/RecordsScreen.fxml")) ;
-              Parent root = loader.load();
-              Navigate.navigateTo(root, event);
-        }
+        
     }
