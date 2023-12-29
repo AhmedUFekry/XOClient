@@ -64,8 +64,6 @@ public class OnlineListScreenController implements Initializable {
     @FXML
     private Button profileBtn;
     @FXML
-    private Button singlrModeBtn;
-    @FXML
 
     /*private ListView<String> listView;
 
@@ -215,7 +213,6 @@ public class OnlineListScreenController implements Initializable {
         client.setCallback(resultFuture);
     }
 
-    @FXML
     private void gotoSingleMode(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScreen/GameScreen.fxml"));
         Parent root = loader.load();
