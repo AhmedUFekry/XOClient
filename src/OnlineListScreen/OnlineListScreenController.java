@@ -115,7 +115,7 @@ public class OnlineListScreenController implements Initializable {
                     List<DTOPlayerData> playerLists = gson.fromJson(result, listType);
                     
                       availabLeList = FXCollections.observableArrayList(playerLists);
-
+                      System.out.println("انا بطبع الليست تاني");
                        listView.setItems(availabLeList);
                        listView.setCellFactory((ListView<DTOPlayerData> param) -> new  CustomListCell());  
                        listView.setOnMouseClicked(event -> handleListViewClicked());
@@ -139,17 +139,17 @@ public class OnlineListScreenController implements Initializable {
 
         }
         );
-       /* Timeline timeline = new Timeline(
+        Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(3), event -> {
-                    // Add a new item to the list
-                    
+     Client client = NetworkManager.getClient();
+    client.setSendDataToServer("availableUsers");
+    client.setCallback(resultFuture); 
+                    System.out.println("calling available from database");
                 })
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();*/
-    Client client = NetworkManager.getClient();
-    client.setSendDataToServer("availableUsers");
-    client.setCallback(resultFuture);
+        timeline.play();
+    
 };
     
 
