@@ -16,6 +16,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import xoclient.Navigate;
 
@@ -73,8 +76,10 @@ public class Client extends Thread {
                 thread.start();
                 System.out.println("sendDataToserver "+sendDataToServer);
              while(isRunning){
+                 
                 recieveDatafromServer = ears.readLine();
-                System.out.println("recieveDatafromServer "+recieveDatafromServer);
+                if(recieveDatafromServer != null){
+                //System.out.println("recieveDatafromServer "+recieveDatafromServer);
                 if (recieveDatafromServer.equals("Server is closing")) {
                         System.out.println("server closed");
                        // notifyCallback(recieveDatafromServer);
@@ -87,10 +92,45 @@ public class Client extends Thread {
                     stopClient();
                     break;
                  }
+                 if("user invited".equalsIgnoreCase(sendDataToServer)){
+                     System.out.println("response from server "+recieveDatafromServer);
+                     System.out.println("user invited before run later");
+                     Platform.runLater(() -> {
+                          System.out.println("user inside before run later");
+                        Alert alert = ExtraComponent.showAlert(
+                                Alert.AlertType.CONFIRMATION,
+                                "Request",
+                                "You have been invited to a game."
+                        );
+                    ButtonType acceptButton = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
+                    ButtonType rejectButton = new ButtonType("Reject", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                    alert.getButtonTypes().setAll(acceptButton, rejectButton);
+                    Optional<ButtonType> resultButton = alert.showAndWait();
+
+                    if (resultButton.isPresent()) {
+                        if (resultButton.get() == acceptButton) {
+                            // User clicked Accept
+                            this.setSendDataToServer("start the game");
+                            System.out.println("User clicked Accept");
+                        } else if (resultButton.get() == rejectButton) {
+                            // User clicked Reject
+                            this.setSendDataToServer("rejected the game");
+                            System.out.println("User clicked Reject");
+                        }
+                    } else {
+                        // User closed the alert without clicking a button
+                        System.out.println("User closed the alert without clicking a button");
+                    }
+                     notifyCallback(recieveDatafromServer);
+                });
+                 }
+                 
+
                 // Notify the callback with the received data
                 notifyCallback(recieveDatafromServer);
 
-           }
+           }}
             }else {
                System.out.println("Error: InetAddress is null. Please set a valid host using setIpServer.");
           }
@@ -163,7 +203,7 @@ public class Client extends Thread {
     }
     private void showServerClosedAlert() {
         Platform.runLater(() -> {
-            Alert alert = ExtraComponent.showAlertChooseSymbol(
+            Alert alert = ExtraComponent.showAlert(
                         Alert.AlertType.ERROR,
                         "Error",
                         "The server is closing. Please try again later.");

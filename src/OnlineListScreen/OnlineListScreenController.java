@@ -106,7 +106,7 @@ public class OnlineListScreenController implements Initializable {
         resultFuture.thenAccept(result -> {
             Platform.runLater(() -> {
                 if (result.equals("error")) {
-                    Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
+                    Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
                     alert.show();
                     System.out.println("No available players " + result);
                 } else {
@@ -115,7 +115,7 @@ public class OnlineListScreenController implements Initializable {
                     List<DTOPlayerData> playerLists = gson.fromJson(result, listType);
                     
                       availabLeList = FXCollections.observableArrayList(playerLists);
-                      System.out.println("انا بطبع الليست تاني");
+                   //   System.out.println("انا بطبع الليست تاني");
                        listView.setItems(availabLeList);
                        listView.setCellFactory((ListView<DTOPlayerData> param) -> new  CustomListCell());  
                        listView.setOnMouseClicked(event -> handleListViewClicked());
@@ -139,16 +139,18 @@ public class OnlineListScreenController implements Initializable {
 
         }
         );
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(3), event -> {
-     Client client = NetworkManager.getClient();
-    client.setSendDataToServer("availableUsers");
-    client.setCallback(resultFuture); 
-                    System.out.println("calling available from database");
+       /* Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.5), event -> {
+     
+                   // System.out.println("calling available from database");
                 })
+                
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        timeline.play();*/
+       Client client = NetworkManager.getClient();
+    client.setSendDataToServer("availableUsers");
+    client.setCallback(resultFuture); 
     
 };
     
@@ -182,7 +184,7 @@ public class OnlineListScreenController implements Initializable {
              resultFuture.thenAccept(result->{
                  Platform.runLater(() ->{   
                      if(result.equals("error")){
-                        Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
+                        Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
                          alert.show();
                          System.out.println("cant login " + result);
                     }else {
@@ -242,7 +244,7 @@ public class OnlineListScreenController implements Initializable {
                  Platform.runLater(() ->{
                      System.out.println("response from server for request "+result);
                      if(result.equalsIgnoreCase("user invited")){
-                         Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.CONFIRMATION, "Request", "Request");
+                         Alert alert = ExtraComponent.showAlert(Alert.AlertType.CONFIRMATION, "Request", "Request");
                          ButtonType acceptButton = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
                          ButtonType rejectButton = new ButtonType("Reject", ButtonBar.ButtonData.CANCEL_CLOSE);
                          alert.getButtonTypes().setAll(acceptButton, rejectButton);
@@ -251,6 +253,7 @@ public class OnlineListScreenController implements Initializable {
                               if (resultButton.get() == acceptButton) {
                                  client.setSendDataToServer("start the game");
                                  System.out.println("User clicked Accept");
+                                
                         } else if (resultButton.get() == rejectButton) {
                             client.setSendDataToServer("rejected the game");
                              System.out.println("User clicked Reject");
@@ -259,14 +262,19 @@ public class OnlineListScreenController implements Initializable {
                               System.out.println("User closed the alert without clicking a button");
                         }
                      }else if(result.equalsIgnoreCase("start the game")){
-                        /* GameScreenController controller = new GameScreenController(4);
-                          FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
-                          loader.setController(controller);
-                          Parent root = loader.load();
-                          Navigate.navigateTo(root, event);*/
-                          System.out.println(" start the game");
+                         try {
+                             GameScreenController controller = new GameScreenController(4);
+                             FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
+                             loader.setController(controller);
+                             
+                             //Navigate.navigateTo(root, event);
+                             Navigate.navigateTo(loader.load());
+                             System.out.println(" start the game");
+                         } catch (IOException ex) {
+                             Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                         }
                      }else if(result.equalsIgnoreCase("rejected the game")){
-                         Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.INFORMATION, "Information ", "Rejected");
+                         Alert alert = ExtraComponent.showAlert(Alert.AlertType.INFORMATION, "Information ", "Rejected");
                          alert.show();
                      }
                 });

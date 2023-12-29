@@ -21,7 +21,7 @@ import javafx.scene.layout.BackgroundSize;
  * @author DELL
  */
 public class ExtraComponent {
-    public static Alert showAlertChooseSymbol(Alert.AlertType type, String title , String headerTxt){
+    public static Alert showAlert(Alert.AlertType type, String title , String headerTxt){
         // Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         // alert.setTitle("Symbol");
         //   alert.setHeaderText("You want play with");
