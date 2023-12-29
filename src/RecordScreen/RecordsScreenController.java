@@ -7,8 +7,8 @@ package RecordScreen;
  */
 
 import GameScreen.GameScreenController;
-import OnlineListScreen.CustomListCell;
 import Records.GameRecord;
+import RecordScreen.RecordsCell;
 import Records.Recordings;
 import java.io.IOException;
 import java.net.URL;
@@ -58,7 +58,7 @@ public class RecordsScreenController implements Initializable {
             @Override
             public ListCell<String> call(ListView<String> param) {
              //return new  CustomListCell();
-             return null;
+             return new RecordsCell();
             }
             
             
