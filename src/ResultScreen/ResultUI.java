@@ -184,7 +184,7 @@ public class ResultUI {
                  
                  FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
                  Parent root = loader.load();
-                 Navigate.navigateTo(root, event);
+                 Navigate.navigateTo(root);
              } catch (IOException ex) {
                  Logger.getLogger(ResultUI.class.getName()).log(Level.SEVERE, null, ex);
              }

@@ -103,10 +103,13 @@ public class CustomListCell extends ListCell<DTOPlayerData> {
        if (item != null && !empty) {
          //Set icon, label, and button properties
          //icon.setImage(new Image("/girlIcon.png"));
-           playerName.setText(item.getFullName());
+           playerName.setText(item.getUserName());
            statusTxt.setText("Online");
-           playerImage.setImage(new Image(getClass().getResource("/Icons/boy.png").toExternalForm()));
-        //   inviteBtn.setText("Button");
+           if(item.isIsMale())
+                playerImage.setImage(new Image(getClass().getResource("/Icons/boy.png").toExternalForm()));
+           else 
+               playerImage.setImage(new Image(getClass().getResource("/Icons/girl.png").toExternalForm()));
+        
            setGraphic(cell);
        }else {
            setGraphic(null);

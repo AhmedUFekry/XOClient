@@ -37,4 +37,6 @@ public class NetworkManager {
     public static synchronized Boolean isClientAlive(){
         return client.isAlive();
     }
+
+    
 }
