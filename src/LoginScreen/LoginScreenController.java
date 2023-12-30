@@ -127,12 +127,12 @@ public class LoginScreenController implements Initializable {
                              txtFieldPassword.setPromptText("Please Enter valid Password");
                              txtFieldPlayerName.setStyle("-fx-border-color: red ; -fx-border-width:2px");
                              txtFieldPlayerName.setPromptText("Please Enter valid UserName");
-                            Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
+                            Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
                              alert.show();
                              System.out.println("cant login " + result);
                          }else if ("user not found".equals(result)){
                              System.out.println("cant login " + result);
-                             Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "User Name not found ");
+                             Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "User Name not found ");
                              alert.show();
                          }else{
                              String playerName = result;

@@ -5,6 +5,7 @@
         <group>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/D:/ITI%20Native%209%20month/Java/Laps/JavaProject/XOClient/src/SignUpScreen/SignUpScreenController.java</file>
 =======
 
@@ -27,6 +28,13 @@
             <file>file:/D:/git/tic%20tac/XOClient/src/GameScreen/GameScreenController.java</file>
 
 >>>>>>> 77ac616fd9e08cf992614a9db05b092bc67f9a8a
+=======
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/OnlineListScreen/OnlineListScreenController.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/ResultScreen/ResultScreenController.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/ResultScreen/ResultUI.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/ChooseLevelScreen/ChooseLevelScreenController.java</file>
+            <file>file:/D:/ITI/ITI/Developing%20Applications%20using%20Java%20SE/Java%20Project/XOClient/src/ClientServer/Client.java</file>
+>>>>>>> a04d9f4f52517fa86c54c922aa82e6a4f65c8c1b
         </group>
     </open-files>
 </project-private>

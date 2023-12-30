@@ -9,6 +9,7 @@ import ClientServer.Client;
 import DTO.DTOPlayerData;
 import DTO.DataOperation;
 import ExtraComponent.ExtraComponent;
+import GameScreen.GameScreenBase;
 import GameScreen.GameScreenController;
 import NetworkManager.NetworkManager;
 import ProfileScreen.ProfileScreenController;
@@ -37,9 +38,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -88,6 +87,7 @@ public class OnlineListScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        currentPlayer = new DTOPlayerData();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         CompletableFuture<String> resultFuture = new CompletableFuture<>();
@@ -97,7 +97,7 @@ public class OnlineListScreenController implements Initializable {
         resultFuture.thenAccept(result -> {
             Platform.runLater(() -> {
                 if (result.equals("error")) {
-                    Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
+                    Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
                     alert.show();
                     System.out.println("No available players " + result);
                 } else {
@@ -128,6 +128,9 @@ public class OnlineListScreenController implements Initializable {
 
     };
     
+
+                    //add availablePlayer to the list
+
     @FXML
     private void logoutMethod(ActionEvent event) throws IOException {
        /* if(NetworkManager.isClientAlive()){
@@ -181,11 +184,12 @@ public class OnlineListScreenController implements Initializable {
         Gson gson = builder.create();
         System.out.println(gson.toJson(operation));
         CompletableFuture<String> resultFuture = new CompletableFuture<>();
+
         // Set the callback for the result
         resultFuture.thenAccept(result -> {
             Platform.runLater(() -> {
                 if (result.equals("error")) {
-                    Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
+                    Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
                     alert.show();
                     System.out.println("cant login " + result);
                 } else {
@@ -211,6 +215,7 @@ public class OnlineListScreenController implements Initializable {
         Client client = NetworkManager.getClient();
         client.setSendDataToServer(gson.toJson(operation));
         client.setCallback(resultFuture);
+
     }
 
     private void gotoSingleMode(ActionEvent event) throws IOException {
@@ -218,8 +223,9 @@ public class OnlineListScreenController implements Initializable {
         Parent root = loader.load();
         Navigate.navigateTo(root, event);
     }
-
+    //when playe select player to play with get the player data
     private void handleListViewClicked() {
+
 
         int item = listView.getSelectionModel().getSelectedIndex();
         if (item >= 0) {
@@ -236,16 +242,18 @@ public class OnlineListScreenController implements Initializable {
         cp.setUserName(playerName.trim());
         List<DTOPlayerData> playerList = Arrays.asList(cp, invitedPlayer);
         DataOperation request = new DataOperation("request", playerList);
+
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         System.out.println(gson.toJson(request));
         Client client = NetworkManager.getClient();
         CompletableFuture<String> resultFuture = new CompletableFuture<>();
+
         resultFuture.thenAccept(result -> {
             Platform.runLater(() -> {
                 System.out.println("response from server for request " + result);
                 if (result.equalsIgnoreCase("user invited")) {
-                    Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.CONFIRMATION, "Request", "Request");
+                    Alert alert = ExtraComponent.showAlert(Alert.AlertType.CONFIRMATION, "Request", "Request");
                     ButtonType acceptButton = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
                     ButtonType rejectButton = new ButtonType("Reject", ButtonBar.ButtonData.CANCEL_CLOSE);
                     alert.getButtonTypes().setAll(acceptButton, rejectButton);
@@ -262,20 +270,21 @@ public class OnlineListScreenController implements Initializable {
                         System.out.println("User closed the alert without clicking a button");
                     }
                 } else if (result.equalsIgnoreCase("start the game")) {
-                    /* GameScreenController controller = new GameScreenController(4);
-                          FXMLLoader loader = new FXMLLoader (getClass().getResource("/GameScreen/GameScreen.fxml")) ;
-                          loader.setController(controller);
-                          Parent root = loader.load();
-                          Navigate.navigateTo(root, event);*/
-                    System.out.println(" start the game");
-                } else if (result.equalsIgnoreCase("rejected the game")) {
-                    Alert alert = ExtraComponent.showAlertChooseSymbol(Alert.AlertType.INFORMATION, "Information ", "Rejected");
-                    alert.show();
+                     client.setCurrSym("X");
+                         
+                         //Navigation
+                         System.out.println(" start the game ");
+                        Navigate.navigateTo(new GameScreenBase(client));
+                     }else if(result.equalsIgnoreCase("rejected the game")){
+                         Alert alert = ExtraComponent.showAlert(Alert.AlertType.INFORMATION, "Information ", "Rejected");
+                         alert.show();
                 }
             });
         });
         client.setSendDataToServer(gson.toJson(request));
         System.out.println("Data send to request for a game " + gson.toJson(request));
         client.setCallback(resultFuture);
+
     }
+    
 }
