@@ -54,8 +54,6 @@ public class OnlineListScreenController implements Initializable {
     @FXML
     private Button profileBtn;
     @FXML
-    private Button singlrModeBtn;
-    @FXML
 
     /*private ListView<String> listView;
 
@@ -180,54 +178,53 @@ public class OnlineListScreenController implements Initializable {
     @FXML
     private void goToProfileScreen(ActionEvent event) throws IOException {
         if(NetworkManager.isClientAlive()){
-        List<DTOPlayerData> playerList = new ArrayList<>();
-        DTOPlayerData player = new DTOPlayerData();
-        player.setUserName(playerName.trim());
-        playerList.add(player);
-        DataOperation operation = new DataOperation("profile", playerList);
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        System.out.println(gson.toJson(operation));
-        CompletableFuture<String> resultFuture = new CompletableFuture<>();
-        // Set the callback for the result
-        resultFuture.thenAccept(result -> {
-            Platform.runLater(() -> {
-                if (result.equals("error")) {
-                    Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
-                    alert.show();
-                    System.out.println("cant login " + result);
-                } else {
-                    try {
-                        DTOPlayerData dataReceived = new Gson().fromJson(result, DTOPlayerData.class);
-                        System.out.println("OnlineListScreen.OnlineListScreenController.goToProfileScreen()" + dataReceived.getPassword());
-                        ProfileScreenController profile = new ProfileScreenController(dataReceived);
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileScreen/ProfileScreen.fxml"));
-                        loader.setController(profile);
-                        currentPlayer = dataReceived;
-                        // profile.setPlayerData(dataReceived);
-                        Parent root = loader.load();
-                        Navigate.navigateTo(root, event);
-                    } catch (IOException ex) {
-                        Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            List<DTOPlayerData> playerList = new ArrayList<>();
+            DTOPlayerData player = new DTOPlayerData();
+            player.setUserName(playerName.trim());
+            playerList.add(player);
+            DataOperation operation = new DataOperation("profile", playerList);
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+            System.out.println(gson.toJson(operation));
+            CompletableFuture<String> resultFuture = new CompletableFuture<>();
+            // Set the callback for the result
+            resultFuture.thenAccept(result -> {
+                Platform.runLater(() -> {
+                    if (result.equals("error")) {
+                        Alert alert = ExtraComponent.showAlert(Alert.AlertType.ERROR, "Error", "The Username or Password is Invalid");
+                        alert.show();
+                        System.out.println("cant login " + result);
+                    } else {
+                        try {
+                            DTOPlayerData dataReceived = new Gson().fromJson(result, DTOPlayerData.class);
+                            System.out.println("OnlineListScreen.OnlineListScreenController.goToProfileScreen()" + dataReceived.getPassword());
+                            ProfileScreenController profile = new ProfileScreenController(dataReceived);
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ProfileScreen/ProfileScreen.fxml"));
+                            loader.setController(profile);
+                            currentPlayer = dataReceived;
+                            // profile.setPlayerData(dataReceived);
+                            Parent root = loader.load();
+                            Navigate.navigateTo(root);
+                        } catch (IOException ex) {
+                            Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-
-                }
+                });
             });
-        }
-        );
-        Client client = NetworkManager.getClient();
-        client.setSendDataToServer(gson.toJson(operation));
-        client.setCallback(resultFuture);
-    }try {
-        FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
-        Parent root = loader.load();
-        Navigate.navigateTo(root);
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+            Client client = NetworkManager.getClient();
+            client.setSendDataToServer(gson.toJson(operation));
+            client.setCallback(resultFuture);
+        }else{
+            try {
+                FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
+                Parent root = loader.load();
+                Navigate.navigateTo(root);
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlineListScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
     }
 
-    @FXML
     private void gotoSingleMode(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameScreen/GameScreen.fxml"));
         Parent root = loader.load();

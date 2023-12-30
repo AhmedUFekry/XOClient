@@ -7,8 +7,8 @@ package RecordScreen;
  */
 
 import GameScreen.GameScreenController;
-import OnlineListScreen.CustomListCell;
 import Records.GameRecord;
+import RecordScreen.RecordsCell;
 import Records.Recordings;
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,7 +59,7 @@ public class RecordsScreenController implements Initializable {
             @Override
             public ListCell<String> call(ListView<String> param) {
              //return new  CustomListCell();
-             return null;
+             return new RecordsCell();
             }
             
             
@@ -102,5 +103,13 @@ public class RecordsScreenController implements Initializable {
             recs = recordings.getRecordedGamesList();
             System.out.println(recs[0]);*/
     }    
+
+    @FXML
+    private void back(ActionEvent event) throws IOException {
+        System.out.println("Back");
+        FXMLLoader loader = new FXMLLoader (getClass().getResource("/StartScreen/StartScreen.fxml")) ;
+         Parent root = loader.load();
+         Navigate.navigateTo(root, event);
+    }
     
 }

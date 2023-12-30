@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 // navigate by event action parameter
     public static void navigateTo(Parent distinationRoot, ActionEvent event){
         scene  = new Scene(distinationRoot);
-        
+
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         showScene();
        

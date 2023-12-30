@@ -110,14 +110,6 @@
                   <Insets left="520.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="showRecordsBtn" mnemonicParsing="false" onAction="#displayRecordOnline" text="Play Records">
-               <font>
-                  <Font name="Baskerville Old Face" size="25.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets bottom="-200.0" left="220.0" />
-               </GridPane.margin>
-            </Button>
          </children>
       </GridPane>
    </center>

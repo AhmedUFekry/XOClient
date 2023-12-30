@@ -32,13 +32,8 @@ public class XOClient extends Application {
         //OnlineListScreenController controller = loader.getController();
        
         Scene scene = new Scene(root);
-        stage.setOnCloseRequest(event -> {
-            if(NetworkManager.NetworkManager.isClientAlive()){
-                Client client = NetworkManager.NetworkManager.getClient();
-                client.setSendDataToServer("exit");
-                client.stopClient();
-            }
-        });
+        
+        
         
         stage.setScene(scene);
         stage.show();

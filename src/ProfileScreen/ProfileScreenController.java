@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -44,7 +45,6 @@ public class ProfileScreenController implements Initializable {
     private Label drawLabel;
     @FXML
     private Label loseLabel;
-    @FXML
     private Button showRecordsBtn;
     @FXML
     private BorderPane rootPane;
@@ -65,32 +65,21 @@ public class ProfileScreenController implements Initializable {
             BackgroundImage background = ExtraComponent.setBackgroundImg("/Icons/back.jpg");
             rootPane.setBackground(new Background(background));
             Draw =player.getTotalMatch()-(player.getLoseMAtch()+player.getWinMatch());
-                     txtUserName.setText(player.getUserName());
-                      totalMatchesLabel.setText(""+player.getTotalMatch());
-                       winLabel.setText(""+player.getWinMatch());
-                        loseLabel.setText(""+player.getLoseMAtch());
-                        drawLabel.setText(""+Draw);
+            txtUserName.setText(player.getUserName());
+             totalMatchesLabel.setText(""+player.getTotalMatch());
+            winLabel.setText(""+player.getWinMatch());
+             loseLabel.setText(""+player.getLoseMAtch());
+             drawLabel.setText(""+Draw);
+             if(player.isIsMale())
+                player2Img.setImage(new Image(getClass().getResource("/Icons/boy.png").toExternalForm()));
+           else 
+               player2Img.setImage(new Image(getClass().getResource("/Icons/girl.png").toExternalForm()));
+        
+                        
                       
 
            
     }
-
-    // other methods...
-  /*  public void setPlayerData(DTOPlayerData player) {
-        txtUserName.setText(player.getUserName());
-       //
-         System.out.println("ProfileScreen.ProfileScreenController.setPlayerData()"+player.getLoseMAtch());
-          //totalMatchesLabel.setTotalMatch( player. getTotalMatch());  
-           // player.getLoseMAtch();
-          //  player.getTotalMatch();
-       
-
-    } */
-
-
-        
-        
-
         @FXML
         private void goBack(ActionEvent event) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
@@ -104,10 +93,5 @@ public class ProfileScreenController implements Initializable {
 }
 
 
-        @FXML
-        private void displayRecordOnline(ActionEvent event) throws IOException {
-            FXMLLoader loader = new FXMLLoader (getClass().getResource("/RecordScreen/RecordsScreen.fxml")) ;
-              Parent root = loader.load();
-              Navigate.navigateTo(root, event);
-        }
+        
     }
