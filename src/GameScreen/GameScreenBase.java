@@ -3,15 +3,25 @@ package GameScreen;
 import ClientServer.Client;
 import DTO.MoveDTO;
 import DTO.MoveOperation;
+import ExtraComponent.ExtraComponent;
 import static GameLogic.MarkSymbol.OIMG;
 import static GameLogic.MarkSymbol.XIMG;
 import Records.RecordGame;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import xoclient.Navigate;
 
 public  class GameScreenBase extends BorderPane {
 
@@ -518,8 +529,38 @@ public  class GameScreenBase extends BorderPane {
         gridPane.getChildren().add(button9);
         pane.getChildren().add(exitBtn);
         pane.getChildren().add(recBtn);
+        
+        exitBtn.addEventHandler(ActionEvent.ACTION, e ->{
+            try {
+                if(isRecord)
+                {
+                    recordGame.saveRecord(txtPlayer1, txtPlayer2, p1ayMoves, "draw");
+                    isRecord = false;
+                }
+                 Alert alert = ExtraComponent.showAlert(Alert.AlertType.INFORMATION, "Information", "Do you want to Exit the game?");
+            ButtonType yesButton = new ButtonType("YES",ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("Cancel",ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(yesButton,cancelButton);
+            Optional<ButtonType> resultButton = alert.showAndWait();
+            
+            if(resultButton.isPresent() && resultButton.get().equals(yesButton)){
+                 FXMLLoader loader = new FXMLLoader (getClass().getResource("/OnlineListScreen/OnlineListScreen.fxml")) ;
+                Parent root = loader.load();
+                Navigate.navigateTo(root, e);
+            } 
+            } catch (IOException ex) {
+                Logger.getLogger(GameScreenBase.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        recBtn.addEventHandler(ActionEvent.ACTION, e ->{
+            isRecord = true;
+            recordGame = new RecordGame(recBtn);
+            recordGame.startRecord();
+        });
 
     }
+    
 
  public void makeMove(int index,String sym){
       
